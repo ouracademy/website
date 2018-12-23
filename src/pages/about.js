@@ -2,11 +2,7 @@ import React from "react";
 import Header from "../components/header";
 
 import styled from "styled-components";
-
-const Container = styled.div`
-  margin: 3rem auto;
-  max-width: 600px;
-`;
+import Layout from "../components/layout";
 
 const UserWrapper = styled.div`
   display: flex;
@@ -50,9 +46,8 @@ const User = props => (
 );
 
 export default () => (
-  <Container>
+  <Layout>
     <Header title="Nosotros" />
-    <h1>About Styled Components</h1>
     <p>Styled Components is cool</p>
     <User
       username="Jane Doe"
@@ -64,5 +59,5 @@ export default () => (
       avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
       excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
     />
-  </Container>
+  </Layout>
 );
