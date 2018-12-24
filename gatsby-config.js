@@ -2,5 +2,14 @@ module.exports = {
   siteMetadata: {
     title: `Ouracademy`
   },
-  plugins: [`gatsby-plugin-styled-components`]
+  plugins: [
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `src`,
+        path: `${__dirname}/src/`
+      }
+    },
+    `gatsby-plugin-styled-components`
+  ]
 };
