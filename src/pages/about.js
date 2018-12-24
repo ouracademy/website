@@ -1,8 +1,8 @@
 import React from "react";
-import Header from "../components/header";
 
 import styled from "styled-components";
 import Layout from "../components/layout";
+import { graphql } from "gatsby";
 
 const UserWrapper = styled.div`
   display: flex;
@@ -45,9 +45,9 @@ const User = props => (
   </UserWrapper>
 );
 
-export default () => (
+export default ({ data }) => (
   <Layout>
-    <Header title="Nosotros" />
+    <h1>Nosotros {data.site.siteMetadata.title}</h1>
     <p>Styled Components is cool</p>
     <User
       username="Jane Doe"
@@ -61,3 +61,13 @@ export default () => (
     />
   </Layout>
 );
+
+export const query = graphql`
+  query {
+    site {
+      siteMetadata {
+        title
+      }
+    }
+  }
+`;

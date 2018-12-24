@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "gatsby";
+import { Link, StaticQuery, graphql } from "gatsby";
 import styled from "styled-components";
 
 const ListLink = props => (
@@ -15,16 +15,30 @@ const Container = styled.div`
 `;
 
 export default ({ children }) => (
-  <Container>
-    <header style={{ marginBottom: `1.5rem` }}>
-      <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
-        <h3 style={{ display: `inline` }}>Ouracademy</h3>
-      </Link>
-      <ul style={{ listStyle: `none`, float: `right` }}>
-        <ListLink to="/">Home</ListLink>
-        <ListLink to="/about">Nosotros</ListLink>
-      </ul>
-    </header>
-    {children}
-  </Container>
+  <StaticQuery
+    query={graphql`
+      query {
+        site {
+          siteMetadata {
+            title
+          }
+        }
+      }
+    `}
+    render={data => (
+      <Container>
+        <header style={{ marginBottom: `1.5rem` }}>
+          <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
+            <h3 style={{ display: `inline` }}>
+              {data.site.siteMetadata.title}
+            </h3>
+          </Link>
+          <ul style={{ listStyle: `none`, float: `right` }}>
+            <ListLink to="/about">Nosotros</ListLink>
+          </ul>
+        </header>
+        {children}
+      </Container>
+    )}
+  />
 );
