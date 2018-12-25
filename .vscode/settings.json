@@ -2,5 +2,8 @@
   "editor.formatOnSave": true,
   "emmet.includeLanguages": {
     "javascript": "javascriptreact"
+  },
+  "[mdx]": {
+    "editor.wordWrap": "bounded"
   }
 }
