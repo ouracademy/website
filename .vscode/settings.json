@@ -5,5 +5,14 @@
   },
   "[mdx]": {
     "editor.wordWrap": "bounded"
+  },
+  "emojisense.languages": {
+    "markdown": true,
+    "plaintext": {
+      "markupCompletionsEnabled": false,
+      "emojiDecoratorsEnabled": false
+    },
+    "git-commit": true,
+    "mdx": true
   }
 }
