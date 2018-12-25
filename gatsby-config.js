@@ -10,6 +10,12 @@ module.exports = {
         path: `${__dirname}/src/`
       }
     },
+    {
+      resolve: `gatsby-mdx`,
+      options: {
+        extensions: [".mdx", ".md"]
+      }
+    },
     `gatsby-plugin-styled-components`
   ]
 };

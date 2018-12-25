@@ -1,29 +1,55 @@
 import React from "react";
+import styled from "styled-components";
 import Layout from "../components/layout";
+import { graphql } from "gatsby";
 
-export default () => (
+const Title = styled.h1`
+  display: inline-block;
+  border-bottom: 1px solid;
+`;
+
+const PostHeader = styled.h3`
+  margin-bottom: 1rem;
+`;
+
+export default ({ data }) => (
   <Layout>
-    <h1>Richard Hamming on Luck</h1>
     <div>
-      <p>
-        From Richard Hamming’s classic and must-read talk, “
-        <a href="http://www.cs.virginia.edu/~robins/YouAndYourResearch.html">
-          You and Your Research
-        </a>
-        ”.
-      </p>
-      <blockquote>
-        <p>
-          There is indeed an element of luck, and no, there isn’t. The prepared
-          mind sooner or later finds something important and does it. So yes, it
-          is luck.{" "}
-          <em>
-            The particular thing you do is luck, but that you do something is
-            not.
-          </em>
-        </p>
-      </blockquote>
+      <Title>Amazing Pandas Eating Things</Title>
+      <h4>{data.allMdx.totalCount} Posts</h4>
+      {data.allMdx.edges.map(({ node }) => (
+        <div key={node.id}>
+          <PostHeader>
+            {node.frontmatter.title}{" "}
+            <span
+              style={{
+                color: "#bbb"
+              }}
+            >
+              — {node.frontmatter.date}
+            </span>
+          </PostHeader>
+          <p>{node.excerpt}</p>
+        </div>
+      ))}
     </div>
-    <p>Posted April 09, 2011</p>
   </Layout>
 );
+
+export const query = graphql`
+  query {
+    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
+      totalCount
+      edges {
+        node {
+          id
+          frontmatter {
+            title
+            date(formatString: "DD MMMM, YYYY")
+          }
+          excerpt
+        }
+      }
+    }
+  }
+`;
