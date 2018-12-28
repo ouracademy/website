@@ -1,4 +1,6 @@
+const path = require(`path`);
 const { createFilePath } = require(`gatsby-source-filesystem`);
+const componentWithMDXScope = require("gatsby-mdx/component-with-mdx-scope");
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
@@ -10,4 +12,59 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
       value: slug
     });
   }
+};
+exports.createPages = ({ graphql, actions }) => {
+  const { createPage } = actions;
+  return new Promise((resolve, reject) => {
+    resolve(
+      graphql(
+        `
+          {
+            allMdx {
+              edges {
+                node {
+                  id
+                  parent {
+                    ... on File {
+                      name
+                      sourceInstanceName
+                    }
+                  }
+                  code {
+                    scope
+                  }
+                }
+              }
+            }
+          }
+        `
+      ).then(result => {
+        if (result.errors) {
+          console.log(result.errors);
+          reject(result.errors);
+        }
+        // Create blog posts pages.
+        result.data.allMdx.edges.forEach(({ node }) => {
+          createPage({
+            path: `/${node.parent.sourceInstanceName}/${node.parent.name}`,
+            component: componentWithMDXScope(
+              path.resolve("./src/components/posts/template.js"),
+              node.code.scope,
+              __dirname
+            ),
+            context: { id: node.id }
+          });
+        });
+      })
+    );
+  });
+};
+
+exports.onCreateWebpackConfig = ({ actions }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      modules: [path.resolve(__dirname, "src"), "node_modules"],
+      alias: { $components: path.resolve(__dirname, "src/components") }
+    }
+  });
 };
