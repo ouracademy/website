@@ -16,6 +16,20 @@ module.exports = {
         extensions: [".mdx", ".md"]
       }
     },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: "Ouracademy",
+        short_name: "Ouracademy",
+        start_url: "/",
+        background_color: "#5c5e5f",
+        theme_color: "#5c5e5f",
+        // Enables "Add to Homescreen" prompt and disables browser UI (including back button)
+        // see https://developers.google.com/web/fundamentals/web-app-manifest/#display
+        display: "standalone",
+        icon: "src/images/icon.png" // This path is relative to the root of the site.
+      }
+    },
     `gatsby-plugin-styled-components`
   ]
 };
