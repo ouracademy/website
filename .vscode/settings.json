@@ -14,5 +14,11 @@
     },
     "git-commit": true,
     "mdx": true
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    ".cache/**": true
   }
 }
