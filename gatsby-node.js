@@ -5,7 +5,7 @@ const componentWithMDXScope = require("gatsby-mdx/component-with-mdx-scope");
 exports.onCreateNode = ({ node, getNode, actions }) => {
   const { createNodeField } = actions;
   if (node.internal.type === `Mdx`) {
-    const slug = createFilePath({ node, getNode, basePath: `pages/posts` });
+    const slug = createFilePath({ node, getNode });
     createNodeField({
       node,
       name: `slug`,
@@ -24,11 +24,8 @@ exports.createPages = ({ graphql, actions }) => {
               edges {
                 node {
                   id
-                  parent {
-                    ... on File {
-                      name
-                      sourceInstanceName
-                    }
+                  fields {
+                    slug
                   }
                   code {
                     scope
@@ -46,11 +43,10 @@ exports.createPages = ({ graphql, actions }) => {
         // Create blog posts pages.
         result.data.allMdx.edges.forEach(({ node }) => {
           createPage({
-            path: `/${node.parent.sourceInstanceName}/${node.parent.name}`,
+            path: node.fields.slug,
             component: componentWithMDXScope(
               path.resolve("./src/components/posts/template.js"),
-              node.code.scope,
-              __dirname
+              node.code.scope
             ),
             context: { id: node.id }
           });
