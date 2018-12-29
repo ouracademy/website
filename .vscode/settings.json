@@ -19,7 +19,7 @@
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
     "**/node_modules/**": true,
-    ".cache/**": true,
+    "**/.cache/**": true,
     "public/**": true
   }
 }
