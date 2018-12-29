@@ -46,7 +46,7 @@ const User = props => (
 );
 
 export default ({ data }) => (
-  <Layout>
+  <Layout title="Nosotros">
     <h1>Nosotros {data.site.siteMetadata.title}</h1>
     <p>Styled Components is cool</p>
     <User

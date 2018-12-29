@@ -1,6 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: `Ouracademy`
+    title: `Ouracademy`,
+    siteUrl: "https://our-academy.org",
+    description:
+      "Una academia para aprender de ingeniería de software, desde métodos y prácticas hasta las últimas tecnologías en el desarrollo de software"
   },
   plugins: [
     {
@@ -17,6 +20,7 @@ module.exports = {
       }
     },
     `gatsby-plugin-styled-components`,
+    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
