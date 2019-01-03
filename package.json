@@ -12,11 +12,11 @@
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "dependencies": {
-    "@mdx-js/mdx": "^0.15.7",
-    "@mdx-js/tag": "^0.15.6",
+    "@mdx-js/mdx": "^0.16.6",
+    "@mdx-js/tag": "^0.16.6",
     "babel-plugin-styled-components": "^1.10.0",
     "gatsby": "^2.0.75",
-    "gatsby-mdx": "^0.2.0",
+    "gatsby-mdx": "^0.3.2",
     "gatsby-plugin-manifest": "^2.0.12",
     "gatsby-plugin-offline": "^2.0.20",
     "gatsby-plugin-react-helmet": "^3.0.5",
