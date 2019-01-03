@@ -36,7 +36,7 @@ export default ({ data }) => (
 const PostItem = ({ fields, frontmatter, excerpt }) => (
   <div>
     <PostHeader>
-      <StyledLink to={fields.slug}>
+      <StyledLink to={`posts${fields.slug}`}>
         <PostTitle>{frontmatter.title}</PostTitle>
       </StyledLink>{" "}
       <span

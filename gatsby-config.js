@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   siteMetadata: {
     title: `Ouracademy`,
@@ -7,20 +9,20 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `pages`,
-        path: `src/pages`
-      }
-    },
-    {
       resolve: `gatsby-mdx`,
       options: {
         extensions: [".mdx", ".md"]
       }
     },
-    `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `posts`,
+        path: `${__dirname}/src/posts/`
+      }
+    },
+    `gatsby-plugin-styled-components`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
