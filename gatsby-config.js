@@ -1,5 +1,3 @@
-const path = require("path");
-
 module.exports = {
   siteMetadata: {
     title: `Ouracademy`,
@@ -8,6 +6,7 @@ module.exports = {
       "Una academia para aprender de ingeniería de software, desde métodos y prácticas hasta las últimas tecnologías en el desarrollo de software"
   },
   plugins: [
+    `gatsby-transformer-yaml`,
     {
       resolve: `gatsby-mdx`,
       options: {
@@ -38,5 +37,8 @@ module.exports = {
       }
     },
     "gatsby-plugin-offline"
-  ]
+  ],
+  mapping: {
+    "Mdx.frontmatter.author": `AuthorYaml`
+  }
 };

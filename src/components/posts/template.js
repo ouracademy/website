@@ -2,6 +2,14 @@ import React from "react";
 import { graphql } from "gatsby";
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
 import Layout from "../layout";
+import { At } from "../at";
+
+const Author = ({ name, twitter }) => (
+  <div>
+    <h4>{name}</h4>
+    <At user={twitter} />
+  </div>
+);
 
 const PostPageTemplate = ({ data: { mdx } }) => (
   <Layout
@@ -10,6 +18,7 @@ const PostPageTemplate = ({ data: { mdx } }) => (
     type="article"
   >
     <h1>{mdx.frontmatter.title}</h1>
+    <Author {...mdx.frontmatter.author} />
     <MDXRenderer>{mdx.code.body}</MDXRenderer>
   </Layout>
 );
@@ -22,6 +31,10 @@ export const query = graphql`
       id
       frontmatter {
         title
+        author {
+          twitter
+          name
+        }
       }
       excerpt
       code {
