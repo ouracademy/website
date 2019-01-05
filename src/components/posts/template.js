@@ -4,6 +4,7 @@ import MDXRenderer from "gatsby-mdx/mdx-renderer";
 import Layout from "../layout";
 import { At } from "../at";
 import { DiscussionEmbed } from "disqus-react";
+import SocialLinks from "./social-links";
 
 const Author = ({ name, twitter }) => (
   <div>
@@ -12,18 +13,21 @@ const Author = ({ name, twitter }) => (
   </div>
 );
 
-const PostPageTemplate = ({ data: { mdx }, location }) => (
-  <Layout
-    description={mdx.excerpt}
-    title={mdx.frontmatter.title}
-    type="article"
-  >
-    <h1>{mdx.frontmatter.title}</h1>
-    <Author {...mdx.frontmatter.author} />
-    <MDXRenderer>{mdx.code.body}</MDXRenderer>
-    <Comments id={mdx.id} title={mdx.title} url={location.href} />
-  </Layout>
-);
+const PostPageTemplate = ({ data: { mdx }, location }) => {
+  const title = mdx.frontmatter.title;
+  const description = mdx.excerpt;
+  const url = location.href;
+
+  return (
+    <Layout description={description} title={title} type="article">
+      <h1>{title}</h1>
+      <Author {...mdx.frontmatter.author} />
+      <SocialLinks title={title} description={description} url={url} />
+      <MDXRenderer>{mdx.code.body}</MDXRenderer>
+      <Comments id={mdx.id} title={mdx.title} url={url} />
+    </Layout>
+  );
+};
 
 const disqusShortname = "academyforus";
 
