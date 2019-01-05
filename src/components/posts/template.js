@@ -3,6 +3,7 @@ import { graphql } from "gatsby";
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
 import Layout from "../layout";
 import { At } from "../at";
+import { DiscussionEmbed } from "disqus-react";
 
 const Author = ({ name, twitter }) => (
   <div>
@@ -11,16 +12,30 @@ const Author = ({ name, twitter }) => (
   </div>
 );
 
-const PostPageTemplate = ({ data: { mdx } }) => (
+const PostPageTemplate = ({ data: { mdx }, location }) => (
   <Layout
-    title={mdx.frontmatter.title}
     description={mdx.excerpt}
+    title={mdx.frontmatter.title}
     type="article"
   >
     <h1>{mdx.frontmatter.title}</h1>
     <Author {...mdx.frontmatter.author} />
     <MDXRenderer>{mdx.code.body}</MDXRenderer>
+    <Comments id={mdx.id} title={mdx.title} url={location.href} />
   </Layout>
+);
+
+const disqusShortname = "academyforus";
+
+const Comments = ({ id, url, title }) => (
+  <DiscussionEmbed
+    shortname={disqusShortname}
+    config={{
+      url,
+      identifier: id,
+      title
+    }}
+  />
 );
 
 export default PostPageTemplate;
