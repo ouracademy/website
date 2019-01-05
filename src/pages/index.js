@@ -53,7 +53,10 @@ const PostItem = ({ fields, frontmatter, excerpt }) => (
 
 export const query = graphql`
   query {
-    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMdx(
+      filter: { fields: { isPublic: { eq: true } } }
+      sort: { fields: [frontmatter___date], order: DESC }
+    ) {
       totalCount
       edges {
         node {
