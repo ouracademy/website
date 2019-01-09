@@ -1,4 +1,6 @@
 const path = require(`path`);
+const _ = require("lodash");
+import kebabCase from "lodash/kebabCase";
 const { createFilePath } = require(`gatsby-source-filesystem`);
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
@@ -19,6 +21,19 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   }
 };
 
+const getTags = posts => {
+  let tags = [];
+  // Iterate through each post, putting all found tags into `tags`
+  _.each(posts, edge => {
+    if (_.get(edge, "node.frontmatter.tags")) {
+      tags = tags.concat(edge.node.frontmatter.tags);
+    }
+  });
+  // Eliminate duplicate tags
+  tags = _.uniq(tags);
+  return tags;
+};
+
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions;
   return new Promise((resolve, reject) => {
@@ -36,6 +51,9 @@ exports.createPages = ({ graphql, actions }) => {
                       sourceInstanceName
                     }
                   }
+                  frontmatter {
+                    tags
+                  }
                 }
               }
             }
@@ -46,12 +64,25 @@ exports.createPages = ({ graphql, actions }) => {
           console.log(result.errors);
           reject(result.errors);
         }
+
         // Create blog posts pages.
-        result.data.allMdx.edges.forEach(({ node }) => {
+        const posts = result.data.allMdx.edges;
+        posts.forEach(({ node }) => {
           createPage({
             path: `/${node.parent.sourceInstanceName}/${node.parent.name}`,
             component: path.resolve("./src/components/posts/template.js"),
             context: { id: node.id }
+          });
+        });
+
+        const tags = getTags(posts);
+        tags.forEach(tag => {
+          createPage({
+            path: `/tags/${kebabCase(tag)}/`,
+            component: path.resolve("./src/components/tags/template.js"),
+            context: {
+              tag
+            }
           });
         });
       })
