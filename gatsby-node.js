@@ -1,6 +1,5 @@
 const path = require(`path`);
 const _ = require("lodash");
-import kebabCase from "lodash/kebabCase";
 const { createFilePath } = require(`gatsby-source-filesystem`);
 
 exports.onCreateNode = ({ node, getNode, actions }) => {
@@ -78,7 +77,7 @@ exports.createPages = ({ graphql, actions }) => {
         const tags = getTags(posts);
         tags.forEach(tag => {
           createPage({
-            path: `/tags/${kebabCase(tag)}/`,
+            path: `/tags/${_.kebabCase(tag)}/`,
             component: path.resolve("./src/components/tags/template.js"),
             context: {
               tag
