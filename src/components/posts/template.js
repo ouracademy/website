@@ -1,5 +1,5 @@
 import React from "react";
-import { graphql } from "gatsby";
+import { Link, graphql } from "gatsby";
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
 import Layout from "../layout";
 import { At } from "../at";
@@ -13,15 +13,27 @@ const Author = ({ name, twitter }) => (
   </div>
 );
 
+const Tags = ({ tags }) => (
+  <h3>
+    <i className="tags" />{" "}
+    {tags.map(tag => (
+      <Tag key={tag} tag={tag} />
+    ))}
+  </h3>
+);
+
+const Tag = ({ tag }) => <Link to={`/tags/${tag}`}>{tag}</Link>;
+
 const PostPageTemplate = ({ data: { mdx }, location }) => {
-  const title = mdx.frontmatter.title;
+  const { title, author, tags } = mdx.frontmatter;
   const description = mdx.excerpt;
   const url = location.href;
 
   return (
     <Layout description={description} title={title} type="article">
       <h1>{title}</h1>
-      <Author {...mdx.frontmatter.author} />
+      <Author {...author} />
+      <Tags tags={tags} />
       <SocialLinks title={title} description={description} url={url} />
       <MDXRenderer>{mdx.code.body}</MDXRenderer>
       <Comments id={mdx.id} title={mdx.title} url={url} />
@@ -54,6 +66,7 @@ export const query = graphql`
           twitter
           name
         }
+        tags
       }
       excerpt
       code {
