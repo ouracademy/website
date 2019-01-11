@@ -25,12 +25,17 @@ const Tags = ({ tags }) => (
 const Tag = ({ tag }) => <Link to={`/tags/${tag}`}>{tag}</Link>;
 
 const PostPageTemplate = ({ data: { mdx }, location }) => {
-  const { title, author, tags } = mdx.frontmatter;
+  const { title, author, tags, image = null } = mdx.frontmatter;
   const description = mdx.excerpt;
   const url = location.href;
 
   return (
-    <Layout description={description} title={title} type="article">
+    <Layout
+      description={description}
+      title={title}
+      image={image}
+      type="article"
+    >
       <h1>{title}</h1>
       <Author {...author} />
       <Tags tags={tags} />
@@ -67,6 +72,7 @@ export const query = graphql`
           name
         }
         tags
+        image
       }
       excerpt
       code {

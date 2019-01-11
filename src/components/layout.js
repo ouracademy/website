@@ -15,7 +15,7 @@ const Container = styled.div`
   padding: 1rem;
 `;
 
-export default ({ children, title, description, type = "website" }) => (
+export default ({ children, title, description, image, type = "website" }) => (
   <StaticQuery
     query={graphql`
       query {
@@ -24,6 +24,7 @@ export default ({ children, title, description, type = "website" }) => (
             title
             siteUrl
             description
+            image
           }
         }
       }
@@ -35,6 +36,7 @@ export default ({ children, title, description, type = "website" }) => (
           description={description || meta.description}
           type={type}
           siteUrl={meta.siteUrl}
+          image={image || meta.image}
         />
         <Container>
           <header style={{ marginBottom: `1.5rem` }}>
@@ -56,7 +58,7 @@ export default ({ children, title, description, type = "website" }) => (
   />
 );
 
-const SEO = ({ title, description, type, siteUrl }) => (
+const SEO = ({ title, description, type, siteUrl, image }) => (
   <Helmet>
     <html lang="es" />
     <meta charSet="utf-8" />
@@ -71,6 +73,6 @@ const SEO = ({ title, description, type, siteUrl }) => (
     <meta property="og:type" content={type} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    {/* TODO: <meta property="og:image" content={meta.og.image} /> */}
+    <meta property="og:image" content={image} />
   </Helmet>
 );
