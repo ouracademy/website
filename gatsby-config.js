@@ -1,4 +1,4 @@
-const siteUrl = "https://pedantic-mahavira-2620f1.netlify.com/";
+const siteUrl = "https://pedantic-mahavira-2620f1.netlify.com";
 
 module.exports = {
   siteMetadata: {
