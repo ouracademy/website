@@ -3,7 +3,6 @@ const siteUrl = "https://pedantic-mahavira-2620f1.netlify.com";
 module.exports = {
   siteMetadata: {
     title: `Ouracademy`,
-    siteUrl,
     image: `${siteUrl}/static/icon.png`,
     description:
       "Una academia para aprender de ingeniería de software, desde métodos y prácticas hasta las últimas tecnologías en el desarrollo de software"

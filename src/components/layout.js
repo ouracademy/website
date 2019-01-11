@@ -22,7 +22,6 @@ export default ({ children, title, description, image, type = "website" }) => (
         site {
           siteMetadata {
             title
-            siteUrl
             description
             image
           }
@@ -35,7 +34,6 @@ export default ({ children, title, description, image, type = "website" }) => (
           title={title ? `${title} - ${meta.title}` : meta.title}
           description={description || meta.description}
           type={type}
-          siteUrl={meta.siteUrl}
           image={image || meta.image}
         />
         <Container>
@@ -58,12 +56,11 @@ export default ({ children, title, description, image, type = "website" }) => (
   />
 );
 
-const SEO = ({ title, description, type, siteUrl, image }) => (
+const SEO = ({ title, description, type, image }) => (
   <Helmet>
     <html lang="es" />
     <meta charSet="utf-8" />
-    <title>{title}</title>>
-    <link rel="canonical" href={siteUrl} />
+    <title>{title}</title>
     <meta name="description" content={description} />
     {/* Twitter Card data  */}
     <meta name="twitter:card" value="summary" />
