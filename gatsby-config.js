@@ -39,7 +39,17 @@ module.exports = {
         icon: "static/icon.png" // This path is relative to the root of the site.
       }
     },
-    "gatsby-plugin-offline"
+    "gatsby-plugin-offline",
+    {
+      resolve: `gatsby-plugin-google-tagmanager`,
+      options: {
+        // TODO: only working on reload page (not in client <Link/>)
+        // Solution:
+        // To automatically track page changes, in GA for instance, you can
+        // configure your tags in GTM to trigger on History Change.
+        id: "GTM-K7D2R6R"
+      }
+    }
   ],
   mapping: {
     "Mdx.frontmatter.author": `AuthorYaml`
