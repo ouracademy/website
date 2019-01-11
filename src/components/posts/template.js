@@ -25,8 +25,8 @@ const Tags = ({ tags }) => (
 const Tag = ({ tag }) => <Link to={`/tags/${tag}`}>{tag}</Link>;
 
 const PostPageTemplate = ({ data: { mdx }, location }) => {
+  const { id, code, excerpt: description } = mdx;
   const { title, author, tags, image = null } = mdx.frontmatter;
-  const description = mdx.excerpt;
   const url = location.href;
 
   return (
@@ -40,8 +40,8 @@ const PostPageTemplate = ({ data: { mdx }, location }) => {
       <Author {...author} />
       <Tags tags={tags} />
       <SocialLinks title={title} description={description} url={url} />
-      <MDXRenderer>{mdx.code.body}</MDXRenderer>
-      <Comments id={mdx.id} title={title} url={url} />
+      <MDXRenderer>{code.body}</MDXRenderer>
+      <Comments id={id} title={title} url={url} />
     </Layout>
   );
 };
