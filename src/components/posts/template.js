@@ -41,7 +41,7 @@ const PostPageTemplate = ({ data: { mdx }, location }) => {
       <Tags tags={tags} />
       <SocialLinks title={title} description={description} url={url} />
       <MDXRenderer>{mdx.code.body}</MDXRenderer>
-      <Comments id={mdx.id} title={mdx.title} url={url} />
+      <Comments id={mdx.id} title={title} url={url} />
     </Layout>
   );
 };
