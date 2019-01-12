@@ -18,10 +18,29 @@ const PostTitle = styled.span`
 `;
 
 const Banner = () => (
-  <div>
-    <Heading>Un lugar donde aprender desarrollo de software</Heading>
-    <Heading level="3">Para ti, para mi, para todos</Heading>
-  </div>
+  <Box
+    pad="large"
+    align="center"
+    gap="medium"
+    direction="row-responsive"
+    fill="horizontal"
+    border="all"
+  >
+    <Box height="small" width="small" basis="1/4">
+      <Image
+        fit="contain"
+        src="/icon.png"
+        alt="Our academy logo"
+        style={{ borderRadius: "50%" }}
+      />
+    </Box>
+    <Box basis="auto">
+      <Heading size="medium">
+        Un lugar donde aprender desarrollo de software
+      </Heading>
+      <Heading level="3">Para ti, para mi, para todos</Heading>
+    </Box>
+  </Box>
 );
 
 const Postsss = styled.div`
@@ -30,26 +49,22 @@ const Postsss = styled.div`
   grid-gap: 5px;
 
   & div {
-    width: 100%;
+    height: 400px;
   }
 
-  & div:nth-child(5n + 1) {
+  & div:nth-child(4n + 1) {
     grid-column: span 6;
   }
 
-  & div:nth-child(5n + 2) {
+  & div:nth-child(4n + 2) {
     grid-column: span 4;
   }
-  & div:nth-child(5n + 3) {
+  & div:nth-child(4n + 3) {
     grid-column: span 5;
   }
 
-  & div:nth-child(5n + 4) {
+  & div:nth-child(4n) {
     grid-column: span 5;
-  }
-
-  & div:nth-child(5n) {
-    grid-column: span 10;
   }
 `;
 

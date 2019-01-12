@@ -25,6 +25,7 @@ const Nav = ({ title }) => (
     width="xlarge"
     alignSelf="center"
     justify="between"
+    fill="horizontal"
   >
     <Link to="/" style={{ textDecoration: "none" }}>
       <Heading level="3" size="large">
