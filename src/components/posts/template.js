@@ -5,24 +5,30 @@ import Layout from "../layout";
 import { At } from "../at";
 import { DiscussionEmbed } from "disqus-react";
 import SocialLinks from "./social-links";
+import { Tag as TagIcon } from "grommet-icons";
+import { Box, Button, Text } from "grommet";
 
 const Author = ({ name, twitter }) => (
-  <div>
+  <Box pad="small" direction="row" align="center" gap="small">
     <h4>{name}</h4>
     <At user={twitter} />
-  </div>
+  </Box>
 );
 
 const Tags = ({ tags }) => (
-  <h3>
-    <i className="tags" />{" "}
+  <Box pad="small" direction="row" align="center" gap="small">
+    <TagIcon />
     {tags.map(tag => (
       <Tag key={tag} tag={tag} />
     ))}
-  </h3>
+  </Box>
 );
 
-const Tag = ({ tag }) => <Link to={`/tags/${tag}`}>{tag}</Link>;
+const Tag = ({ tag }) => (
+  <Link to={`/tags/${tag}`}>
+    <Text>{tag}</Text>
+  </Link>
+);
 
 const PostPageTemplate = ({ data: { mdx }, location }) => {
   const { id, code, excerpt: description } = mdx;
@@ -37,10 +43,22 @@ const PostPageTemplate = ({ data: { mdx }, location }) => {
       type="article"
     >
       <h1>{title}</h1>
-      <Author {...author} />
-      <Tags tags={tags} />
-      <SocialLinks title={title} description={description} url={url} />
-      <MDXRenderer>{code.body}</MDXRenderer>
+      <Box
+        as="div"
+        direction="row"
+        align="center"
+        width="xlarge"
+        alignSelf="center"
+        justify="between"
+      >
+        <Author {...author} />
+        <Tags tags={tags} />
+      </Box>
+      <Box>
+        <SocialLinks title={title} description={description} url={url} />
+        <MDXRenderer>{code.body}</MDXRenderer>
+      </Box>
+
       <Comments id={id} title={title} url={url} />
     </Layout>
   );
