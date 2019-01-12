@@ -2,58 +2,76 @@ import React from "react";
 import { Link, StaticQuery, graphql } from "gatsby";
 import styled from "styled-components";
 import { Helmet } from "react-helmet";
+import { Heading, Box, Grommet, Button } from "grommet";
+import { theme } from "./our-theme";
 
-const ListLink = props => (
+const ListLink = ({ children, to }) => (
   <li style={{ display: `inline-block`, marginRight: `1rem` }}>
-    <Link to={props.to}>{props.children}</Link>
+    <Link to={to}>{children}</Link>
   </li>
 );
 
 const Container = styled.div`
   margin: 0 auto;
-  max-width: 650px;
+  max-width: 70vw;
   padding: 1rem;
 `;
 
+const Nav = ({ title }) => (
+  <Box
+    as="header"
+    direction="row"
+    align="center"
+    width="xlarge"
+    alignSelf="center"
+    justify="between"
+  >
+    <Link to="/" style={{ textDecoration: "none" }}>
+      <Heading level="3" size="large">
+        {title}
+      </Heading>
+    </Link>
+    <ul style={{ listStyle: `none` }}>
+      <ListLink to="/about">
+        <Button label="Nosotros" />
+      </ListLink>
+      <ListLink to="/tags" primary>
+        <Button label="Tags" primary />
+      </ListLink>
+    </ul>
+  </Box>
+);
+
 export default ({ children, title, description, image, type = "website" }) => (
-  <StaticQuery
-    query={graphql`
-      query {
-        site {
-          siteMetadata {
-            title
-            description
-            image
+  <Grommet theme={theme}>
+    <StaticQuery
+      query={graphql`
+        query {
+          site {
+            siteMetadata {
+              title
+              description
+              image
+            }
           }
         }
-      }
-    `}
-    render={({ site: { siteMetadata: meta } }) => (
-      <div>
-        <SEO
-          title={title ? `${title} - ${meta.title}` : meta.title}
-          description={description || meta.description}
-          type={type}
-          image={image || meta.image}
-        />
-        <Container>
-          <header style={{ marginBottom: `1.5rem` }}>
-            <Link
-              to="/"
-              style={{ textShadow: `none`, backgroundImage: `none` }}
-            >
-              <h3 style={{ display: `inline` }}>{meta.title}</h3>
-            </Link>
-            <ul style={{ listStyle: `none`, float: `right` }}>
-              <ListLink to="/about">Nosotros</ListLink>
-              <ListLink to="/tags">Tags</ListLink>
-            </ul>
-          </header>
-          {children}
-        </Container>
-      </div>
-    )}
-  />
+      `}
+      render={({ site: { siteMetadata: meta } }) => (
+        <div>
+          <SEO
+            title={title ? `${title} - ${meta.title}` : meta.title}
+            description={description || meta.description}
+            type={type}
+            image={image || meta.image}
+          />
+          <Container>
+            <Nav title={meta.title} />
+            {children}
+          </Container>
+        </div>
+      )}
+    />
+  </Grommet>
 );
 
 const SEO = ({ title, description, type, image }) => (

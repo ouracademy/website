@@ -2,11 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Layout from "../components/layout";
 import { graphql, Link } from "gatsby";
-
-const Title = styled.h1`
-  display: inline-block;
-  border-bottom: 1px solid;
-`;
+import { Heading, Box, Button, Image } from "grommet";
 
 const PostHeader = styled.h3`
   margin-bottom: 1rem;
@@ -21,20 +17,64 @@ const PostTitle = styled.span`
   font-size: 1.5rem;
 `;
 
+const Banner = () => (
+  <div>
+    <Heading>Un lugar donde aprender desarrollo de software</Heading>
+    <Heading level="3">Para ti, para mi, para todos</Heading>
+  </div>
+);
+
+const Postsss = styled.div`
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: 5px;
+
+  & div {
+    width: 100%;
+  }
+
+  & div:nth-child(5n + 1) {
+    grid-column: span 6;
+  }
+
+  & div:nth-child(5n + 2) {
+    grid-column: span 4;
+  }
+  & div:nth-child(5n + 3) {
+    grid-column: span 5;
+  }
+
+  & div:nth-child(5n + 4) {
+    grid-column: span 5;
+  }
+
+  & div:nth-child(5n) {
+    grid-column: span 10;
+  }
+`;
+
 export default ({ data }) => (
   <Layout>
     <div>
-      <Title>Amazing Pandas Eating Things</Title>
-      <h4>{data.allMdx.totalCount} Posts</h4>
-      {data.allMdx.edges.map(({ node }) => (
-        <PostItem key={node.id} {...node} />
-      ))}
+      <Banner />
+      <Heading level="4" size="large">
+        <Button label={data.allMdx.totalCount} /> Posts
+      </Heading>
+      {/* {data.allMdx.edges.map(({ node }) => (
+      <PostItem key={node.id} {...node} />
+      
+      ))} */}
+      <Postsss>
+        {data.allMdx.edges.map(({ node }) => (
+          <PostItem key={node.id} {...node} />
+        ))}
+      </Postsss>
     </div>
   </Layout>
 );
 
 const PostItem = ({ fields, frontmatter, excerpt }) => (
-  <div>
+  <Box elevation="medium" pad="medium">
     <PostHeader>
       <StyledLink to={`posts${fields.slug}`}>
         <PostTitle>{frontmatter.title}</PostTitle>
@@ -47,8 +87,12 @@ const PostItem = ({ fields, frontmatter, excerpt }) => (
         — {frontmatter.date}
       </span>
     </PostHeader>
-    <p>{excerpt}</p>
-  </div>
+    {frontmatter.image ? (
+      <Image src={frontmatter.image} fit="cover" />
+    ) : (
+      <p>{excerpt}</p>
+    )}
+  </Box>
 );
 
 export const query = graphql`
@@ -67,6 +111,7 @@ export const query = graphql`
           frontmatter {
             title
             date(formatString: "DD MMMM, YYYY")
+            image
           }
           excerpt
         }
