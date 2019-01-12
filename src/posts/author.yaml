@@ -1,6 +1,13 @@
+# See https://learnxinyminutes.com/docs/yaml/
+# for learn sintax
+
 - id: arthur
   twitter: artmadeit
   name: Arthur Mauricio
+  avatar: https://miro.medium.com/fit/c/240/240/1*nNStMm8JvNW7ffS-Rd8Y6A.jpeg
+  description: Always learning & Like to coding.
 - id: diana
   twitter: diam_qu
   name: Diana Quintanilla
+  avatar: https://pbs.twimg.com/profile_images/1078457576600285185/KE-T1b1O_400x400.jpg
+  description: I am an enthusiastic person.

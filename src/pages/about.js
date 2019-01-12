@@ -3,62 +3,121 @@ import React from "react";
 import styled from "styled-components";
 import Layout from "../components/layout";
 import { graphql } from "gatsby";
-
-const UserWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 0 auto 12px auto;
-  &:last-child {
-    margin-bottom: 0;
-  }
-`;
+import { Heading, Anchor, Box, Paragraph } from "grommet";
+import { Twitter, Github } from "grommet-icons";
 
 const Avatar = styled.img`
   flex: 0 0 96px;
   width: 96px;
   height: 96px;
   margin: 0;
+  border-radius: 100%;
 `;
 
-const Description = styled.div`
-  flex: 1;
-  margin-left: 18px;
-  padding: 12px;
-`;
-
-const Username = styled.h2`
-  margin: 0 0 12px 0;
-  padding: 0;
-`;
-
-const Excerpt = styled.p`
-  margin: 0;
-`;
-
-const User = props => (
-  <UserWrapper>
-    <Avatar src={props.avatar} alt="" />
-    <Description>
-      <Username>{props.username}</Username>
-      <Excerpt>{props.excerpt}</Excerpt>
-    </Description>
-  </UserWrapper>
+const Card = ({ name, avatar, twitter, description }) => (
+  <Box
+    background={{ color: "light-2", opacity: "strong" }}
+    pad="large"
+    margin="xsmall"
+    direction="row-responsive"
+    round
+    gap="small"
+  >
+    <Avatar src={avatar} alt="foto" />
+    <Box>
+      <Heading level="3" margin="xsmall">
+        {name}
+      </Heading>
+      {twitter && <TwitterAnchor username={twitter} />}
+      <Paragraph size="medium">{description}</Paragraph>
+    </Box>
+  </Box>
 );
 
-export default ({ data }) => (
+const TwitterAnchor = ({ username }) => (
+  <Anchor
+    reverse
+    color="accent-6"
+    icon={<Twitter />}
+    label={`@${username}`}
+    href={`https://twitter.com/${username}`}
+  />
+);
+
+const GithubAnchor = ({ username, project }) => (
+  <Anchor
+    reverse
+    color="accent-6"
+    icon={<Github />}
+    href={`https://github.com/${username}/${project}`}
+  />
+);
+
+const projects = [
+  {
+    id: 1,
+    name: "Essboard",
+    description:
+      "Herramienta colaborativo para la direccion y monitoreo de desarrollo de software usando Essence",
+    url: "https://cranky-murdock-5f141a.netlify.com/",
+    avatar:
+      "https://cranky-murdock-5f141a.netlify.com/assets/images/logo/logo-horizontal.png"
+  },
+  {
+    id: 2,
+    name: "SOPIOS",
+    description: "Sociedad Peruana de Investigación Operativa y de Sistemas",
+    url: "http://sopios.org.pe/",
+    avatar: ""
+  }
+];
+
+const Projects = () => (
+  <Box>
+    <Heading level="3" size="large">
+      Proyectos
+    </Heading>
+    {projects.map(project => (
+      <Project key={project.id} {...project} />
+    ))}
+  </Box>
+);
+
+const Project = ({ name, description, avatar, url }) => (
+  <Card name={name} avatar={avatar} description={description} />
+);
+
+export default ({
+  data: {
+    allAuthorYaml: { edges }
+  }
+}) => (
   <Layout title="Nosotros">
-    <h1>Nosotros {data.site.siteMetadata.title}</h1>
-    <p>Styled Components is cool</p>
-    <User
-      username="Jane Doe"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/adellecharles/128.jpg"
-      excerpt="I'm Jane Doe. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-    />
-    <User
-      username="Bob Smith"
-      avatar="https://s3.amazonaws.com/uifaces/faces/twitter/vladarbatov/128.jpg"
-      excerpt="I'm Bob smith, a vertically aligned type of guy. Lorem ipsum dolor sit amet, consectetur adipisicing elit."
-    />
+    <Heading level="3" size="large">
+      Nosotros
+    </Heading>
+    <p>
+      Un grupo de amigos que se divierte aprendiendo y enseñando practicas,
+      principios, tecnologías y teorías de desarrollo software.
+    </p>
+    <Box
+      direction="row-responsive"
+      wrap="true"
+      justify="center"
+      pad="large"
+      gap="medium"
+    >
+      {edges.map(({ node: member }) => (
+        <Card
+          key={member.id}
+          name={member.name}
+          avatar={member.avatar}
+          description={member.description}
+          twitter={member.twitter}
+        />
+      ))}
+    </Box>
+    <Projects />
   </Layout>
 );
 
@@ -67,6 +126,17 @@ export const query = graphql`
     site {
       siteMetadata {
         title
+      }
+    }
+    allAuthorYaml {
+      edges {
+        node {
+          id
+          name
+          avatar
+          description
+          twitter
+        }
       }
     }
   }
