@@ -1,12 +1,13 @@
 import React from "react";
 import { Link, graphql } from "gatsby";
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
+import { DiscussionEmbed } from "disqus-react";
+import { Box, Text } from "grommet";
+import { Tag as TagIcon } from "grommet-icons";
+
 import Layout from "../layout";
 import { At } from "../at";
-import { DiscussionEmbed } from "disqus-react";
 import SocialLinks from "./social-links";
-import { Tag as TagIcon } from "grommet-icons";
-import { Box, Button, Text } from "grommet";
 
 const Author = ({ name, twitter }) => (
   <Box pad="small" direction="row" align="center" gap="small">
