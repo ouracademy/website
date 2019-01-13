@@ -1,0 +1,344 @@
+---
+title: "El pequeño mocker"
+image: "http://www.informit.com/content/images/ch23_9780131495050/elementLinks/23fig02.jpg"
+description: "Una historia de patrones de testing: mock, stub, dummy, fake, spy...Una traducción del articulo The Little Mocker"
+date: "2018-02-23"
+author: arthur
+tags: ["diseño", "patron", "testing"]
+---
+
+> Una traducción del articulo de Robert C. Martin - aka Uncle Bob: [The Little Mocker](https://8thlight.com/blog/uncle-bob/2014/05/14/TheLittleMocker.html) .
+
+La siguiente es una conversación sobre mocking (crear mocks - simulados):
+
+¿Que es esto?
+
+```java
+interface Authorizer {
+  public Boolean authorize(String username, String password);
+}
+```
+
+> Una interfaz, una inferface
+
+¿Y esto?
+
+```java
+public class DummyAuthorizer implements Authorizer {
+  public Boolean authorize(String username, String password) {
+    return null;
+  }
+}
+```
+
+> Eso es un Dummy - un objeto que no hace nada, un envase
+
+¿Y que haces con un Dummy?
+
+> Lo pasas a algo, cuando no te interesa saber como es usado
+
+¿Como?
+
+> En una prueba, cuando debes pasarlo como argumento, pero sabes que el argumento no será usado
+
+¿Podrías mostrarme un ejemplo?
+
+> Claro
+
+```java
+ public class System {
+    public System(Authorizer authorizer) {
+        this.authorizer = authorizer;
+    }
+
+    public int loginCount() {
+        // retorna el número de usuarios logueados
+        // o autentificados basado en el Authorizer
+    }
+
+}
+
+  @Test
+  public void newlyCreatedSystem_hasNoLoggedInUsers() {
+    System system = new System(new DummyAuthorizer());
+    assertThat(system.loginCount(), is(0));
+  }
+```
+
+Ya entendí. Para construir un `System`, un `Authorizer` debe ser pasado al constructor; además el método `authorize` de `Authorizer` nunca es llamado ya que, en esta prueba, nadie se logea (autentifica)
+
+> Eso es
+
+Y entonces el hecho que el método `authorize` de `DummyAuthorizer` retorne `null` no es un error.
+
+> Claro. De hecho, es lo mejor que un Dummy puede retornar
+
+¿Porqué?
+
+> Porque si alguien trata de usar el Dummy, tendrá un NullPointerException
+
+Ah, y no quieres que el Dummy sea usado.
+
+> Claro! Es un dummy
+
+Pero eso no es un mock?. Pensaba que estos objetos (que se usan en las pruebas) eran llamados mocks - objetos simulados
+
+> Si asi es; pero es una jerga
+
+¿Jerga?
+
+> Si, la palabra "mock" es algunas veces usada de manera informal para referirse a una familia de objetos que se usan en las pruebas
+
+¿Existe un nombre formal para estos objetos de prueba?
+
+> Si, son llamados "Test Doubles"[1] - Dobles de prueba
+
+¿Quieres decir como los "dobles de acción" en las películas?
+
+> Exacto
+
+¿Asi que la palabra "mock" es solo una jerga coloquial?
+
+> No, también tiene un significado formal; pero cuando hablamos informalmente la pabra mock es sinónimo de Test Double
+
+¿Por qué existen 2 palabras? ¿Por qué no solo usamos Test Double en vez de Mock?
+
+> Historia
+
+¿Historia?
+
+> Si, hace un tiempo atrás, unas personas muy inteligentes escribieron un [paper](http://www.ccs.neu.edu/research/demeter/related-work/extreme-programming/MockObjectsFinal.PDF) que introdujo y definio el termino Mock Object. Muchas personas leyeron y empezaron a utilizar este término. Otras personas, que no leyeron el paper, escucharon el término y lo empezaron a usar bajo un significado más amplio. Incluso ellos cambiaron la palabra a verbo. Ellos por ejemplo decían, "Mockeemos este objeto,", o "Tenemos que hacer mucho que mockear"
+
+Ese tipo de cosas pasan mucho con las palabras, no?
+
+> Si. Especialmente cuando una palabra tiene solo una sílaba, y que son fáciles de pronunciar
+
+Si, supongo que es más fácil decir: "Mockeemos eso. " en vez de: "Hagamos un test double para eso. "
+
+> Claro. Los coloquialismos son parte de la vida
+
+OK, pero cuando queremos hablar precisamente...
+
+> Deberías usar el lenguaje formal.
+
+Entonces ¿que es un mock?
+
+> Antes que lleguemos a eso, deberíamos ver otros tipos de Test Doubles.
+
+¿Como cuales?
+
+> Veamos los Stubs
+
+¿Qué es un Stub?
+
+> Esto es un stub:
+
+```java
+public class AcceptingAuthorizerStub implements Authorizer {
+  public Boolean authorize(String username, String password) {
+    return true;
+  }
+}
+```
+
+Retorna `true`.
+
+> Eso es cierto
+
+¿Por que?
+
+> Bueno, supongamos que quieres probar una parte de tu sistema que requiere que estes autentificado
+
+Entonces me logueo
+
+> Pero si sabes qe el logueo funciona, ya lo has testeado. ¿Por que tendría que probarlo otra vez?
+
+Por que es fácil?
+
+> Pero toma tiempo. Y requiere configurar. Y si hay un error en el login, tu prueba se rompera. Y, despúes de todo, es un acoplamiento innecesario.
+
+Hmmmm. Bueno, por el bien de la discusión, digamos que estoy de acuerdo. ¿Entonces que?
+
+> Simplemente inyectas AcceptingAuthorizerStub en tu System para esa prueba
+
+Y autorizaras al usuario sin preguntarle nada.
+
+> Aja
+
+Y si deseo probar una parte del sistema que trabaje con usuarios no autorizados, puedo usar un stub que retorne `false`
+
+> Correcto de nuevo
+
+OK, ¿que más hay?
+
+> Hay esto:
+
+```java
+public class AcceptingAuthorizerSpy implements Authorizer {
+  public boolean authorizeWasCalled = false;
+
+  public Boolean authorize(String username, String password) {
+    authorizeWasCalled = true;
+    return true;
+  }
+}
+```
+
+Supongo que se llaman Spy - Espías
+
+> Eso es cierto
+
+Entonces, ¿por que lo usaría?
+
+> Lo usas cuando quieres estar seguro que el método `authorize` ha sido llamado por tu sistema
+
+Ah, ya veo. En mis pruebas puedo inyectarlo como un stub, pero al final de mis pruebas puedo ver la variable `authorizerWasCalled` para estar seguro que mi sistema haya llamado a `authorize`
+
+> Absolutamente
+
+Así que un Spy, espía al que llama. Supongo que puede registar todo tipo de cosas.
+
+> Si incluso, por ejemplo, podría contar el número de invocaciones al método
+
+Si, o podría mantener una lista de los argumentos que se les paso cada vez que fue llamado.
+
+> Si. Podrías usar los Spies para ver por dentro lo que hacen los algoritmos que estas probando
+
+Eso suena a acoplamiento.
+
+> Si lo es! Tienes que ser cuidadoso. A más espías, más acoplas tus pruebas a la implementación de tu sistema. Eso lleva a pruebas frágiles
+
+¿Qué es una prueba frágil?
+
+> Una prueba que no funciona - se rompe - por razones que no debería
+
+Bueno si cambias el código de tu sistema, algunas pruebas se romperan
+
+> Si, pero unas pruebas bien diseñadas minimizan esas roturas. Los Spies puede ir en contra de eso
+
+Ok, lo entendi. ¿Qué otros tipos de Test Doubles hay?
+
+> Dos más. Aquí el primero:
+
+```java
+public class AcceptingAuthorizerVerificationMock implements Authorizer {
+  public boolean authorizeWasCalled = false;
+
+  public Boolean authorize(String username, String password) {
+    authorizeWasCalled = true;
+    return true;
+  }
+
+  public boolean verify() {
+    return authorizedWasCalled;
+  }
+}
+```
+
+Y, por su puesto, ese es un mock
+
+> Si, un **verdadero Mock**
+
+¿Un verdadero?
+
+> Si, este es el mock formal de acuerdo al significado original de la palabra
+
+Ya veo. Y parece que has movido la asercion de la prueba hacia el método `verify` del, uh, _verdero_ mock.
+
+> Correcto. Los Mocks conocen que están probando
+
+¿Eso es todo? ¿Solo moviste la aserción hacia dentro del mock?
+
+> No exactamente. Si, la aserción está dentro del mock. Sin embargo, lo que el mock esta probando es **comportamiento**
+
+¿Comportamiento?
+
+> Si. El mock no está tan interesado en retornar valores. Esta más interesado en que función fue llamada, con que argumentos, cuando y que tanto.
+
+Entonces ¿los mock son siempre espías?
+
+> Si. Un mock espía comportamiento del modulo que se prueba. Y el mock conoce que comportamiento espera
+
+Hmmmm. Mover lo que se espera dentro del mock suena a acoplamiento.
+
+> Si lo es
+
+Entonces, ¿por que hacerlo?
+
+> Porque hace más fácil escribir una herramienta para mocks - mocking tool
+
+¿Un mocking tool?
+
+> Si, como JMock o EasyMock o Mockito. Estás herramientas permiten construir objetos mock mientras avanzas.
+
+Eso suena complicado
+
+> No lo es. [aquí](http://martinfowler.com/articles/mocksArentStubs.html) esta un famoso paper de Martin Fowler que lo explica bien.
+
+Y también existe un libro, no?
+
+> Si. [Creciendo un software orientado a objetos, guiado por pruebas](http://www.amazon.com/Growing-Object-Oriented-Software-Guided-Tests/dp/0321503627) es un gran libro sobre una popular filosofía de diseño dirigida por mocks.
+
+OK, ¿entonces eso es todo? Me dijiste que aún habia otro tipo de test double
+
+> Si, uno más. Fakes - Falsificadores o imitadores
+
+```java
+public class AcceptingAuthorizerFake implements Authorizer {
+    public Boolean authorize(String username, String password) {
+      return username.equals("Bob");
+    }
+}
+```
+
+OK, eso es extraño. Cualquiera que se llame "Bob" será autorizado.
+
+> Claro. Un Fake tiene comportamiento de negocio. Puedes hacer que un fake se comporte de de diferentes maneras dandole diferente data
+
+Es una especie de simulador.
+
+> Si los simuladores son fakes
+
+Los fakes no son stubs, ¿no?
+
+> No, los fakes tiene comportamiento de negocio real; los stubs no. De hecho, ninguno de los otros test doubles que hemos hablado tienen comportamiento de negocio real
+
+Asi que los fakes son diferentes a un nivel fundamental.
+
+> En efecto lo son. Podemos decir que un Mock es un tipo de spy, un spy es un tipo de stub,y un stub es un tipo de dummy. Pero un fake no es un tipo de ninguno de ellos. Es completamente un tipo diferente de test double
+
+Imagino que los Fakes se pueden volver complicados.
+
+> Se pueden volver **extremadamente** complicados. Tan complicados que necesitan pruebas unitarias para ellos mismos. A un nivel extremo los fake son un sistema en si mismo
+
+Hmmmm.
+
+> Si, Hmmm. Yo a menudo no escribo fakes. De hecho, No he escrito ninguno por más de trenta años
+
+Wow! ¿Entonces que escribes? ¿Usas todos los demás test doubles?
+
+> Mayormente uso stubs y spies. Y los escribo por mi mismo, no uso herramientas de mockeo
+
+¿Usas Dummies?
+
+> Si, pero raramente
+
+¿Y los mocks?
+
+> Solo cuando uso herramientas de mockeo
+
+Pero dijiste que no usabas herramientas de mockeo
+
+> Si, usualmente no lo hago
+
+¿Por que no?
+
+> Porque los stubs y los spy son fáciles de escribir. Mi IDE lo hace trivial. Solo tengo que apuntar a la interface y decirle a mi IDE que lo implemente. Voila! Y me da un dummy. Luego solo hago una modificación simple y ahora es un stub o spy. Por eso raramente necesito de una herramienta de mockeo
+
+¿Así que usarlos solo es por cuestión de conveniencia?
+
+> Si, además que no me gustan las sintaxis extrañas de las herramientas de mockeo, y las complicaciones que agregan a mi configuración. Encuentro que escribir mis propios test dobules es más simple en la mayoría de los casos
+
+Ok, bueno, gracias por la conversación
+
+> No hay de que
