@@ -9,6 +9,8 @@ import Layout from "../layout";
 import { At } from "../at";
 import SocialLinks from "./social-links";
 
+import DesignSystem from "../design-system";
+
 const Author = ({ name, twitter }) => (
   <Box pad="small" direction="row" align="center" gap="small">
     <h4>{name}</h4>
@@ -57,7 +59,13 @@ const PostPageTemplate = ({ data: { mdx }, location }) => {
       </Box>
       <Box>
         <SocialLinks title={title} description={description} url={url} />
-        <MDXRenderer>{code.body}</MDXRenderer>
+        <MDXRenderer
+          components={{
+            pre: DesignSystem.Code
+          }}
+        >
+          {code.body}
+        </MDXRenderer>
       </Box>
 
       <Comments id={id} title={title} url={url} />
