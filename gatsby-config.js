@@ -4,17 +4,25 @@ module.exports = {
   siteMetadata: {
     title: `Ouracademy`,
     image: `${siteUrl}/static/icon.png`,
-    description:
-      "Una academia para aprender de ingeniería de software, desde métodos y prácticas hasta las últimas tecnologías en el desarrollo de software"
+    description: "Una academia para aprender de ingeniería de software, desde métodos y prácticas hasta las últimas tecnologías en el desarrollo de software"
   },
   plugins: [
     `gatsby-transformer-yaml`,
+    `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-mdx`,
       options: {
-        extensions: [".mdx", ".md"]
+        extensions: [".mdx", ".md"],
+        gatsbyRemarkPlugins: [{
+          resolve: "gatsby-remark-images",
+          options: {
+            maxWidth: 1035,
+            sizeByPixelDensity: true
+          }
+        }]
       }
     },
+
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
