@@ -1,0 +1,81 @@
+---
+title: Explicando la funcion map
+date: 2019-01-15
+author: diana
+tags: ["programacion funcional"]
+image: /images/map.png
+---
+
+import Code from "$components/code";
+
+**Primero una imagen**
+
+<figure>
+  <img src="/images/map.png" />
+  <figcaption>¿Qué sucede en la imagen?</figcaption>
+</figure>
+
+Se observa un cambio, un conjunto de elementos se transforma en otro, la palabra clave a aca, es **transformacióm**
+
+**Ahora un escenario**
+
+Se tiene una lista de precios, y te piden que apliques un descuento de 10% a cada precio.
+Entonces tu dices, con js seria asi:
+
+<Code language="javascript">{`
+    let prices = [10, 15.4, 23.6];
+    let pricesWithDesc = [];    
+    for (let i = 0, max = prices.length; i < max; i ++) {
+      pricesWithDesc.push(prices[i] * 0.9);
+    }    
+`}</Code>
+
+Hemos aplicado un cambio a cada elemento del arreglo 'prices' y puesto el resultado en el arreglo 'pricesWithDesc', esta accion se puede realizar de una manera distinta usando una funcion "map", el cual tiene como objetivo transformar una lista, aplicar una función a cada uno de sus elementos y retornar un nuevo arreglo. Veamos como quedaria:
+
+<Code language="javascript">{`
+    let prices = [10, 15.4, 23.6];
+    let pricesWithDesc = prices.map( price => price * 0.9)      
+`}</Code>
+
+Mas corto eh, ahora explicaremos su definicion a detalle.
+
+**Funcion map**
+
+En la seccion anterior colocamos esta definición:
+La funcion map, tiene como objetivo **transformar una lista**, aplicar una **función a cada uno de sus elementos** y **retornar un nuevo areglo**.
+
+En js:
+
+<Code language="javascript">{`
+    let prices = [10, 15.4, 23.6];
+    let pricesWithDesc = prices.map( price => { return price * 0.9 })      
+`}</Code>
+
+La funcion se define ahora con function
+
+<Code language="javascript">{`
+    let prices = [10, 15.4, 23.6];
+    let pricesWithDesc = prices.map( function(price) { return price * 0.9 })    
+`}</Code>
+Y ahora declaramos una funcion en una variable, para luego usarlo:
+<Code language="javascript">{`
+    let prices = [10, 15.4, 23.6];
+    let desc = function(price) { return price * 0.9 }
+    //  let desc = (price) => price * 0.9 
+    let pricesWithDesc = prices.map(desc)    
+`}</Code>
+
+Ahora en python:
+
+<Code language="python">{`
+    prices = [10, 15.4, 23.6];
+    pricesWithDesc =  list(map(lambda price: price * 0.9, prices))
+`}</Code>
+
+Y ahora con una "sintactic sugar":
+Y que es sintactic sugar, Wikipedia nos dice esto: En ciencias de la computación, el azúcar sintáctico es una sintaxis dentro de un lenguaje de programación que está diseñado para facilitar la lectura o la expresión. Hace que el lenguaje sea "más dulce" para el uso humano: las cosas se pueden expresar de forma más clara, más concisa o en un estilo alternativo que algunos prefieren.
+
+<Code language="python">{`
+    prices = [10, 15.4, 23.6];
+    pricesWithDesc = [price * 0.9 for price in prices]
+`}</Code>
