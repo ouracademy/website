@@ -43,28 +43,35 @@ const Banner = () => (
   </Box>
 );
 
-const Postsss = styled.div`
+const Posts = styled.div`
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
   grid-gap: 5px;
 
   & div {
-    height: 400px;
+    height: 330px;
   }
 
-  & div:nth-child(4n + 1) {
-    grid-column: span 6;
-  }
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(10, 1fr);
 
-  & div:nth-child(4n + 2) {
-    grid-column: span 4;
-  }
-  & div:nth-child(4n + 3) {
-    grid-column: span 5;
-  }
+    & div {
+      height: 400px;
+    }
 
-  & div:nth-child(4n) {
-    grid-column: span 5;
+    & div:nth-child(4n + 1) {
+      grid-column: span 6;
+    }
+
+    & div:nth-child(4n + 2) {
+      grid-column: span 4;
+    }
+    & div:nth-child(4n + 3) {
+      grid-column: span 5;
+    }
+
+    & div:nth-child(4n) {
+      grid-column: span 5;
+    }
   }
 `;
 
@@ -79,11 +86,11 @@ export default ({ data }) => (
       <PostItem key={node.id} {...node} />
       
       ))} */}
-      <Postsss>
+      <Posts>
         {data.allMdx.edges.map(({ node }) => (
           <PostItem key={node.id} {...node} />
         ))}
-      </Postsss>
+      </Posts>
     </div>
   </Layout>
 );
