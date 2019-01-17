@@ -1,20 +1,17 @@
 import React from "react";
 
-import styled from "styled-components";
 import Layout from "../components/layout";
 import { graphql } from "gatsby";
-import { Heading, Anchor, Box, Paragraph } from "grommet";
+import { Heading, Anchor, Box, Paragraph, Image } from "grommet";
 import { Twitter, Github } from "grommet-icons";
 
-const Avatar = styled.img`
-  flex: 0 0 96px;
-  width: 96px;
-  height: 96px;
-  margin: 0;
-  border-radius: 100%;
-`;
+const Avatar = ({ size, ...rest }) => (
+  <Box height={size} width={size} round="full" background="light-2">
+    <Image {...rest} fit="cover" style={{ borderRadius: "50%" }} />
+  </Box>
+);
 
-const Card = ({ name, avatar, twitter, description }) => (
+export const Card = ({ name, avatar, twitter, description }) => (
   <Box
     background={{ color: "light-2", opacity: "strong" }}
     pad="large"
@@ -23,7 +20,7 @@ const Card = ({ name, avatar, twitter, description }) => (
     round
     gap="small"
   >
-    <Avatar src={avatar} alt="foto" />
+    <Avatar src={avatar} alt="foto" size="xsmall" />
     <Box>
       <Heading level="3" margin="xsmall">
         {name}

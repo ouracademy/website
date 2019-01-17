@@ -2,24 +2,17 @@ import React from "react";
 import { Link, graphql } from "gatsby";
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
 import { DiscussionEmbed } from "disqus-react";
-import { Box, Text } from "grommet";
+import { Box, Button, Heading, Text } from "grommet";
 import { Tag as TagIcon } from "grommet-icons";
 
 import Layout from "../layout";
-import { At } from "../at";
 import SocialLinks from "./social-links";
+import { Card } from "../../pages/about";
 
 import DesignSystem from "../design-system";
 
-const Author = ({ name, twitter }) => (
-  <Box pad="small" direction="row" align="center" gap="small">
-    <h4>{name}</h4>
-    <At user={twitter} />
-  </Box>
-);
-
 const Tags = ({ tags }) => (
-  <Box pad="small" direction="row" align="center" gap="small">
+  <Box pad="small" direction="row" align="center" gap="small" wrap>
     <TagIcon />
     {tags.map(tag => (
       <Tag key={tag} tag={tag} />
@@ -29,8 +22,16 @@ const Tags = ({ tags }) => (
 
 const Tag = ({ tag }) => (
   <Link to={`/tags/${tag}`}>
-    <Text>{tag}</Text>
+    <Button hoverIndicator="light-1" onClick={() => {}}>
+      <Box pad="small" direction="row" align="center" gap="small">
+        <Text>{tag}</Text>
+      </Box>
+    </Button>
   </Link>
+);
+
+const Author = ({ name, avatar, description }) => (
+  <Card name={name} avatar={avatar} description={description} />
 );
 
 const PostPageTemplate = ({ data: { mdx }, location }) => {
@@ -45,19 +46,8 @@ const PostPageTemplate = ({ data: { mdx }, location }) => {
       image={image}
       type="article"
     >
-      <h1>{title}</h1>
-      <Box
-        as="div"
-        direction="row"
-        align="center"
-        width="xlarge"
-        alignSelf="center"
-        justify="between"
-      >
-        <Author {...author} />
-        <Tags tags={tags} />
-      </Box>
-      <Box>
+      <Box as="article">
+        <Heading>{title}</Heading>
         <SocialLinks title={title} description={description} url={url} />
         <MDXRenderer
           components={{
@@ -66,8 +56,9 @@ const PostPageTemplate = ({ data: { mdx }, location }) => {
         >
           {code.body}
         </MDXRenderer>
+        <Tags tags={tags} />
+        <Author {...author} />
       </Box>
-
       <Comments id={id} title={title} url={url} />
     </Layout>
   );
@@ -95,8 +86,9 @@ export const query = graphql`
       frontmatter {
         title
         author {
-          twitter
+          avatar
           name
+          description
         }
         tags
         image
