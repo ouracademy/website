@@ -1,0 +1,79 @@
+---
+title: Que es un closure?
+date: 2019-01-16
+author: arthur
+tags: ["programacion funcional"]
+---
+
+Los closures son usados en el día a día de un programador, aunque inicialmente no estaban en muchos lenguajes de programación, hoy en día están prácticamente en todos. Java (desde su versión 8), Javascript, C#, Ruby, Python, ... Smalltalk, Lisp (el 1ro en usarlo 🏆).
+
+Asi que, que son los closures?. Son:
+
+> Funciones que pueden acceder a variables no locales (externas a la función), pero que son útiles a la función - [Ralph Johnson](http://wiki.c2.com/?WhatIsClosure), precursor de patrones de software (probablemente lo conoces del famoso libro Patrones de diseño)
+
+Mmmmm... muy formal? Que tal un ejemplo?
+
+Digamos que tenemos una función que me saluda a mi mismo 😜, algo asi como:
+
+```javascript
+function sayHiToMe(me) {
+  console.log("Hello, " + me + "!");
+}
+
+var me = "Bruce wayne";
+sayHiToMe(me);
+```
+
+Escribiendo esta funcion `sayHiToMe` como un closure, seria algo asi
+
+```javascript
+var me = "Bruce wayne"; // una variable externa (no local a sayHiToMe)
+function sayHiToMe() {
+  console.log("Hello, " + me + "!");
+}
+sayHiToMe(); // sin argumentos
+```
+
+Nota que ahora llamamos a la función sin ningún argumento, la función accede a la variable `me` que no esta declarada dentro de la función (no es local) y lo usa para hacer su proposito un `console.log()`. Entonces como queda la definición?
+
+> Funciones (como `sayHiToMe`) que pueden acceder a variables no locales (externas a la función, como la variable `me`), pero que son útiles a la función (la usa para hacer un `console.log`)
+
+Simplemente es eso. Pero ahora te dirás oye para que sirve eso?, bueno como te dije, hoy la mayoría de programadores lo usamos en el día a día.
+
+Que tal un ejemplo en Ruby?
+
+```ruby
+def highPaid(employees) # obtener empleados con salario > 150
+  threshold = 150
+  return employees.select {|e| e.salary > threshold}
+end
+```
+
+o que tal este (en Javascript)?
+
+```javascript
+// en vez de obtener las personas legales (>17 años) con esto:
+console.log(people.filter(person => person.age > 17));
+// podemos hacer
+const greaterThan = age => person => person.age > age;
+console.log(people.filter(greaterThan(17)));
+
+// o incluso ... creando funciones reusables
+const isLegalPerson = greaterThan(17);
+const isOldPerson = greaterThan(65);
+
+console.log(people.filter(isLegalPerson));
+console.log(people.filter(isOldPerson));
+```
+
+Este último ejemplo usa la potencia de los closures junto a la técnica currying. Ves que la función `greaterThan` retorna otra función? Si la llamas asi `greaterThan(17)` te retornará una función asi `person => person.age > 17`. Currying y closures son muy grandes amigos, incluso permiten el reuso al máximo (asi como vimos), pero eso será para otro post.
+
+Espero que te haya gustado el post 🙂
+
+## Donde aprender más?
+
+La mayoría de conceptos y ejemplos los saque de mis sitios favoritos:
+
+- [Closures en Javascript](https://www.youtube.com/watch?v=CQqwU2Ixu-U) de Fun fun functioooooon!
+- [Lambdas](https://martinfowler.com/bliki/Lambda.html) del bliki de Martin Fowler.
+- [What is closures?](http://wiki.c2.com/?WhatIsClosure) del famoso wiki C2
