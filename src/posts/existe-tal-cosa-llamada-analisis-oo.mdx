@@ -15,9 +15,14 @@ Las personas imaginan que es fácil construir un sistema de computación. Buscas
 En teoría, el análisis describe el dominio del problema, sin decir nada acerca de la solución. Esta descripción no debería construir nada en el dominio del problema y debería ser independiente de toda tecnología. Los desarrolladores luego simplemente diseñarían la solución a esta descripción. Lástima que las cosas no funcionan así.
 
 <figure>
-<img alt="Modelo Independiente de Plataformas" src="https://goo.gl/M8HxZi"/>
-<figcaption>En teoría el mismo modelo de análisis no depende de nada, en base a ella se puede construir muchas soluciones- igual que en MDA, un solo modelo y construyes soluciones específicas para Java/C#, Mobile/Web, OO/FP</figcaption>
+  <img alt="Modelo Independiente de Plataformas" src="https://goo.gl/M8HxZi" />
+  <figcaption>
+    En teoría el mismo modelo de análisis no depende de nada, en base a ella se
+    puede construir muchas soluciones- igual que en MDA, un solo modelo y
+    construyes soluciones específicas para Java/C#, Mobile/Web, OO/FP
+  </figcaption>
 </figure>
+
 Bajo esta teoría, el término análisis orientado a objetos es un oxímoron (suena absurda). Los objetos son una idea de diseño —cosas como la encapsulación, polimorfismo, y similares tienen sentido cuando se desarrolla software, en especial un software mantenible; si me miras a mi como una masa de datos encapsulados con una interfaz de métodos, entonces necesitas algo más que un óptico. Habiendo dicho esto, si ves a las personas que práctican Orientación a Objetos (OO) hacer análisis, los modelos que hacen son claramente diferentes, por su naturaleza, a los que hacen los modeladores de datos relacionales. Puedes ver esto al comparar los libros de patrones de David Hay y los míos (Fowler, M., Analysis Patterns: Reusable Object Models, Addison Wesley, 1997; Hay, D., Data Model Patterns: Conventions of Thought, Dorset House, 1996); ambos hemos hecho modelado de análisis, pero nuestra forma de modelar es muy distinta y claramente esta influenciada por la tecnología.
 
 ¿Es el análisis solo registrar al mundo como es, o trata de diseñar algo nuevo? Pocos modeladores haran un modelo de lo que realmente sucede en el negocio. Frecuentemente existen contradicciones e inconsistencias entre los usuarios y departamentos (cada persona tiene su punto de vista), además que las palabras son usadas de distintas formas. Intentamos abstraernos, y por lo tanto simplificamos nuestros modelos de análisis, aunque tales abstracciones se construyen—no podemos realmente decir que ellas existen en el mundo real.
@@ -34,9 +39,14 @@ Para responder esta nueva pregunta de utilidad, debemos entender para que estamo
 Mi opinion es que es perfectamente razonable que un modelo de análisis se incline hacia la tecnología de implementación que intentas usar, como resultado, el modelo es más útil en entender el problema en el que estas trabajando. Para mi, la diferencia esencial entre el análisis y el diseño es que el análisis trata primariamente en entender el dominio, mientras que el diseño trata de _entender como el software apoya a ese dominio_. Claramente ambos están estrechamente conectados, y los límites entre ellos pueden convertirse, a menudo, borrosos. Pero los límites no necesitan ser nítidos. No deberíamos dejar que la pureza este antes que la utilidad. En teoría, tener un modelo que es tanto de análisis y diseño, es un híbrido que no es bueno para ninguno, sin embargo yo creo que estos tipos de híbridos son los que hacen los mejores modelos.
 
 <figure>
-<img alt="analisis y diseño" src="https://goo.gl/yZe3ts"/>
-<figcaption>La forma en como usualmente vemos al análisis y el diseño con objetivos distintos, separados por una linea, que en realidad es borrosa, como muchas otras cosas</figcaption>
+  <img alt="analisis y diseño" src="https://goo.gl/yZe3ts" />
+  <figcaption>
+    La forma en como usualmente vemos al análisis y el diseño con objetivos
+    distintos, separados por una linea, que en realidad es borrosa, como muchas
+    otras cosas
+  </figcaption>
 </figure>
+
 ¿Por qué? Mi visión es que la clave para la utilidad de un modelo de análisis es que sea un medio de comunicación entre expertos de software y expertos del negocio. Los expertos de software necesitan entender lo que el modelo necesita en términos de construcción de software, y los expertos del negocio necesitan entender que el proceso de negocio este propiamente descrito de tal forma que los expertos de software entiendan lo correcto.
 
 Así que, ¿que es el modelo de análisis, y que lo hace diferente del modelo de diseño? Para mi la pregunta es una de enfásis. Recuerda, el análisis trata de entender como el dominio funciona. Construyo este entendimiento por construir modelos, bien en mi mente, en UML, o en algún lenguaje de programación. Puedo estar entendiendo en detalle un algoritmo de cobros al programarlo, o al hablar con los usuarios sobre lo que significa activo para ellos. No diría que es análisis identifcar las interacciones con la base de datos o definir una arquitectura de computación distribuida. Pero mis modelos de análisis aún son dirigidos por las mismas heurísticas de cualquier software orientado a objetos. El análisis es esencialmente el diseño de objetos de negocio (business objects) y la lógica de negocio. Quizá no sea una definicion que todo el mundo este de acuerdo, pero es una que encuentro útil.
