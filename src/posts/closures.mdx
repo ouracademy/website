@@ -5,11 +5,11 @@ author: arthur
 tags: ["programacion funcional"]
 ---
 
-Si, te dire de inicio... como muchas cosas, los Closures tienen muchas definiciones. Aún así, son usadas en el día a día de un programador, aunque inicialmente no estaban en muchos lenguajes de programación, hoy en día están prácticamente en todos. Java (desde su versión 8), Javascript, C#, Ruby, Python, ... Smalltalk, Lisp (el 1ro en usarlo 🏆).
+Los closures son usados en el día a día de un programador, aunque inicialmente no estaban en muchos lenguajes de programación, hoy en día están prácticamente en todos. Java (desde su versión 8), Javascript, C#, Ruby, Python, ... Smalltalk, Lisp (el 1ro en usarlo 🏆).
 
 Asi que, que son los closures?. Son:
 
-> Funciones que pueden acceder a variables no locales - fuera de la función (pero que sirven a la función ) - [Ralph Johnson](http://wiki.c2.com/?WhatIsClosure), precursor de patrones de software (probablemente lo conoces del famoso libro Patrones de diseño)
+> Funciones que pueden acceder a variables no locales (externas a la función), pero que son útiles a la función - [Ralph Johnson](http://wiki.c2.com/?WhatIsClosure), precursor de patrones de software (probablemente lo conoces del famoso libro Patrones de diseño)
 
 Mmmmm... muy formal? Que tal un ejemplo?
 
@@ -34,13 +34,13 @@ function sayHiToMe() {
 sayHiToMe(); // sin argumentos
 ```
 
-Nota que al llamarlo no tienen ningún argumento y accede a la variable `me` que no esta declarada dentro de la función (no es local). Entonces como queda la definición?
+Nota que ahora llamamos a la función sin ningún argumento, la función accede a la variable `me` que no esta declarada dentro de la función (no es local) y lo usa para hacer su proposito un `console.log()`. Entonces como queda la definición?
 
-> Funciones (como `sayHiToMe`) que pueden acceder a variables no locales (como la variable `me`) - fuera de la función (pero que sirven a la función - la usa para hacer un `console.log`)
+> Funciones (como `sayHiToMe`) que pueden acceder a variables no locales (externas a la función, como la variable `me`), pero que son útiles a la función (la usa para hacer un `console.log`)
 
 Simplemente es eso. Pero ahora te dirás oye para que sirve eso?, bueno como te dije, hoy la mayoría de programadores lo usamos en el día a día.
 
-Mira un ejemplo:
+Que tal un ejemplo en Ruby?
 
 ```ruby
 def highPaid(employees) # obtener empleados con salario > 150
@@ -49,7 +49,7 @@ def highPaid(employees) # obtener empleados con salario > 150
 end
 ```
 
-o que tal este?
+o que tal este (en Javascript)?
 
 ```javascript
 // en vez de obtener las personas legales (>17 años) con esto:
