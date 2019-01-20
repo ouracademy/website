@@ -1,0 +1,157 @@
+---
+title: La función filter
+date: 2019-01-19
+author: arthur
+tags: ["programacion funcional"]
+---
+
+Uno de los HigherOrderFunctions (HOF) comúnes, prácticamente hoy se puede usar en la mayoría de lenguajes. Hagamos un ejemplo muy sencillo, obtener solo los números pares de la siguiente lista de números.
+
+```javascript
+// Por ejemplo en javascript
+let numbers = [1, 2, 3, 4, 5, 8, 2];
+```
+
+Usando los clásicos `for loops`, el código sería algo como
+
+```javascript
+let result = [];
+
+for (let i = 0; i < numbers.length; i++) {
+  let number = numbers[i];
+  if (number % 2 === 0) {
+    result.push(number); // agrega number al arreglo result
+  }
+}
+
+console.log(result);
+```
+
+Bastante verboso, uno podría mejorarlo usando los `for each`, en javascript usando `for of` (en Java `(for elemento : lista)`):
+
+```javascript
+let result = [];
+
+for (let number of numbers) {
+  if (number % 2 === 0) {
+    result.push(number);
+  }
+}
+
+console.log(result);
+```
+
+Un poco mejor no? Que tal si movemos esa lógica de obtener si un número es par, en una función `even`:
+
+```javascript
+const even = number => number % 2 === 0;
+
+let result = [];
+
+for (let number of numbers) {
+  if (even(number)) {
+    result.push(number);
+  }
+}
+
+console.log(result);
+```
+
+Imagina que nos digan de los mismos números obtener los números primos, usando la misma lógica tendriamos algo como:
+
+```javascript
+const prime = number => // aqui la lógica...
+
+let result = [];
+
+for (let number of numbers) {
+  if (prime(number)) {
+    result.push(number);
+  }
+}
+
+console.log(result);
+```
+
+Nose si te des cuenta que el `for`, el `if` y el `push` (agregar al resultado) se está volviendo a repetir. Si movieramos esa lógica a un método...
+
+```javascript
+const filter = (numbers, predicate) => {
+  let result = [];
+
+  for (let number of numbers) {
+    if (predicate(number)) {
+      result.push(number);
+    }
+  }
+  return result;
+};
+```
+
+Donde `predicate` es una función que recibe un elemento (en este caso un número) y retorna un booleano. Con este nuevo método predicate podríamos obtener los números pares y primos de la siguiente forma:
+
+```javascript
+const even = number => number % 2 === 0;
+let result = filter(numbers, even);
+console.log(result);
+
+// de hecho podriamos ponerlo en 1 sola linea..
+console.log(filter(numbers, even));
+// de la misma forma los primos
+console.log(filter(numbers, prime));
+```
+
+Que tal? Mejoro bastante.. De hecho la mayoría de lenguajes de hoy, tienen esa función filter. Por ejemplo en javascript, usamos `array.filter(predicate)`. En algunos lenguajes tienen otro nombre (select, find all, where) o son más verbosos, pero en general, cumplen esta función. Que tal si vemos unos ejemplos, en otros lenguajes?
+
+En ruby (o quiza usando find_all)
+
+```ruby
+evens = [1,2,3,4,5,8,2].select { |i| i%2 == 0 }
+```
+
+En c# (de distintas formas)
+
+```csharp
+// (1) Usando Array.FindAll:
+var numbers = new int[] {1,2,3,4,5,8,2};
+var evens = Array.FindAll(numbers, n => n % 2 == 0);
+
+// (2) O Where:
+evens = numbers.Where(n => n % 2 == 0);
+
+// (3) a traves de list comprehension:
+evens = from n in numbers where n % 2 == 0 select n;
+```
+
+En PHP
+
+```php
+$evens = array_filter([1,2,3,4,5,8,2], function ($x) { return $x % 2 == 0;  });
+```
+
+En javascript (ES6)
+
+```javascript
+const evens = numbers.filter(x => x % 2 == 0);
+```
+
+Que tal python?
+
+```python
+evens = filter(lambda x: x%2 == 0, [1,2,3,4,5,8,2])
+# o usando list comprenhension
+evens = [x for x in [1,2,3,4,5,8,2] if x%2 == 0]
+```
+
+En java
+
+```java
+// java 8
+IntStream evens = IntStream.of(10, 2, 4, 9, 1).filter(n -> n % 2 == 0);
+int evens[] = IntStream.of(10, 2, 4, 9, 1).filter(n -> n % 2 == 0).toArray();
+
+// java 11
+var evens = IntStream.of(10, 2, 4, 9, 1).filter(n -> n % 2 == 0);
+```
+
+A tu opinión cual se entiende mejor 😉
