@@ -5,20 +5,22 @@ author: arthur
 tags: ["programacion funcional"]
 ---
 
-Uno de los HigherOrderFunctions (HOF) comúnes, prácticamente hoy se puede usar en la mayoría de lenguajes. Hagamos un ejemplo muy sencillo, obtener solo los números pares de la siguiente lista de números.
+La función filter es uno de los Higher Order Functions (HOF) comúnes, aunque inicialmente no estaban en muchos lenguajes de programación, hoy en día están prácticamente en todos. Java (8+), Javascript, C# (3+), Ruby, Python, ... Smalltalk, Lisp.
+
+Asi que, que son las funciones filter?. Que tal si lo explicamos con un ejemplo. Uno muy sencillo: obtener los números pares de la siguiente lista de números.
 
 ```javascript
 // Por ejemplo en javascript
-let numbers = [1, 2, 3, 4, 5, 8, 2];
+var numbers = [1, 2, 3, 4, 5, 8, 2];
 ```
 
-Usando los clásicos `for loops`, el código sería algo como
+A 1ra vista, uno podría resolverlo usando los clásicos `for loops`, el código quiza podría ser algo como:
 
 ```javascript
-let result = [];
+var result = [];
 
-for (let i = 0; i < numbers.length; i++) {
-  let number = numbers[i];
+for (var i = 0; i < numbers.length; i++) {
+  var number = numbers[i];
   if (number % 2 === 0) {
     result.push(number); // agrega number al arreglo result
   }
@@ -27,7 +29,7 @@ for (let i = 0; i < numbers.length; i++) {
 console.log(result);
 ```
 
-Bastante verboso, uno podría mejorarlo usando los `for each`, en javascript usando `for of` (en Java `(for elemento : lista)`):
+Bastante verboso, uno podría mejorarlo usando los `for each`, en javascript usando `for of` (en otros lenguajes, por ejemplo Java algo asi `for(Elemento e : lista)`):
 
 ```javascript
 let result = [];
@@ -57,7 +59,7 @@ for (let number of numbers) {
 console.log(result);
 ```
 
-Imagina que nos digan de los mismos números obtener los números primos, usando la misma lógica tendriamos algo como:
+Imagina que nos digan de los mismos números, obtener los números primos. Usando la misma lógica tendriamos algo como:
 
 ```javascript
 const prime = number => // aqui la lógica...
@@ -73,7 +75,7 @@ for (let number of numbers) {
 console.log(result);
 ```
 
-Nose si te des cuenta que el `for`, el `if` y el `push` (agregar al resultado) se está volviendo a repetir. Si movieramos esa lógica a un método...
+Nose si te des cuenta que el `for`, el `if` y el `push` (agregar al resultado) se está volviendo a repetir. Si quisieramos obtener los números > 18 o los números múltiples de 3, volveríamos a repetir otra vez lo mismo. Si movieramos esa lógica a un método...
 
 ```javascript
 const filter = (numbers, predicate) => {
@@ -88,7 +90,7 @@ const filter = (numbers, predicate) => {
 };
 ```
 
-Donde `predicate` es una función que recibe un elemento (en este caso un número) y retorna un booleano. Con este nuevo método predicate podríamos obtener los números pares y primos de la siguiente forma:
+Donde `predicate` es una función que recibe un elemento (en este caso un número) y retorna un booleano. Podriamos reusar esta función siempre. Por ejemplo, con este nuevo método podríamos obtener los números pares y primos de la siguiente forma:
 
 ```javascript
 const even = number => number % 2 === 0;
@@ -101,7 +103,13 @@ console.log(filter(numbers, even));
 console.log(filter(numbers, prime));
 ```
 
-Que tal? Mejoro bastante.. De hecho la mayoría de lenguajes de hoy, tienen esa función filter. Por ejemplo en javascript, usamos `array.filter(predicate)`. En algunos lenguajes tienen otro nombre (select, find all, where) o son más verbosos, pero en general, cumplen esta función. Que tal si vemos unos ejemplos, en otros lenguajes?
+Que tal? Mejoro bastante.. Bueno ahora si podemos contestar a la pregunta que es una función filter?
+
+> Es una función que toma una secuencia (e.g. arrays, listas, streams...) y retorna una nueva secuencia que contiene exactamente aquellos elementos de la secuencia original para los cuales el predicado retorna true.
+
+Un poco complicado? En el 1er ejemplo, la secuencia seria el array `numbers`, el predicado `even` (es número par?), y la nueva secuencia seria el nuevo array `result`.... filter simplemente obtendría aquellos elementos de la secuencia `numbers` para los que `even` retorna true, los números pares!
+
+De hecho la mayoría de lenguajes de hoy, tienen esa función filter. Por ejemplo en javascript, usamos `array.filter(predicate)`. En algunos lenguajes tienen otro nombre (select, find all, where) o son más verbosos, pero en general, cumplen esta función. Que tal si vemos unos ejemplos, en otros lenguajes?
 
 En ruby (o quiza usando find_all)
 
