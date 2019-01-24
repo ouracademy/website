@@ -1,0 +1,27 @@
+---
+title: Cual es la diferencia entre Casos de Usos y Escenarios?
+date: 2019-01-23
+author: arthur
+tags: [requerimientos]
+image: https://cdn.visual-paradigm.com/guide/use-case/what-is-use-case-specification/02-use-case-character.png
+---
+
+Si recién estas aprendiendo de casos de usos, una de las cosas que quizá te habrás preguntado puede ser ..en que se diferencian a los escenarios? Son lo mismo?
+
+Para responder estas preguntas, primero debemos tener claro que son los escenarios.
+
+> Un escenario es una secuencia de pasos que describen una interaccion entre un usuario y un sistema. - Martin Fowler, UML Distilled
+
+Veamos un ejemplo, en una tienda web, podriamos tener un escenario de comprar un producto, como el siguiente:
+
+> "El cliente navega en un catalogo y agrega articulos deseados a una canasta de compras. Cuando el cliente desea pagar, el cliente describe la informacion de envio como de su tarjeta de credito y confirma la venta. El sistema verifica la autorizacion de la tarjeta de credito y confirma la venta inmediatamente y con un mensaje a su correo."
+
+Este escenario es algo que puede pasar. Sin embargo, la autorizacion de la tarjeta de credito pudo haber fallado (puede que el usuario por equivocación haya ingresado mal el número de la tarjeta). Este seria un escenario separado. Ademas, que pasa si un cliente regular, previamente se registro al sistema, en ese caso quizá no sea necesario ingresar la información de su tarjeta de crédito o incluso información de envio, el sistema podría quiza tomar la información que previamente ingreso para facilitar el proceso de compra, este seria otro escenario.
+
+Hemos visto 3 escenarios distintos pero que tienen algo en similar, el usuario tiene la misma meta: Comprar un producto.
+
+El usuario no necesariamente tendra exito, pero la meta permanece. Esta meta del usuario es la clave de los casos de uso: **Un caso de uso es un conjunto de escenarios con un mismo objetivo para el usuario**. En general podemos ver a cada escenario como uno de los tantos flujos que puede tener un caso de uso.
+
+![Escenario y casos de uso](https://cdn.visual-paradigm.com/guide/use-case/what-is-use-case-specification/02-use-case-character.png)
+
+Los escenarios...son como las ramas en Git? 😜
