@@ -43,29 +43,31 @@ Mas corto eh, ahora explicaremos su definicion a detalle.
 En la seccion anterior colocamos esta definición:
 La funcion map, tiene como objetivo **transformar una lista**, aplicar una **función a cada uno de sus elementos** y **retornar un nuevo areglo**.
 
-Veamos mas formas de en js:
+Veamos de una forma mas explicita a ** la función**:
 
 <Code language="javascript">{`
     let prices = [10, 15.4, 23.6];
-    let pricesWithDesc = prices.map( price => { return price * 0.9 })      
+    let applyDiscount = function(price) { return price * 0.9 }
+    let pricesWithDesc = prices.map(applyDiscount)    
 `}</Code>
 
-La funcion se define ahora con function:
+Veamos de una forma mas explicita a ** la función**:
 
 <Code language="javascript">{`
     let prices = [10, 15.4, 23.6];
-    let pricesWithDesc = prices.map( function(price) { return price * 0.9 })    
+    let applyDiscount = function(price) { return price * 0.9 }
+    let pricesWithDesc = prices.map(applyDiscount)    
 `}</Code>
-Y ahora declaramos una funcion en una variable, para luego usarlo:
+
+Ahora usemos el poder de los closures junto a la técnica currying, ¿si te preguntas que son, tranquilo mira este otro post: [Que es un closure?](https://our-academy.org/posts/closures)
 
 <Code language="javascript">{`
     let prices = [10, 15.4, 23.6];
-    let desc = function(price) { return price * 0.9 }
-    //  let desc = (price) => price * 0.9 
-    let pricesWithDesc = prices.map(desc)    
+    let applyDiscount = discount => price =>  price * discount 
+    let pricesWithDesc = prices.map(applyDiscount(0.9))    
 `}</Code>
 
-Y como es en otro lenguaje, veamos en python:
+Y como es en otro lenguaje?, veamos en python:
 
 <Code language="python">{`
     prices = [10, 15.4, 23.6];
