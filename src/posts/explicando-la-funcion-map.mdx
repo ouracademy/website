@@ -64,14 +64,19 @@ Y como es en otro lenguaje?, veamos en python:
 
 <Code language="python">{`
     prices = [10, 15.4, 23.6];
-    pricesWithDesc =  list(map(lambda price: price * 0.9, prices))
+    multiplier = lambda percentage: (100 - percentage)/100.0
+    percentageToDiscount = 10
+    applyDiscount = lambda price: price*multiplier(percentageToDiscount)
+    pricesWithDesc = list(map(applyDiscount,prices))
 `}</Code>
 
 Y ahora con una **sintactic sugar** (una sintaxis dentro de un lenguaje de programación que está diseñado para facilitar la lectura o la expresión. Hace que el lenguaje sea "más dulce" para el uso humano: las cosas se pueden expresar de forma más clara, más concisa o en un estilo alternativo que algunos prefieren)
 
 <Code language="python">{`
     prices = [10, 15.4, 23.6];
-    pricesWithDesc = [price * 0.9 for price in prices]
+    percentageToDiscount = 10
+    multiplier = lambda percentage : (100 - percentage)/100.0 
+    pricesWithDesc = [price * multiplier(percentageToDiscount) for price in prices]
 `}</Code>
 
 Espero que te haya gustado el post 🙂
