@@ -51,12 +51,13 @@ Veamos de una forma mas explicita a ** la función**:
     let pricesWithDesc = prices.map(applyDiscount)    
 `}</Code>
 
-Ahora usemos el poder de los closures junto a la técnica currying, ¿si te preguntas que son?, tranquilo mira este otro post: [Que es un closure?](https://our-academy.org/posts/closures)
+Ahora ¿si queremos aplicar otros porcentajes a descontar?, uhm entonces hagamas mas mantenible el codigo, pasemos como parametro el porcentaje a descontar, para eso usaremos el poder de los closures junto a la técnica currying, ¿si te preguntas que son?, tranquilo mira este otro post: [Que es un closure?](https://our-academy.org/posts/closures)
 
 <Code language="javascript">{`
     let prices = [10, 15.4, 23.6];
-    let applyDiscount = discount => price =>  price * discount 
-    let pricesWithDesc = prices.map(applyDiscount(0.9))    
+    let multiplier = percentage => (100 - percentage)/100 
+    let discountAPercentageOf=percentage=>price=>price*multiplier(percentage)
+    let result = prices.map(discountAPercentageOf(10))    
 `}</Code>
 
 Y como es en otro lenguaje?, veamos en python:
