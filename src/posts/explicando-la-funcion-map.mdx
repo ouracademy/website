@@ -43,40 +43,40 @@ Mas corto eh, ahora explicaremos su definicion a detalle.
 En la seccion anterior colocamos esta definición:
 La funcion map, tiene como objetivo **transformar una lista**, aplicar una **función a cada uno de sus elementos** y **retornar un nuevo areglo**.
 
-Veamos mas formas de en js:
+Veamos de una forma mas explicita a ** la función**:
 
 <Code language="javascript">{`
     let prices = [10, 15.4, 23.6];
-    let pricesWithDesc = prices.map( price => { return price * 0.9 })      
+    let applyDiscount = function(price) { return price * 0.9 }
+    let pricesWithDesc = prices.map(applyDiscount)    
 `}</Code>
 
-La funcion se define ahora con function:
+Ahora ¿si queremos aplicar otros porcentajes a descontar?, uhm entonces hagamas mas mantenible el codigo, pasemos como parametro el porcentaje a descontar, para eso usaremos el poder de los closures junto a la técnica currying, ¿si te preguntas que son?, tranquilo mira este otro post: [Que es un closure?](https://our-academy.org/posts/closures)
 
 <Code language="javascript">{`
     let prices = [10, 15.4, 23.6];
-    let pricesWithDesc = prices.map( function(price) { return price * 0.9 })    
-`}</Code>
-Y ahora declaramos una funcion en una variable, para luego usarlo:
-
-<Code language="javascript">{`
-    let prices = [10, 15.4, 23.6];
-    let desc = function(price) { return price * 0.9 }
-    //  let desc = (price) => price * 0.9 
-    let pricesWithDesc = prices.map(desc)    
+    let multiplier = percentage => (100 - percentage)/100 
+    let discountAPercentageOf=percentage=>price=>price*multiplier(percentage)
+    let result = prices.map(discountAPercentageOf(10))    
 `}</Code>
 
-Y como es en otro lenguaje, veamos en python:
+Y como es en otro lenguaje?, veamos en python:
 
 <Code language="python">{`
     prices = [10, 15.4, 23.6];
-    pricesWithDesc =  list(map(lambda price: price * 0.9, prices))
+    multiplier = lambda percentage: (100 - percentage)/100.0
+    percentageToDiscount = 10
+    applyDiscount = lambda price: price*multiplier(percentageToDiscount)
+    pricesWithDesc = list(map(applyDiscount,prices))
 `}</Code>
 
 Y ahora con una **sintactic sugar** (una sintaxis dentro de un lenguaje de programación que está diseñado para facilitar la lectura o la expresión. Hace que el lenguaje sea "más dulce" para el uso humano: las cosas se pueden expresar de forma más clara, más concisa o en un estilo alternativo que algunos prefieren)
 
 <Code language="python">{`
     prices = [10, 15.4, 23.6];
-    pricesWithDesc = [price * 0.9 for price in prices]
+    percentageToDiscount = 10
+    multiplier = lambda percentage : (100 - percentage)/100.0 
+    pricesWithDesc = [price * multiplier(percentageToDiscount) for price in prices]
 `}</Code>
 
 Espero que te haya gustado el post 🙂
