@@ -1,0 +1,59 @@
+---
+title: Reforzando un formato de código común
+date: 2019-01-23
+author: arthur
+tags: [requerimientos]
+image: https://cdn.visual-paradigm.com/guide/use-case/what-is-use-case-specification/02-use-case-character.png
+---
+
+Vemos todos los días debates sobre usar " o ', usar ; o no usarlo, usar tabs o espacios para identar el código...lo peor es que estos debates siempre habrán, son ![guerras santas](http://wiki.c2.com/?HolyWar) 🔪
+
+
+Lo peor es que no son debates de los cuales dices bueno no importa..., estos debates sucederán porque la mayoría de desarrollos o mantenimientos de software implican un equipo. Y cuando hay equipos, siempre habrá discrepancias.
+Es importante que el equipo (o incluso la organización en general) defina un estándar común. De lo contrarío, tendrán código como:
+
+```javascript
+// código real de un sistema legado (adaptado a Javascript)
+// contracts-component.js
+// ...
+// programado por desarrollador 1
+getState(contracts) {
+    return
+            contracts.getMcotoEstado()==3 ? messages.getProperty("suspendedSing"):
+            (contracts.getMcotoEstado()==2 ? messages.getProperty("dismissedSing") :  messages.getProperty("activeSing"));
+}
+
+// programado por desarrollador 2
+ultimoValorAmpliacion(contract) {
+    const services = ctx.get('contractsDatesService');
+    const contractDate = services.ultimaAmpliacion(contract);
+
+    if(contractDate==null) {
+        return null;
+    }else {
+    return contractDate.getDfecontValor();
+    }
+}
+```
+
+Por un lado con comillas simples (`"` en `getState`) por otro lado con comilla dobles (`'` en el otro método `ultimoValorAmpliacion`), un `else` sin identación...Imaginate estas incosistencias esparcidas por todo el código fuente. Por eso es importante definir lo más antes posible una convención de código para el equipo, siguiendo el [principio de uniformidad](http://principles-wiki.net/principles:uniformity_principle).
+
+Aún así es usual que el equipo rompa estas convenciones, por distintos motivos
+(un nuevo desarrollador entra al equipo pero no está al tanto de las convenciones o un desarrollador se olvida de una regla de la convención) por ello es importante en lo posible que estas convenciones sean reforzadas por herramientas.
+
+# Usando un formateador
+Hoy en día la mayoría de lenguajes de programación tienen herramientas para dar formato a tu código, usando algúna convención usual pero con capacidades de configurarlo según sea necesario. Por ejemplo Go tenemos `fmt`, en Java `google-java-format`, en Javascript `prettier`...
+
+Nota que es importante que es importante toda configuración a la herramienta de formateo (formateador) debe ser compartida a todo el equipo y **versionada** de tal forma que todos posean las mismas estilo de código.
+
+Hagamos un ejemplo usando el código anterior, usare [Prettier](https://prettier.io/) para ejemplificar el caso.
+
+Instalamos el formateador usando `npm install --save-dev --save-exact prettier`, el equipo previamente acordo usar `'` en vez de `"` y  no usar `;`, por que vaya si tu lenguaje es opcional usar `;` entonces mejor no usarlo no?
+
+El equipo con 
+
+
+Prettier es un formateador de código que puede reforzar que todo un equipo use los mismos guias de estilos, puede ser integrado con tu editor (das guardar y el codigo se formatea automaticamente) ahorrandote el tiempo de dar formato a tu código, funciona para muchos lenguajes. Además es usado por muchos proyectos Webpack, babel, React, Jest...
+
+Y lo más importante puedes configurarlo para seguir tus propios estilos (y que todo tu equipo siga el mismo estilo)! ?? .-.
+
