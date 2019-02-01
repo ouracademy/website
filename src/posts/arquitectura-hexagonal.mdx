@@ -6,15 +6,16 @@ tags: [arquitectura, patron, testing]
 image: https://res.cloudinary.com/our-academy/image/upload/v1/articles/hexagonal-fig1
 ---
 
-import Image from "$components/image";
-
 Cree su aplicación para que funcione sin una interfaz de usuario o una base de datos de tal forma que pueda ejecutar pruebas de regresión automatizadas, trabajar aún cuando la base de datos no este disponible y conectar aplicaciones sin la intervención del usuario.
 
 > Una traducción del articulo de Alistair Cockburn: [Hexagonal Architecture](http://alistair.cockburn.us/Hexagonal+architecture) . Todas las gracias a él por permitirnos traducir su articulo
 
 <figure>
   <a href="http://alistair.cockburn.us/Hexagonal+architecture+pic+1-to-4+socket.jpg">
-    <Image src="ports-and-adapters" alt="sockets: puertos y adaptadores" />
+    <img
+      src="http://res.cloudinary.com/our-academy/image/upload/v1/articles/ports-and-adapters"
+      alt="sockets: puertos y adaptadores"
+    />
   </a>
 </figure>
 
@@ -29,7 +30,10 @@ Permite que una aplicación sea usada de la misma forma por usuarios, programas,
 Todo evento externo (i.e. como pedidos http) que llega a la aplicación por un puerto, es convertido, a través de un adaptador especifico a la tecnología del evento externo, en una llamada a un procedimiento o un mensaje entendible por la aplicación. (Por ello) la aplicación es “felizmente” ignorante de la naturaleza de los dispositivos de entrada. Cuando la aplicación tiene algo que enviar, lo hace por un puerto a un adaptador, el cual crea las señales apropiadas, necesarias por la tecnología receptora (humana o automatizada). La aplicación tiene una interacción semántica con los adaptadores de todos sus lados, sin saber realmente la naturaleza de las cosas del otro lado de los adaptadores.
 
 <figure>
-  <Image src="hexagonal-fig1" alt="arquitectura hexagonal básica" />
+  <img
+    src="http://res.cloudinary.com/our-academy/image/upload/v1/articles/hexagonal-fig1"
+    alt="arquitectura hexagonal básica"
+  />
   <figcaption>Figura 1</figcaption>
 </figure>
 
@@ -84,14 +88,20 @@ En la sección Notas de Aplicación, la simetría izquierda-derecha será vista 
 ## Estructura
 
 <figure>
-  <Image src="hexagonal-fig2" alt="arquitectura hexagonal con adaptadores" />
+  <img
+    src="http://res.cloudinary.com/our-academy/image/upload/v1/articles/hexagonal-fig2"
+    alt="arquitectura hexagonal con adaptadores"
+  />
   <figcaption>Figura 2 </figcaption>
 </figure>
 
 La Figura 2 muestra una aplicación que tiene 2 puertos activos y muchos adaptadores para cada puerto. Los 2 puertos son el lado que controla la aplicación y el lado de obtención de datos. Este esquema indica que la aplicación puede ser igualmente dirigida por suites de pruebas automatizadas a nivel de sistema, por un usuario humano, por una aplicación remota a través de http , o por otra aplicación local. En el lado de los datos, la aplicación puede ser configurada para ejecutarse sin acoplamiento de bases de datos externas usando una base de datos de reemplazo en memoria, o “mock” o puede ser ejecutada bajo la base de datos de pruebas o producción. La especificación funcional de la aplicación, quizá en Casos de Uso, es hecha bajo la interfaz del hexágono interno y no en cambio en cualquier tecnología externa que podría ser usada.
 
 <figure>
-  <Image src="hexagonal-fig3" alt="arquitectura hexagonal vista como capas" />
+  <img
+    src="http://res.cloudinary.com/our-academy/image/upload/v1/articles/hexagonal-fig3"
+    alt="arquitectura hexagonal vista como capas"
+  />
   <figcaption>Figura 3</figcaption>
 </figure>
 
@@ -309,8 +319,8 @@ No parece haber algún daño en escoger un número “equivocado” de puertos, 
 ## Usos conocidos
 
 <figure>
-  <Image
-    src="hexagonal-fig4.png"
+  <img
+    src="http://res.cloudinary.com/our-academy/image/upload/v1/articles/hexagonal-fig4.png"
     alt="ejemplo complejo de arquitectura hexagonal"
   />
   <figcaption>Figura 4</figcaption>
