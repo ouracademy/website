@@ -1,0 +1,57 @@
+---
+title: String Interpolation
+date: 2019-01-30
+author: diana
+tags: ["programacion, string"]
+image: /images/interpolation.png
+---
+
+import Code from "$components/code";
+
+**Iniciamos con esta imagen, ¿que observamos?**
+
+<figure>
+    <img src="/images/interpolation.png" style="width:100%;" />
+</figure>
+
+Uhm, puedo generar una cadena, teniendo una plantilla y luego reemplazando algunos valores con un simbolo \${} en la plantilla con variables.
+
+Yo me dije, oh que genial,hacerlo asi, porque antes tenia que estar concatenando:
+
+<Code language="javascript">{`
+    let user = "Diana";
+    let offersQuantity = 5;
+    let welcomeMessage = "welcome"+ user +", we have"+ offersQuantity + "offers for you"; 
+`}</Code>
+
+**Uhm diras ¿Ya veo, entonces pero dime que es string interpolation?**
+
+Bien, **string interpolation ** es el proceso de evaluar una cadena que contiene uno o más marcadores, luego reemplazar a estos marcadores con sus valores correspondientes.
+Para tenerlo mas claro, te dire que interpolar es poner una cosa entre otras, entonces, en este contexto es colocar variables dentro de una cadena.
+
+**Y siguiendo con los ejemplos, veamos en los lenguajes de programación**
+
+En Javascript ya mostramos arriba, solo aclaro que en este lenguaje la interpolacion se aplica a los **Template String** o [Plantilla de cadena de texto](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/template_strings),los cuales delimitan una cadena con tildes invertidas (``).
+
+<Code language="javascript">{`
+    let user = "Diana";
+    let offersQuantity = 5;
+    let welcomeMessage = `welcome ${user}, we have ${offersQuantity} offers for you`;  
+`}</Code>
+
+En python, mostrare una forma que considero la mas elegante,pero es solo disponible en python 3.6+
+
+<Code language="python">{`
+    user = "Diana";
+    offersQuantity = 5;
+    welcomeMessage = f"welcome {user}, we have {offersQuantity} offers for you";
+`}</Code>
+
+Espero que te haya gustado el post 🙂
+
+## Donde aprender más?
+
+La mayoría de conceptos y ejemplos los saque de mis sitios favoritos:
+
+-   [String interpolation](https://en.wikipedia.org/wiki/String_interpolation)
+-   [Plantilla de cadena de texto](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/template_strings)
