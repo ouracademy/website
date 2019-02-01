@@ -10,7 +10,7 @@ import {
 import { Box } from "grommet";
 
 export default ({ title, description, url }) => (
-    <Box direction="row" pad="medium" gap="small" fill="true" justify="center">
+    <Box direction="row" pad="medium" gap="small" fill justify="center">
         <FacebookShareButton url={url} quote={title}>
             <FacebookIcon size={40} round />
         </FacebookShareButton>
