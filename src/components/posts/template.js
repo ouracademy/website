@@ -26,9 +26,10 @@ const Author = ({ name, avatar, description }) => (
 );
 
 const PostPageTemplate = ({ data: { mdx }, location }) => {
-  const { id, code, excerpt: description } = mdx;
-  const { title, author, tags, image = null } = mdx.frontmatter;
+  const { id, code, frontmatter, excerpt } = mdx;
+  const { title, author, tags, image = null } = frontmatter;
   const url = location.href;
+  const description = frontmatter.description || excerpt;
 
   return (
     <Layout
@@ -84,6 +85,7 @@ export const query = graphql`
         }
         tags
         image
+        description
       }
       excerpt
       code {
