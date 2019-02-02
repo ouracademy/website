@@ -1,5 +1,5 @@
 import React from "react";
-import { graphql } from "gatsby";
+import { graphql, Link } from "gatsby";
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
 import { DiscussionEmbed } from "disqus-react";
 import { Box, Heading } from "grommet";
@@ -8,7 +8,7 @@ import { Tag } from "../../pages/tags";
 
 import Layout from "../layout";
 import SocialLinks from "./social-links";
-import { Card } from "../../pages/about";
+import { Avatar } from "../../pages/about";
 
 import DesignSystem from "../design-system";
 
@@ -21,12 +21,17 @@ const Tags = ({ tags }) => (
   </Box>
 );
 
-const Author = ({ name, avatar, description }) => (
-  <Card name={name} avatar={avatar} description={description} />
+const Author = ({ name, avatar }) => (
+  <Link to="/about" style={{ textDecoration: "none" }}>
+    <Box pad="small" direction="row" gap="xsmall" align="center">
+      <Avatar src={avatar} alt="foto" size="50px" />
+      <span>{name}</span>
+    </Box>
+  </Link>
 );
 
 const PostPageTemplate = ({ data: { mdx }, location }) => {
-  const { id, code, frontmatter, excerpt } = mdx;
+  const { code, frontmatter, excerpt } = mdx;
   const { title, author, tags, image = null } = frontmatter;
   const url = location.href;
   const description = frontmatter.description || excerpt;
@@ -40,7 +45,10 @@ const PostPageTemplate = ({ data: { mdx }, location }) => {
     >
       <Box as="article">
         <Heading>{title}</Heading>
-
+        <Box direction="row-responsive" align="center" justify="between">
+          <Author {...author} />
+          <Tags tags={tags} />
+        </Box>
         <MDXRenderer
           components={{
             pre: DesignSystem.Code
@@ -48,14 +56,25 @@ const PostPageTemplate = ({ data: { mdx }, location }) => {
         >
           {code.body}
         </MDXRenderer>
-        <SocialLinks title={title} description={description} url={url} />
-        <Tags tags={tags} />
-        <Author {...author} />
+        <Share title={title} description={description} url={url} />
       </Box>
-      <Comments id={id} title={title} url={url} />
+      {/* <Comments id={id} title={title} url={url} /> */}
     </Layout>
   );
 };
+
+const Share = props => (
+  <Box direction="row-responsive" align="center" justify="between">
+    <span>
+      Si te fue útil este artículo, por favor compártelo. Apreciamos los
+      comentarios y el aliento.
+    </span>
+    <Box direction="row" align="center">
+      <span>Compartelo por:</span>
+      <SocialLinks {...props} />
+    </Box>
+  </Box>
+);
 
 const disqusShortname = "academyforus";
 
