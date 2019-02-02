@@ -1,8 +1,7 @@
 import React from "react";
 import { Link, StaticQuery, graphql } from "gatsby";
-import styled from "styled-components";
 import { Helmet } from "react-helmet";
-import { Heading, Box, Grommet, Button } from "grommet";
+import { Heading, Box, Grommet, Button, ResponsiveContext } from "grommet";
 import { theme } from "./our-theme";
 
 const ListLink = ({ children, to }) => (
@@ -11,11 +10,15 @@ const ListLink = ({ children, to }) => (
   </li>
 );
 
-const Container = styled.div`
-  margin: 0 auto;
-  max-width: 70vw;
-  padding: 1rem;
-`;
+const Container = ({ children }) => (
+  <ResponsiveContext.Consumer>
+    {size => (
+      <Box align="center" pad="small">
+        <Box width={size !== "small" ? "70vw" : "full"}>{children}</Box>
+      </Box>
+    )}
+  </ResponsiveContext.Consumer>
+);
 
 const Nav = ({ title }) => (
   <Box
@@ -58,7 +61,7 @@ export default ({ children, title, description, image, type = "website" }) => (
         }
       `}
       render={({ site: { siteMetadata: meta } }) => (
-        <div>
+        <React.Fragment>
           <SEO
             title={title ? `${title} - ${meta.title}` : meta.title}
             description={description || meta.description}
@@ -69,7 +72,7 @@ export default ({ children, title, description, image, type = "website" }) => (
             <Nav title={meta.title} />
             {children}
           </Container>
-        </div>
+        </React.Fragment>
       )}
     />
   </Grommet>
