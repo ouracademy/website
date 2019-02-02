@@ -51,7 +51,8 @@ const PostPageTemplate = ({ data: { mdx }, location }) => {
         </Box>
         <MDXRenderer
           components={{
-            pre: DesignSystem.Code
+            pre: DesignSystem.Code,
+            blockquote: DesignSystem.Blockquote
           }}
         >
           {code.body}
