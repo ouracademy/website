@@ -12,12 +12,12 @@
     "test": "echo \"Write tests! -> https://gatsby.app/unit-testing\""
   },
   "dependencies": {
-    "@mdx-js/mdx": "^0.16.6",
-    "@mdx-js/tag": "^0.16.6",
+    "@mdx-js/mdx": "^0.16.8",
+    "@mdx-js/tag": "^0.16.8",
     "babel-plugin-styled-components": "^1.10.0",
     "disqus-react": "^1.0.5",
     "gatsby": "^2.0.75",
-    "gatsby-mdx": "^0.3.2",
+    "gatsby-mdx": "^0.3.5",
     "gatsby-plugin-google-tagmanager": "^2.0.7",
     "gatsby-plugin-manifest": "^2.0.12",
     "gatsby-plugin-offline": "^2.0.20",
