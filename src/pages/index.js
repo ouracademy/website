@@ -108,7 +108,7 @@ const PostItem = ({ fields, frontmatter, excerpt }) => (
     {frontmatter.image ? (
       <Image src={frontmatter.image} fit="cover" />
     ) : (
-      <p> {excerpt} </p>
+      <p> {frontmatter.description || excerpt} </p>
     )}
   </Box>
 );
@@ -130,6 +130,7 @@ export const query = graphql`
             title
             date(formatString: "DD MMMM, YYYY", locale: "es")
             image
+            description
           }
           excerpt
         }

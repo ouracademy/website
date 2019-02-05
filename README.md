@@ -29,10 +29,10 @@ Then put a frontmatter in YAML
 ---
 title: Post title
 image: https://some.com/image-url.png
-description: some desc
 date: 2018-11-06 # in format yyyy-mm-dd
 author: your-author-id # see below
 tags: [tag-1, tag-2]
+description: some desc # optional, default to an excerpt of the post
 ---
 Here your content (in markdown but with the power of JSX)
 ```

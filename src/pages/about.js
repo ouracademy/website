@@ -5,7 +5,7 @@ import { graphql } from "gatsby";
 import { Heading, Anchor, Box, Paragraph, Image } from "grommet";
 import { Twitter, Github } from "grommet-icons";
 
-const Avatar = ({ size, ...rest }) => (
+export const Avatar = ({ size, ...rest }) => (
   <Box height={size} width={size} round="full" background="light-2">
     <Image {...rest} fit="cover" style={{ borderRadius: "50%" }} />
   </Box>
