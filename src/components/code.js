@@ -1,8 +1,8 @@
 import React from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { github } from "react-syntax-highlighter/dist/styles/hljs";
+import { hybrid } from "react-syntax-highlighter/dist/styles/hljs";
 
-const codeTheme = github;
+const codeTheme = hybrid;
 
 /**
  * Use it <Code language="javascript">{`const a = b + c`}</Code>
