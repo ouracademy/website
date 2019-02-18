@@ -21,5 +21,12 @@
     "**/node_modules/**": true,
     "**/.cache/**": true,
     "public/**": true
-  }
+  },
+  "cSpell.words": [
+    "bugs",
+    "optimizaciones",
+    "optimización",
+    "optimizadores",
+    "performance"
+  ]
 }

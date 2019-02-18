@@ -11,7 +11,9 @@
     "silvenon.mdx",
 
     "wayou.vscode-todo-highlight",
-    "bierner.emojisense"
+    "bierner.emojisense",
+    "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-spanish"
   ],
   // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
   "unwantedRecommendations": []
