@@ -4,6 +4,7 @@ author: arthur
 tags: [optimizacion, codigo, practica, desarrollo de software, arquitectura]
 description: Un articulo sobre los principios que debes tomar en cuenta antes de mejorar el performance de tu aplicación.
 date: 2019-02-11
+image: https://assets-keycdn.ej-technologies.com/products/jprofiler/top10/probes_fsa-3e9a30c402ac6f81612e2e291f0927f3.png
 ---
 
 > Una traducción del articulo de Martin Fowler: [Yet another optimization article](https://martinfowler.com/ieeeSoftware/yetOptimization.pdf).

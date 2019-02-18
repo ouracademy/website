@@ -19,7 +19,7 @@ We highly recommend that you install the recommended extensions if you use VS Co
 
 ### How to add a post?
 
-Just create a .mdx file at src/posts
+Just create a .mdx (or .md) file at src/posts
 
 > Note: you could copy & paste from any of the mdx files there as a guide
 
@@ -28,7 +28,7 @@ Then put a frontmatter in YAML
 ```yaml
 ---
 title: Post title
-image: https://some.com/image-url.png
+image: https://some.com/image-url.png # 200x200 minimun
 date: 2018-11-06 # in format yyyy-mm-dd
 author: your-author-id # see below
 tags: [tag-1, tag-2]
