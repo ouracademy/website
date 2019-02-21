@@ -3,7 +3,7 @@ import React from "react";
 import Layout from "../components/layout";
 import { graphql } from "gatsby";
 import { Heading, Anchor, Box, Paragraph, Image } from "grommet";
-import { Twitter, Github } from "grommet-icons";
+import { Github, Link as LinkIcon } from "grommet-icons";
 
 export const Avatar = ({ size, ...rest }) => (
   <Box height={size} width={size} round="full" background="light-2">
@@ -11,7 +11,7 @@ export const Avatar = ({ size, ...rest }) => (
   </Box>
 );
 
-export const Card = ({ name, avatar, twitter, description }) => (
+export const Card = ({ name, avatar, links, description }) => (
   <Box
     background={{ color: "light-2", opacity: "strong" }}
     pad="large"
@@ -25,17 +25,37 @@ export const Card = ({ name, avatar, twitter, description }) => (
       <Heading level="3" margin="xsmall">
         {name}
       </Heading>
-      {twitter && <TwitterAnchor username={twitter} />}
+
+      <Contact name={name} links={links} />
       <Paragraph size="medium">{description}</Paragraph>
     </Box>
   </Box>
 );
 
+const Contact = ({ name, links }) => {
+  return (
+    <div>
+      {Object.keys(links).map(type => {
+        const value = links[type];
+        const key = `${type}_${name}`;
+        switch (type) {
+          case "twitter":
+            return <TwitterAnchor key={key} username={value} />;
+          case "github":
+            return <GithubAnchor key={key} username={value} />;
+          case "website":
+            return <WebsiteAnchor key={key} url={value} />;
+          default:
+            return `not implemented ${key} ${value}`;
+        }
+      })}
+    </div>
+  );
+};
+
 const TwitterAnchor = ({ username }) => (
   <Anchor
-    reverse
     color="accent-6"
-    icon={<Twitter />}
     label={`@${username}`}
     href={`https://twitter.com/${username}`}
   />
@@ -43,11 +63,14 @@ const TwitterAnchor = ({ username }) => (
 
 const GithubAnchor = ({ username, project }) => (
   <Anchor
-    reverse
     color="accent-6"
     icon={<Github />}
-    href={`https://github.com/${username}/${project}`}
+    href={`https://github.com/${username}${project ? `/${project}` : ``}`}
   />
+);
+
+const WebsiteAnchor = ({ url }) => (
+  <Anchor color="accent-6" icon={<LinkIcon color="plain" />} href={url} />
 );
 
 const projects = [
@@ -55,8 +78,10 @@ const projects = [
     id: 1,
     name: "Essboard",
     description:
-      "Herramienta colaborativo para la direccion y monitoreo de desarrollo de software usando Essence",
-    url: "https://cranky-murdock-5f141a.netlify.com/",
+      "Herramienta colaborativo para la dirección y monitoreo de desarrollo de software usando Essence",
+    links: {
+      website: "https://cranky-murdock-5f141a.netlify.com/"
+    },
     avatar:
       "https://cranky-murdock-5f141a.netlify.com/assets/images/logo/logo-horizontal.png"
   },
@@ -64,24 +89,26 @@ const projects = [
     id: 2,
     name: "SOPIOS",
     description: "Sociedad Peruana de Investigación Operativa y de Sistemas",
-    url: "http://sopios.org.pe/",
-    avatar: ""
+    links: {
+      website: "http://sopios.org.pe/"
+    },
+    avatar:
+      "http://res.cloudinary.com/sopios/image/upload/v1513311519/sopios.png"
   }
 ];
 
 const Projects = () => (
   <Box>
-    <Heading level="3" size="large">
-      Proyectos
-    </Heading>
+    <Heading level="3" size="large" />
+    Proyectos
     {projects.map(project => (
       <Project key={project.id} {...project} />
     ))}
   </Box>
 );
 
-const Project = ({ name, description, avatar, url }) => (
-  <Card name={name} avatar={avatar} description={description} />
+const Project = ({ name, description, avatar, links }) => (
+  <Card name={name} avatar={avatar} description={description} links={links} />
 );
 
 export default ({
@@ -98,8 +125,8 @@ export default ({
       principios, tecnologías y teorías de desarrollo software.
     </p>
     <Box
+      wrap
       direction="row-responsive"
-      wrap="true"
       justify="center"
       pad="large"
       gap="medium"
@@ -110,7 +137,7 @@ export default ({
           name={member.name}
           avatar={member.avatar}
           description={member.description}
-          twitter={member.twitter}
+          links={member.links}
         />
       ))}
     </Box>
@@ -132,7 +159,10 @@ export const query = graphql`
           name
           avatar
           description
-          twitter
+          links {
+            twitter
+            github
+          }
         }
       }
     }
