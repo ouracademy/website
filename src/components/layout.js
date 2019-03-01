@@ -1,14 +1,18 @@
-import React from "react";
+import React, { Component } from "react";
 import { Link, StaticQuery, graphql } from "gatsby";
 import { Helmet } from "react-helmet";
-import { Heading, Box, Grommet, Button, ResponsiveContext } from "grommet";
+import {
+  Heading,
+  Box,
+  Grommet,
+  Button,
+  ResponsiveContext,
+  Layer,
+  Text
+} from "grommet";
 import { theme } from "./our-theme";
-
-const ListLink = ({ children, to }) => (
-  <li style={{ display: `inline-block`, marginRight: `1rem` }}>
-    <Link to={to}>{children}</Link>
-  </li>
-);
+import { Menu as MenuIcon, Close } from "grommet-icons";
+import { navigate } from "@reach/router";
 
 const Container = ({ children }) => (
   <ResponsiveContext.Consumer>
@@ -20,29 +24,83 @@ const Container = ({ children }) => (
   </ResponsiveContext.Consumer>
 );
 
+const links = [
+  {
+    label: "Nosotros",
+    href: "/about"
+  },
+  {
+    label: "Tags",
+    href: "/tags"
+  }
+];
+
 const Nav = ({ title }) => (
-  <Box
-    as="header"
-    direction="row"
-    align="center"
-    width="xlarge"
-    alignSelf="center"
-    justify="between"
-    fill="horizontal"
-  >
+  <Box as="header" direction="row" align="center" justify="between">
     <Link to="/" style={{ textDecoration: "none" }}>
-      <Heading level="3" size="large">
-        {title}
-      </Heading>
+      <Heading level="2">{title}</Heading>
     </Link>
-    <ul style={{ listStyle: `none` }}>
-      <ListLink to="/about">
-        <Button label="Nosotros" />
-      </ListLink>
-      <ListLink to="/tags" primary>
-        <Button label="Tags" primary />
-      </ListLink>
-    </ul>
+
+    <div>
+      <ResponsiveContext.Consumer>
+        {size => (size === "small" ? <MobileMenu /> : <DesktopNavButtons />)}
+      </ResponsiveContext.Consumer>
+    </div>
+  </Box>
+);
+
+class MobileMenu extends Component {
+  state = {
+    showLayer: false
+  };
+
+  render() {
+    const { showLayer } = this.state;
+    return (
+      <Box pad="small" fill align="center" justify="center">
+        <MenuIcon
+          color="plain"
+          onClick={() => this.setState({ showLayer: true })}
+        />
+        {showLayer && (
+          <Layer full>
+            <Box fill background="light-1" pad="large">
+              <Close onClick={() => this.setState({ showLayer: false })} />
+              <Box
+                fill
+                gap="xlarge"
+                align="center"
+                justify="center"
+                pad={{ bottom: "large" }}
+              >
+                {links.map(link => (
+                  <Text
+                    key={link.label}
+                    size="xxlarge"
+                    onClick={() => {
+                      navigate(link.href);
+                    }}
+                  >
+                    {link.label}
+                  </Text>
+                ))}
+              </Box>
+            </Box>
+          </Layer>
+        )}
+      </Box>
+    );
+  }
+}
+
+const DesktopNavButtons = () => (
+  <Box direction="row" gap="xsmall">
+    <Link to="/about">
+      <Button label="Nosotros" />
+    </Link>
+    <Link to="/tags">
+      <Button label="Tags" primary />
+    </Link>
   </Box>
 );
 
