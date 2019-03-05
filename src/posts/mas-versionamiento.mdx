@@ -1,0 +1,22 @@
+---
+title: Más control de versiones
+date: 2019-03-05
+author: arthur
+tags: ["control de versiones", "escritura"]
+---
+
+> Una traducción del post [MoreVersionControl](https://martinfowler.com/bliki/MoreVersionControl.html) de Martin Fowler.
+
+Como alguien que usa versionadores (como Git) todo el tiempo, creo que cada vez más el uso de versionadores puede ser usado en otros sitios. Aparte de los desarrolladores de software, pocos otros personas lo usan (sin embargo, veo cada vez más y mas herramientas que poseen carácteristicas de versionamiento, como lo es en Google Drive, Trello o Figma). Tal y como sabemos los desarrolladores, los controladores de versiones son muy utiles en trabajos colaborativos, ya que permiten que múltiples personas puedan trabajar juntas. ¿Cuales son los beneficios de usar un control de versiones en otras áreas?
+
+Lo bueno es que estamos llegando al punto en el que es práctico para cualquier pesona usar un versionador en su trabajo. Git, Subversion y otros sistemas están disponbiles de forma gratuita y eliminan muchas de las limitaciones de versionadores antiguos como CVS. Actualmente el espacio de disco es lo suficientemente barato como para que pueda poner todo un espacio de trabajo bajo un control de versiones.
+
+Sin embargo, aún existe una gran limitante, es que la mayoría de las aplicaciones y herramientas no se dan cuenta de la importancia del versionar. Word y Google Drive actualmente poseen un control de versiones, sin embargo esto no sucede en la mayoría de las aplicaciones que las personas usan. ¿Cómo estás aplicaciones podrán usar las ideas (como diff o merge) de un control de versiones?
+
+Por ejemplo, me gusta dibujar diagramas con herramientas como Visio. Sería interesante ver que las diferencias entre las distintas versiones de un diagrama o por ejemplo ver que cambios hizo otra persona a mi diagrama. Esto es especialmente útil en aplicaciones para sectores maduros, se debe poder ver que cambio sea realizo a un contrato (como alguna adenda) en un sistema para gestionar contratos o poder ver que se receto a un paciente en citas médicas anteriores en un sistema clínico. Para realmente obtener valor de este tipo de cosas quizá necesitemos herramientas que soporten un [Diff Semántico](https://martinfowler.com/bliki/SemanticDiff.html) quizá usando alguna técnica de temporalidad como [Event Sourcing](/posts/eventos-como-mecanismo-de-almacenamiento/)
+
+![Semantic merge](https://www.semanticmerge.com/images/illustration-what.png)
+
+[Semantic Merge](https://www.semanticmerge.com/): una herramienta que usa un diff semantico en vez de solo comparar el resultado (textos) como Git lo hace.
+
+Esta podría ser una oportunidad muy importante para que la comunidad open source tome aplicaciones convencionales y las mueva en esa dirección, basándose en el hecho de que todos pueden obtener y usar fácilmente Git. Algunas buenas ideas por aquí podrían realmente mejorar el trabajo colaborativo.
