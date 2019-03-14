@@ -1,0 +1,35 @@
+---
+title: Un ejemplo viendo el codigo de redux
+date: 2019-03-04
+author: diana
+tags: ["state", "redux"]
+image: https://redux.js.org/img/redux.svg
+---
+
+**¿Qué es Redux?**
+
+> Un contenedor de estado predecible para aplicaciones de JavaScript.
+
+**¿Pero.. Cómo funciona?**
+
+Siempre quise entender como funciona Redux, y pues leía (bueno sin la concentración debida) pero no entendía, miraba ejemplos de cómo usar redux, pero por dentro sentia que no entendia su funcionamiento, entonces ¿porqué no en un ejemplo ir viendo el código de Redux?,
+
+**Bueno ahi vamos, primero identificar el ejemplo, aver será cambiar un número, ya sea agregando o quitandole una unidad :**
+
+**¿Qué sucede en el createStore()?**
+
+<figure>
+    <img src="/images/redux1.png" style="width:100%;" />
+</figure>
+
+**Uhm, ya voy entendiendo, y si hago un dispatch({ action :"INCREMENT"})?**
+
+<figure>
+    <img src="/images/redux2.png" style="width:100%;" />
+</figure>
+
+**No quiero llamar a cada rato a getState(), cómo me entero de los cambios en el estado, bueno ps hay que subscribirse**
+
+<figure>
+    <img src="/images/redux3.png" style="width:100%;" />
+</figure>
