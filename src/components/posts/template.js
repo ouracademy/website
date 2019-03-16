@@ -1,7 +1,6 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
-// import { DiscussionEmbed } from "disqus-react";
 import { Box, Heading } from "grommet";
 import { Tag as TagIcon } from "grommet-icons";
 import { Tag } from "../../pages/tags";
@@ -76,19 +75,6 @@ const Share = props => (
     </Box>
   </Box>
 );
-
-// const disqusShortname = "academyforus";
-
-// const Comments = ({ id, url, title }) => (
-//   <DiscussionEmbed
-//     shortname={disqusShortname}
-//     config={{
-//       url,
-//       identifier: id,
-//       title
-//     }}
-//   />
-// );
 
 export default PostPageTemplate;
 
