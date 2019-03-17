@@ -25,6 +25,7 @@
     "gatsby-plugin-styled-components": "^3.0.7",
     "gatsby-remark-images": "^3.0.10",
     "gatsby-source-filesystem": "^2.0.27",
+    "gatsby-source-graphql": "^2.0.15",
     "gatsby-transformer-yaml": "^2.1.10",
     "grommet": "^2.5.5",
     "grommet-icons": "^4.2.0",
