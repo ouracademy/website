@@ -48,7 +48,7 @@ Also we use the `docs` type in our commit messages, to show a change history of 
 
 ---
 
-## 🚀 Development
+## Development
 
 ```bash
 npm install
