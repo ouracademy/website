@@ -8,6 +8,8 @@
 
 -   Clone this repository
 
+-   Install & Run it following [this steps](#development)
+
 -   Create .env file (like env.sample file) and put your token there, for get your token see this link: https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line
 
 -   Create a .mdx (or .md) file at src/posts, [see a sample here](#sample-post-file)
