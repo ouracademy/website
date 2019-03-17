@@ -39,6 +39,12 @@ Here your content (in markdown but with the power of JSX)
 
 Remember that if you are a new author (put your information) in authors.yaml file.
 
+### About post commit messages
+
+We use [commit lint](https://conventional-changelog.github.io/commitlint/#/) in order to have a standard for commit messages. So if you create or update the content of a blog post, please use the `docs` type in your commit message, for example a commit message like `docs: new "post title"` is ok.
+
+Also we use the `docs` type in our commit messages, to show a change history of every post (see `<History/>` component in `posts/template.js`).
+
 ### Resources
 
 This project use Gatsby. See more of it in its awesome[tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql), it has very useful resources not only to learn Gatsby but also GraphQL, React & plugins for any purpose...
