@@ -48,6 +48,7 @@ exports.createPages = ({ graphql, actions }) => {
                     ... on File {
                       name
                       sourceInstanceName
+                      relativePath
                     }
                   }
                   frontmatter {
@@ -70,7 +71,12 @@ exports.createPages = ({ graphql, actions }) => {
           createPage({
             path: `/${node.parent.sourceInstanceName}/${node.parent.name}`,
             component: path.resolve("./src/components/posts/template.js"),
-            context: { id: node.id }
+            context: {
+              id: node.id,
+              workspacePath: `src/${node.parent.sourceInstanceName}/${
+                node.parent.relativePath
+              }`
+            }
           });
         });
 

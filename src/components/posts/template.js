@@ -2,7 +2,7 @@ import React from "react";
 import { graphql, Link } from "gatsby";
 import MDXRenderer from "gatsby-mdx/mdx-renderer";
 import { Box, Heading } from "grommet";
-import { Tag as TagIcon } from "grommet-icons";
+import { Tag as TagIcon, Clock } from "grommet-icons";
 import { Tag } from "../../pages/tags";
 
 import Layout from "../layout";
@@ -29,11 +29,18 @@ const Author = ({ name, avatar }) => (
   </Link>
 );
 
-const PostPageTemplate = ({ data: { mdx }, location }) => {
+const onlyDocCommits = ({ message = "" }) => message; // message.startsWith("docs");
+
+const PostPageTemplate = ({ data: { mdx, github }, location }) => {
   const { code, frontmatter, excerpt } = mdx;
   const { title, author, tags, image = null } = frontmatter;
   const url = location.href;
   const description = frontmatter.description || excerpt;
+  const history = github.repository.defaultBranchRef.target.history.nodes.filter(
+    onlyDocCommits
+  );
+
+  const showHistory = history.length > 1;
 
   return (
     <Layout
@@ -56,12 +63,29 @@ const PostPageTemplate = ({ data: { mdx }, location }) => {
         >
           {code.body}
         </MDXRenderer>
+        {showHistory && <History commits={history} />}
         <Share title={title} description={description} url={url} />
       </Box>
       {/* <Comments id={id} title={title} url={url} /> */}
     </Layout>
   );
 };
+
+const History = ({ commits }) => (
+  <div>
+    <Box direction="row" align="center" gap="small">
+      <Clock />
+      <Heading level="3">Cambios y revisiones:</Heading>
+    </Box>
+    {commits.map(commit => (
+      <div key={commit.oid}>
+        <p>
+          {commit.authoredDate}: {commit.message}
+        </p>
+      </div>
+    ))}
+  </div>
+);
 
 const Share = props => (
   <Box direction="row-responsive" align="center" justify="between">
@@ -79,7 +103,7 @@ const Share = props => (
 export default PostPageTemplate;
 
 export const query = graphql`
-  query($id: String!) {
+  query($id: String!, $workspacePath: String!) {
     mdx(id: { eq: $id }) {
       id
       frontmatter {
@@ -96,6 +120,28 @@ export const query = graphql`
       excerpt
       code {
         body
+      }
+    }
+
+    github {
+      repository(owner: "ouracademy", name: "website") {
+        defaultBranchRef {
+          target {
+            ... on GitHub_Commit {
+              history(first: 100, path: $workspacePath) {
+                nodes {
+                  author {
+                    name
+                  }
+                  message
+                  oid
+                  authoredDate
+                  url
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
