@@ -1,5 +1,9 @@
 const siteUrl = "https://our-academy.org";
 
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`
+});
+
 module.exports = {
   siteMetadata: {
     title: `Ouracademy`,
@@ -32,8 +36,7 @@ module.exports = {
         fieldName: "github",
         url: "https://api.github.com/graphql",
         headers: {
-          // TODO: Learn about environment variables: https://gatsby.dev/env-vars
-          Authorization: `bearer ce34399fb08e8de91aad4f21bede46e82f815e47`
+          Authorization: `bearer ${process.env.GITHUB_TOKEN}`
         }
       }
     },
