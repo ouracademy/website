@@ -11,6 +11,9 @@ import { Avatar } from "../../pages/about";
 
 import DesignSystem from "../design-system";
 
+import { format } from "date-fns";
+import { parseHeader } from "parse-commit-message";
+
 const Tags = ({ tags }) => (
   <Box pad="small" direction="row" align="center" gap="small" wrap>
     <TagIcon />
@@ -29,15 +32,21 @@ const Author = ({ name, avatar }) => (
   </Link>
 );
 
-const onlyDocCommits = ({ message = "" }) => message; // message.startsWith("docs");
+const onlyDocCommits = commits =>
+  commits
+    .filter(commit => commit.message.startsWith("docs"))
+    .map(commit => ({
+      ...commit,
+      message: parseHeader(commit.message).subject
+    }));
 
 const PostPageTemplate = ({ data: { mdx, github }, location }) => {
   const { code, frontmatter, excerpt } = mdx;
   const { title, author, tags, image = null } = frontmatter;
   const url = location.href;
   const description = frontmatter.description || excerpt;
-  const history = github.repository.defaultBranchRef.target.history.nodes.filter(
-    onlyDocCommits
+  const history = onlyDocCommits(
+    github.repository.defaultBranchRef.target.history.nodes
   );
 
   const showHistory = history.length > 1;
@@ -80,7 +89,8 @@ const History = ({ commits }) => (
     {commits.map(commit => (
       <div key={commit.oid}>
         <p>
-          {commit.authoredDate}: {commit.message}
+          {format(new Date(commit.authoredDate), "dd/MM/yyyy")}:{" "}
+          {commit.message}
         </p>
       </div>
     ))}

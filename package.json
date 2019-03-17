@@ -33,6 +33,7 @@
     "grommet-icons": "^4.2.0",
     "lodash": "^4.17.11",
     "mdx-utils": "0.0.2",
+    "parse-commit-message": "^3.2.3",
     "polished": "^2.3.3",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
