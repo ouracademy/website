@@ -67,7 +67,8 @@ const PostPageTemplate = ({ data: { mdx, github }, location }) => {
         <MDXRenderer
           components={{
             pre: DesignSystem.Code,
-            blockquote: DesignSystem.Blockquote
+            blockquote: DesignSystem.Blockquote,
+            img: DesignSystem.Image
           }}
         >
           {code.body}
