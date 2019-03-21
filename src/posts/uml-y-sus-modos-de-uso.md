@@ -7,15 +7,18 @@ date: 2019-03-17
 image: https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/UML_diagrams_overview.svg/600px-UML_diagrams_overview.svg.png
 ---
 
+import { Figure } from "$components/figure";
+
 De vez en cuando, de algún compañero del trabajo o de la universidad, o en varios grupos de redes sociales veo preguntas como: ¿Usas UML? ¿Vale la pena aprender UML?, ¿UML sirve para aprender Orientación a Objetos? Si soy agile, debería usar UML? ¿UML solo se usa en la universidad?.
 
 Y de ello veo distintas opiniones, y lo peor afirmaciones erradas de gente conocida del desarrollo de software, tales como: UML solo lo usan los universitarios, UML solo se usa para documentar proyectos, Usamos UML para discutir algunas decisiones de diseño, UML está en desuso, UML no se usa en proyectos serios modernos, UML es una **metodología**...algunas barbaridades, otras en algún grado ciertas (quizá la única verdadera es su creciente desuso).
 
 En mucho grado esto refleja desconocimiento de UML, sin embargo creo que la principal razón de las diferencias de opiniones es la forma o modo en que UML es usado y enseñado. Existen distintas [formas o modos de usar UML][4]. Usualmente en las universidades, enseñan UML a un nivel de bastante detalle, dicen cosas como: Haz un diagrama de clases y varios diagramas de secuencia bien detallados, de tal forma que estos representen las clases y objetos que tu código fuente tendrá. Por otro lado, otras personas hacen algunos esbozos de algún flujo de negocio en un diagrama de actividades (o quizá usando BPMN), lo más rápido posible, sin prestar atención a la sintaxis de UML.
 
-![Diagrama de actividades como un esbozo](http://agilemodeling.com/images/models/activityDiagramEnroll.JPG)
-
-Diagrama de actividades como un esbozo, de Scott Ambler
+<Figure
+  src="http://agilemodeling.com/images/models/activityDiagramEnroll.JPG"
+  caption="Diagrama de actividades como un esbozo, de Scott Ambler"
+/>
 
 Y así como estás formas de usar UML, existen otras. Pero en general, existen 3 propósitos, que son los modos generales de como usar UML, siguiendo la clasificación de [Fowler](https://martinfowler.com). UML puede ser muy detallado y rígido, a tal [nivel que sirve como un lenguaje de programación][1], es decir, a un nivel que una herramienta pueda leer los gráficos de UML y generar un programa, tal y como lo hace [IBM Rational Software Architect](https://www.ibm.com/us-en/marketplace/rational-software-architect-designer) (siendo esta forma de usar UML, realmente parte de Model Driven Architecture o MDA). [UML como plano de diseño o blueprint][2], que de alguna forma es la forma más clásica de usar UML (y quizá la más odiada), donde los diagramas son trabajados por un grupo de personas distintos a los programadores, muy de la forma como los planos de diseño son usados al construir un puente (¿notas este enfoque en cascada?). Y [UML como bosquejos o sketchs][3], donde algún desarrollador o diseñador usa UML para explicar alguna parte del sistema, si es que alguna vez te encontraste explicando a algún compañero/s de trabajo... y esta clase Persona se enlaza con esta otra clase XYZ en algún pizarrón, una hoja, una herramienta super ligera (como [UMLet](https://www.umlet.com/)) o incluso en una servilleta 😝
 
