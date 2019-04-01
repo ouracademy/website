@@ -4,6 +4,12 @@ import Code from "./code";
 
 import styled from "styled-components";
 
+export const CenteredImage = styled.img`
+  display: block;
+  max-width: 75%;
+  margin: auto;
+`;
+
 const Blockquote = styled.blockquote`
   padding-left: 20px;
   margin: 0 0 20px;
@@ -23,5 +29,6 @@ export default {
       <pre {...preProps} />
     );
   },
-  Blockquote
+  Blockquote,
+  Image: props => <CenteredImage {...props} />
 };
