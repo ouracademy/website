@@ -80,10 +80,10 @@ const projects = [
     description:
       "Herramienta colaborativo para la dirección y monitoreo de desarrollo de software usando Essence",
     links: {
-      website: "https://cranky-murdock-5f141a.netlify.com/"
+      website: "https://essboard.netlify.com/"
     },
     avatar:
-      "https://cranky-murdock-5f141a.netlify.com/assets/images/logo/logo-horizontal.png"
+      "https://essboard.netlify.com/assets/images/logo/logo-horizontal.png"
   },
   {
     id: 2,
