@@ -110,7 +110,7 @@ export default ({ data: { allMdx } }) => (
 const PostItem = ({ fields, frontmatter, excerpt }) => (
   <Box elevation="medium" pad="medium">
     <PostHeader>
-      <StyledLink to={`posts${fields.slug}`}>
+      <StyledLink to={`/posts${fields.slug}`}>
         <PostTitle> {frontmatter.title} </PostTitle>
       </StyledLink>
       <span
