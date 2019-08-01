@@ -1,6 +1,6 @@
 import React from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { hybrid } from "react-syntax-highlighter/dist/styles/hljs";
+import { hybrid } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 const codeTheme = hybrid;
 
