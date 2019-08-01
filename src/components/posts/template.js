@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
-import MDXRenderer from "gatsby-mdx/mdx-renderer";
+import MDXRenderer from "gatsby-plugin-mdx/mdx-renderer";
 import { Box, Heading } from "grommet";
 import { Tag as TagIcon, Clock } from "grommet-icons";
 import { Tag } from "../../pages/tags";
@@ -41,7 +41,7 @@ const onlyDocCommits = commits =>
     }));
 
 const PostPageTemplate = ({ data: { mdx, github }, location }) => {
-  const { code, frontmatter, excerpt } = mdx;
+  const { body, frontmatter, excerpt } = mdx;
   const { title, author, tags, image = null } = frontmatter;
   const url = location.href;
   const description = frontmatter.description || excerpt;
@@ -71,7 +71,7 @@ const PostPageTemplate = ({ data: { mdx, github }, location }) => {
             img: DesignSystem.Image
           }}
         >
-          {code.body}
+          {body}
         </MDXRenderer>
         {showHistory && <History commits={history} />}
         <Share title={title} description={description} url={url} />
@@ -129,9 +129,7 @@ export const query = graphql`
         description
       }
       excerpt
-      code {
-        body
-      }
+      body
     }
 
     github {
