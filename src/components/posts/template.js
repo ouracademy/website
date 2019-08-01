@@ -1,6 +1,6 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
-import MDXRenderer from "gatsby-plugin-mdx/mdx-renderer";
+import { MDXRenderer } from "gatsby-plugin-mdx";
 import { Box, Heading } from "grommet";
 import { Tag as TagIcon, Clock } from "grommet-icons";
 import { Tag } from "../../pages/tags";
@@ -67,6 +67,7 @@ const PostPageTemplate = ({ data: { mdx, github }, location }) => {
         <MDXRenderer
           components={{
             pre: DesignSystem.Code,
+            code: DesignSystem.Code,
             blockquote: DesignSystem.Blockquote,
             img: DesignSystem.Image
           }}

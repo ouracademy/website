@@ -1,7 +1,4 @@
 import React from "react";
-import { preToCodeBlock } from "mdx-utils";
-import Code from "./code";
-
 import styled from "styled-components";
 
 export const CenteredImage = styled.img`
@@ -21,14 +18,6 @@ const Blockquote = styled.blockquote`
 `;
 
 export default {
-  Code: preProps => {
-    const props = preToCodeBlock(preProps);
-    return props ? (
-      <Code language={props.language}>{props.codeString}</Code>
-    ) : (
-      <pre {...preProps} />
-    );
-  },
   Blockquote,
   Image: props => <CenteredImage {...props} />
 };
