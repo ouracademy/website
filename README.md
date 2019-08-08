@@ -2,7 +2,9 @@
 
 > Ouracademy is an organization that promoves the education in software development throught blog posts & videos 😃.
 
-This website is created using [Gatsby](#resources), MDX & Grommet for UI. It uses many Gatsby plugins for offline, analytics (through Google Tag Manager), Syntax Highlight (through Prismjs) and GraphQL for fetching Github (to automatically generate versioning of posts). It also has a `new-post` script to help you create new posts.
+This website is created using [Gatsby](#resources), MDX & Grommet for UI. It uses many Gatsby plugins for offline, analytics (through Google Tag Manager), Syntax Highlight (through Prismjs) and GraphQL for fetching Github (to automatically generate versioning of posts).
+
+It also has a `new-post` script to help you create new posts.
 
 ---
 
@@ -12,17 +14,13 @@ This website is created using [Gatsby](#resources), MDX & Grommet for UI. It use
 
 - Install & Run it following [this steps](#development)
 
-- Create .env file (like env.sample file) and put your token there, for get your token see this link: https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line
-
-- Run `npm run new-post` for create a new post
-
-- Start writing
+- Create .env file (similar to .env.sample file) and put your Github token there - this is used to fetch Github and versioning posts, [get your token here](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line).
 
 - If you are a new author (put your information) in authors.yaml file.
 
-- Commit your post (follow this [guideline](#guide-for-commit-messages))
+- Run `npm run new-post` to create a new post
 
-- Send a pull request
+- Start writing, please follow this [guideline](#guide-for-commit-messages) to commit your post
 
 ### Guide for commit messages
 
