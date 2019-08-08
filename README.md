@@ -6,39 +6,21 @@
 
 ## How write a post
 
--   Clone this repository
+- Clone this repository
 
--   Install & Run it following [this steps](#development)
+- Install & Run it following [this steps](#development)
 
--   Create .env file (like env.sample file) and put your token there, for get your token see this link: https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line
+- Create .env file (like env.sample file) and put your token there, for get your token see this link: https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line
 
--   Create a .mdx (or .md) file at src/posts, [see a sample here](#sample-post-file)
+- Run `npm run new-post` for create a new post
 
--   Start writing
+- Start writing
 
--   If you are a new author (put your information) in authors.yaml file.
+- If you are a new author (put your information) in authors.yaml file.
 
--   Commit your post (follow this [guideline](#guide-for-commit-messages))
+- Commit your post (follow this [guideline](#guide-for-commit-messages))
 
--   Send a pull request
-
-### Sample post file
-
-Put a frontmatter in YAML and content in post file.
-
-```yaml
----
-title: Post title
-image: https://some.com/image-url.png # 200x200 minimun
-date: 2018-11-06 # in format yyyy-mm-dd
-author: your-author-id # see below
-tags: [tag-1, tag-2]
-description: some desc # optional, default to an excerpt of the post
----
-Here your content (in markdown but with the power of JSX)
-```
-
-> Note: you could copy & paste from any of the mdx files there as a guide
+- Send a pull request
 
 ### Guide for commit messages
 
