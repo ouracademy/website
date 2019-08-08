@@ -42,12 +42,16 @@ inquirer
       image: "https://pbs.twimg.com/media/D-ZG3OWXsAAruSS?format=png&name=small"
     };
 
-    fs.writeFile(getPostPath(view.title), newPost(view), function(err) {
+    const postPath = getPostPath(view.title);
+    fs.writeFile(postPath, newPost(view), function(err) {
       if (err) {
         return console.log(err);
       }
 
-      console.log("Post create, write your post 😃");
+      console.log(`Post created at ${postPath}, start writing 😃`);
+      console.log(
+        "Don't know mdx? You could guide yourself by seeing other .mdx files or see https://www.gatsbyjs.org/docs/mdx/markdown-syntax/"
+      );
     });
   });
 
@@ -55,7 +59,7 @@ const newPost = view =>
   Mustache.render(
     `---
 title: {{title}}
-image: {{imageURL}}
+image: {{image}}
 date: {{date}}
 author: {{author}}
 tags: [tag-1, tag-2]
