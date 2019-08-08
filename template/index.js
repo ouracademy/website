@@ -8,7 +8,7 @@ const inquirer = require("inquirer");
 const slug = text => slugify(text).toLowerCase();
 const getPostPath = text => path.join("src/posts", slug(text) + ".mdx");
 
-console.log("Hi! We'll help you write a post");
+console.log("Hi 🤖! I'll help you write a post");
 inquirer
   .prompt([
     {
@@ -26,28 +26,33 @@ inquirer
     {
       name: "author",
       type: "input",
-      message: "Identify you, by putting your author id (see authors.yml)"
+      message: "Identify you, by putting your author id - see authors.yml:"
+    },
+    {
+      name: "imageURL",
+      type: "input",
+      message:
+        "Enter an image url, this is used when you share your post on Twitter or Facebook:"
     }
   ])
   .then(answers => {
-    console.log(answers);
-
     const format = require("date-fns/format");
     const view = {
-      title: answers.title,
-      description: answers.description,
+      ...answers,
       date: format(new Date(), "yyyy-MM-dd"),
-      author: answers.author,
-      tags: ["historia", "personajes del software", "desarrollo de software"],
-      image: "https://pbs.twimg.com/media/D-ZG3OWXsAAruSS?format=png&name=small"
+      tags: ["historia", "personajes del software", "desarrollo de software"]
     };
 
-    fs.writeFile(getPostPath(view.title), newPost(view), function(err) {
+    const postPath = getPostPath(view.title);
+    fs.writeFile(postPath, newPost(view), function(err) {
       if (err) {
         return console.log(err);
       }
 
-      console.log("Post create, write your post 😃");
+      console.log(`Post created at ${postPath}, start writing 😃`);
+      console.log(
+        "Don't know mdx? You could guide yourself by seeing other .mdx files or see https://www.gatsbyjs.org/docs/mdx/markdown-syntax/"
+      );
     });
   });
 
@@ -55,14 +60,17 @@ const newPost = view =>
   Mustache.render(
     `---
 title: {{title}}
-image: {{imageURL}}
 date: {{date}}
 author: {{author}}
 tags: [tag-1, tag-2]
-description: some desc # optional, default to an excerpt of the post
+{{#description}}
+description: {{description}}
+{{/description}}
+{{#imageURL}}
+image: {{imageURL}}
+{{/imageURL}}
 ---
 
-Your content in markdown but with the power of JSX. MDX!
-`,
+Your content in markdown but with the power of JSX. MDX!`,
     view
   );
