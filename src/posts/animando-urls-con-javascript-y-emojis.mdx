@@ -1,0 +1,46 @@
+---
+title: Animando URLs con Javascript y Emojis
+date: 2019-04-25
+author: arthur
+tags: [codigo, divertido]
+---
+
+import { AnimatedURL } from "$components/animated-url";
+
+<AnimatedURL />
+
+¿Sabias que puedes usar Emojis en (y otros carácteres gráficos de Unicode) en las URLs?. Es super genial. Sin embargo, parece que nadie lo hace. ¿Porque? Quizá sientan que los emoji son muy exoticos 🏖 para que las páginas web las usen? O quiza son evitados por algún miedo de molestar a los gurus del SEO.
+
+Cual fuese la razón, creo que se puede hacer cosas muy interesantes ... Así que vayamos por unos ejemplos!
+
+## Dando vueltas y vueltas (looop tras loop) ➰
+
+Lo primero (si es que deseas poner emojis a tu página) es verificar que este etiquetada con UTF-8 o de otra forma tendrás muchos problemas con los emojis en todo tu código...esto se puede lograr agregando una etiqueta `<meta>` o bien con una cabecera HTTP.
+
+Asi que veamos un ejemplito...si no te has dado cuenta mira la URL de está página...
+
+Como funciona? Bueno el código es algo como:
+
+```javascript
+// prettier-ignore
+var f = ['🕐','🕑','🕒','🕓','🕔','🕕','🕖','🕗','🕘','🕙','🕚','🕛'];
+
+function loop() {
+  location.hash = f[Math.floor((Date.now() / 100) % f.length)];
+
+  setTimeout(loop, 50);
+}
+
+loop();
+```
+
+Todo lo que necesitamos es iniciar un loop y bueno el loop hará loops. ¿No crees que los que crearon esos emojis de relojes pensaron en animarlos con esa secuencia? Creo que si.
+
+Podemos usar está animación cuando cargamos nuestra página o hacemos una llamada a una API, al igual que esta animación, podemos hacer muchas cosas más locas, por ejemplo si nuestra página tiene un video (como Youtube)...que la URL cambie a medida que avanza el video:
+
+/posts/animando-urls-con-javascript-y-emojis/#╭◯┄┄┄┄┄┄┄┄┄┄┄┄┄┄╮00:06╱01:50
+
+Asombroso no? De donde salieron esas ideas extrañas (pero geniales), bueno las lei hace un par de meses atrás de un blog muy extraño, a el la imaginación y todas las gracias.
+
+Puedes ver más ejemplos, como el del reloj o cambiar la URL según avanza un video y otros más en:
+http://matthewrayfield.com/articles/animating-urls-with-javascript-and-emojis/

@@ -14,9 +14,14 @@ module.exports = {
   plugins: [
     `gatsby-transformer-yaml`,
     {
-      resolve: `gatsby-mdx`,
+      resolve: `gatsby-plugin-mdx`,
       options: {
-        extensions: [".mdx", ".md"]
+        extensions: [".mdx", ".md"],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-prismjs`
+          }
+        ]
       }
     },
 

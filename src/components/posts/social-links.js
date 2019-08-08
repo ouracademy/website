@@ -17,13 +17,7 @@ export default ({ title, description, url }) => (
     <TwitterShareButton url={url} title={title}>
       <TwitterIcon size={40} round />
     </TwitterShareButton>
-    <LinkedinShareButton
-      url={url}
-      title={title}
-      description={description}
-      windowWidth={750}
-      windowHeight={600}
-    >
+    <LinkedinShareButton url={url} windowWidth={750} windowHeight={600}>
       <LinkedinIcon size={40} round />
     </LinkedinShareButton>
   </Box>

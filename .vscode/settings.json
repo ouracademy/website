@@ -8,6 +8,7 @@
   },
   "emojisense.languages": {
     "markdown": true,
+    "javascript": true,
     "plaintext": {
       "markupCompletionsEnabled": false,
       "emojiDecoratorsEnabled": false

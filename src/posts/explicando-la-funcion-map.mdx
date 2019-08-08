@@ -6,13 +6,9 @@ tags: ["programacion funcional"]
 image: /images/map.png
 ---
 
-import Code from "$components/code";
-
 **Primero una imagen, ¿que observas?**
 
-<figure>
-    <img src="/images/map.png" style="width:100%;" />
-</figure>
+![](/images/map.png)
 
 Dices observo un cambio, un conjunto de elementos que se transforma en otro, observo una **transformacióm**
 
@@ -21,20 +17,20 @@ Dices observo un cambio, un conjunto de elementos que se transforma en otro, obs
 Se tiene una lista de precios, y te piden que apliques un descuento de 10% a cada precio.
 Entonces tu dices, con javascript seria asi:
 
-<Code language="javascript">{`
-    let prices = [10, 15.4, 23.6];
-    let pricesWithDesc = [];    
-    for (let i = 0, max = prices.length; i < max; i ++) {
-      pricesWithDesc.push(prices[i] * 0.9);
-    }    
-`}</Code>
+```javascript
+let prices = [10, 15.4, 23.6];
+let pricesWithDesc = [];
+for (let i = 0, max = prices.length; i < max; i++) {
+  pricesWithDesc.push(prices[i] * 0.9);
+}
+```
 
 Hemos aplicado un cambio a cada elemento del arreglo 'prices' y puesto el resultado en el arreglo 'pricesWithDesc', esta accion se puede realizar de una manera distinta usando una funcion "map", el cual tiene como objetivo transformar una lista, aplicar una función a cada uno de sus elementos y retornar un nuevo arreglo. Veamos como quedaria:
 
-<Code language="javascript">{`
-    let prices = [10, 15.4, 23.6];
-    let pricesWithDesc = prices.map( price => price * 0.9)      
-`}</Code>
+```javascript
+let prices = [10, 15.4, 23.6];
+let pricesWithDesc = prices.map(price => price * 0.9);
+```
 
 Mas corto eh, ahora explicaremos su definicion a detalle.
 
@@ -45,39 +41,42 @@ La funcion map, tiene como objetivo **transformar una lista**, aplicar una **fun
 
 Veamos de una forma mas explicita a ** la función**:
 
-<Code language="javascript">{`
-    let prices = [10, 15.4, 23.6];
-    let applyDiscount = function(price) { return price * 0.9 }
-    let pricesWithDesc = prices.map(applyDiscount)    
-`}</Code>
+```javascript
+let prices = [10, 15.4, 23.6];
+let applyDiscount = function(price) {
+  return price * 0.9;
+};
+let pricesWithDesc = prices.map(applyDiscount);
+```
 
 Ahora ¿si queremos aplicar otros porcentajes a descontar?, uhm entonces hagamas mas mantenible el codigo, pasemos como parametro el porcentaje a descontar, para eso usaremos el poder de los closures junto a la técnica currying, ¿si te preguntas que son?, tranquilo mira este otro post: [Que es un closure?](https://our-academy.org/posts/closures)
 
-<Code language="javascript">{`
-    let prices = [10, 15.4, 23.6];
-    let multiplier = percentage => (100 - percentage)/100 
-    let discountAPercentageOf=percentage=>price=>price*multiplier(percentage)
-    let result = prices.map(discountAPercentageOf(10))    
-`}</Code>
+```javascript
+let prices = [10, 15.4, 23.6];
+let multiplier = percentage => (100 - percentage) / 100;
+let discountAPercentageOf = percentage => price =>
+  price * multiplier(percentage);
+let result = prices.map(discountAPercentageOf(10));
+```
 
 Y como es en otro lenguaje?, veamos en python:
 
-<Code language="python">{`
-    prices = [10, 15.4, 23.6];
-    multiplier = lambda percentage: (100 - percentage)/100.0
-    percentageToDiscount = 10
-    applyDiscount = lambda price: price*multiplier(percentageToDiscount)
-    pricesWithDesc = list(map(applyDiscount,prices))
-`}</Code>
+```python
+prices = [10, 15.4, 23.6]
+multiplier = lambda percentage: (100 - percentage)/100.0
+percentageToDiscount = 10
+applyDiscount = lambda price: price*multiplier(percentageToDiscount)
+pricesWithDesc = list(map(applyDiscount,prices))
+```
 
 Y ahora con una **sintactic sugar** (una sintaxis dentro de un lenguaje de programación que está diseñado para facilitar la lectura o la expresión. Hace que el lenguaje sea "más dulce" para el uso humano: las cosas se pueden expresar de forma más clara, más concisa o en un estilo alternativo que algunos prefieren)
 
-<Code language="python">{`
-    prices = [10, 15.4, 23.6];
-    percentageToDiscount = 10
-    multiplier = lambda percentage : (100 - percentage)/100.0 
-    pricesWithDesc = [price * multiplier(percentageToDiscount) for price in prices]
-`}</Code>
+```python
+prices = [10, 15.4, 23.6]
+percentageToDiscount = 10
+multiplier = lambda percentage : (100 - percentage)/100.0
+pricesWithDesc = [price * multiplier(percentageToDiscount) for price in prices]
+```
 
 Espero que te haya gustado el post 🙂
 
@@ -85,5 +84,5 @@ Espero que te haya gustado el post 🙂
 
 La mayoría de conceptos y ejemplos los saque de mis sitios favoritos:
 
--   [Map en Javascript](https://www.youtube.com/watch?v=bCqtb-Z5YGQ&t=24s) de Fun fun functioooooon!
--   [map](https://martinfowler.com/articles/collection-pipeline/map.html) del bliki de Martin Fowler.
+- [Map en Javascript](https://www.youtube.com/watch?v=bCqtb-Z5YGQ&t=24s) de Fun fun functioooooon!
+- [map](https://martinfowler.com/articles/collection-pipeline/map.html) del bliki de Martin Fowler.
