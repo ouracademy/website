@@ -1,0 +1,213 @@
+---
+title: "CoreNLP: Un tutorial"
+description: "Extrayendo entidades y relaciones de noticias"
+date: "2018-02-23"
+author: arthur
+tags: ["coreNLP", "extractor", "NLP"]
+---
+
+> Mira el resultado final en: [Demo](https://extractor.qpdiam.now.sh/).
+
+Este post toma un enfoque totalmente práctico,
+dado un texto de un website se mostrará un grafo de entidades reconocidas en ese texto. Para este resultado se tiene el siguiente flujo:
+
+Obtener conjunto de textos --> Reconocer las entidades y relaciones en el texto --> Mostrar el grafo
+
+Cada paso se detalla en los siguientes párrafos:
+
+### Obtener un conjunto de textos
+
+Los textos son obtenidos de sitios web de noticias, alguno de estos son:
+⋅⋅\* https://intercambio.pe/la-mision-que-abrio-una-epoca/
+⋅⋅\* https://ojo-publico.com/93/los-duenos-de-la-salud-privada-en-el-peru
+
+Bueno ahora ¿Como obtendremos el texto de esas noticias?
+
+Para esto, el concepto de web scraping nos sera de ayuda, básicamente es hacer petición a estos enlaces, obtener el html y mediante librerias de analisis de documentos HTML (por ejemplo Beautiful Soup), obtener el texto.
+
+Felizmente hay una libreria que incluye todo esto, [Newspaper3k: Article scraping & curation](https://newspaper.readthedocs.io/en/latest/) 👍
+
+```python
+from newspaper import Article
+
+def extract_text(url):
+    article = Article(url)
+    article.download()
+    article.parse()
+    return article.text
+```
+
+Ahora extraeremos los textos de los links:
+
+```python
+  urls = ['your_url1','your_url2',...]
+  texts = list(map( extract_text, urls ))
+```
+
+Listo, se realizo la primera tarea, vayamos al siguiente paso.
+
+### Reconocer las entidades y relaciones en el texto
+
+Bueno, y ahora ¿Como obtendremos las entidades y relaciones en los textos? Aqui viene [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/) al rescate.
+Stanford CoreNLP integra muchas herramientas de Procesamiento de lenguaje natural, entre nos sera de utilidad: Named Entity Recognizer (NER) y Relation Extractor Annotator.
+
+Para usar estas herramientas desplegaremos el CoreNLP Server, esto requiere que descarguemos: [corenlp.zip](https://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip) y [modelo en español](https://nlp.stanford.edu/software/stanford-spanish-corenlp-2018-10-05-models.jar);
+luego se descomprime el corenlp.zip y se coloca en una carpeta ambos archivos, digamos la carpeta **corenlp**.
+
+Algo importante que se me olvido mencionar, es tener instalado Java 8.
+
+Luego de esto, se debe ubicar en la carpeta **corenlp**, y ejecutar lo
+siguiente:
+
+```shell
+java -cp "\*" -Xmx4g edu.stanford.nlp.pipeline.StanfordCoreNLPServer \
+ -serverProperties StanfordCoreNLP-spanish.properties \
+ -timeout 30000 -quiet \
+ -preload "tokenize,ssplit,pos,lemma,ner,depparse,coref,kbp" \
+ -annotators "ner,kbp" \
+ -maxCharLength 1000000 -port 9000
+```
+
+Una vez ejecutado este comando, se tendra el siguiente [link](localhost:9000), el cual mostrara en tu maquina un contenido igual a [este link](https://corenlp.run/). Al cual se le podra hacer peticiones web para obtener las entidades y relaciones, para esto usaremos la libreria **pycorenlp**.
+
+```python
+  from pycorenlp import StanfordCoreNLP
+  nlp = StanfordCoreNLP('http://localhost:9000')
+
+  def recognizer(text):
+      return nlp.annotate(text,
+                    properties={
+                        'annotators': 'tokenize,ssplit,pos,ner,depparse,openie,kbp',
+                        'outputFormat': 'json',
+                        'timeout': 90000,
+                    })
+  corenlp_by_texts = list(map(recognizer, texts))
+```
+
+El resultado contiene un un objeto con la propiedad **sentences**, el cual contiene un arreglo de oraciones, cada oracion contiene estas propiedades: "index", "basicDependencies", "enhancedDependencies", "enhancedPlusPlusDependencies", "openie", "kbp", "entitymentions" y "tokens". Para este caso usaremos tomaremos como referencia una oracion y obtendremos su propiedad **entitymentions** y **openie**.
+
+###### Oracion de referencia:
+
+> Este hecho motivó la reacción de un grupo de indígenas , quienes ingresaron a las instalaciones de la Estación Nº 6 de PETROPERÚ , golpearon a los líderes manifestantes , así como a el Comandante PNP Miguel Montenegro , quien estaba a el mando de un contingente de 37 policías a el interior de la estación , para finalmente ultimar a 12 policías en el cerro ubicado frente a la sede petrolera.
+
+**entitymentions** contiene un arreglo de entidades reconocidas:
+
+```json
+{
+    "docTokenBegin": 113,
+    "docTokenEnd": 114,
+    "tokenBegin": 18,
+    "tokenEnd": 19,
+    "text": "Estación",
+    "characterOffsetBegin": 592,
+    "characterOffsetEnd": 600,
+    "ner": "LOCATION"
+}
+```
+
+**openie** contien un arreglo de relaciones reconocidas:
+
+```json
+{
+    "subject": "quienes",
+    "subjectSpan": [11, 12],
+    "relation": "golpearon",
+    "relationSpan": [24, 25],
+    "object": "manifestantes",
+    "objectSpan": [28, 29]
+}
+```
+
+### Mostrar el grafo
+
+Mostramos un ejemplo del resultado de una oracion, sabemos que por texto CoreNLP retorna muchas oraciones, bueno el resultado final tomara este formato:
+
+```json
+{ "data": {
+    "nodes": {
+          "0": [
+              {
+                  "name": "PNP",
+                  "type": "ORGANIZATION",
+                  "color": "#527f1c"
+              },
+              {
+                  "name": "Luis Muguruza Delgado",
+                  "type": "PERSON",
+                  "color": "#04dbf4
+              } ...
+              ]
+          "1": [ ... ],
+          "2": [ ... ],
+          ...
+          }
+    "edges": {
+            "0": [
+                {
+                    "from": "efectivos",
+                    "to": "armas",
+                    "label": "empleando"
+                },..
+              ]
+            "1": [ ...],
+            "2": [ ...],
+            }
+}
+```
+
+Dado este formato se visualizara el grafo usando **jsnetworkx.js**
+
+```javascript
+function draw(nodes, edges) {
+    var G = new jsnx.DiGraph();
+    nodes_graph = nodes.map(node => [
+        node["name"],
+        { color: node["color"], size: 30 }
+    ]);
+    edges_graph = edges.map(node => [node["from"], node["to"]]);
+    G.addNodesFrom(nodes_graph);
+    G.addEdgesFrom(edges_graph);
+
+    jsnx.draw(G, {
+        element: "#canvas",
+        withLabels: true,
+        nodeAttr: {
+            r: function(d) {
+                return d.data.size;
+            }
+        },
+        nodeStyle: {
+            fill: function(d) {
+                return d.data.color.replace("0", "5");
+            }
+        },
+        node_style: {
+            fill: "#999",
+            cursor: "pointer",
+            "stroke-opacity": "0",
+            stroke: "white"
+        },
+        labelStyle: { fill: "black", "font-weigth": "bold" },
+        stickyDrag: true
+    });
+}
+```
+
+Basandonos en la variable data mostrado anteriormente en formato json se mostrara el grafo:
+
+```javascript
+index = 0; // el primer texto de data
+draw(data["nodes"][index], data["edges"][index]);
+```
+
+Luego de todo este trabajo, obtendremos un resultado similar a la siguiente image.
+
+<figure>
+    <img src="/images/corenlp.png" />
+    <figcaption>
+        <a href="https://extractor.qpdiam.now.sh">Link de demo</a> Grafo de
+        entidades y sus relaciones
+    </figcaption>
+</figure>
+
+Listo terminamos 😄 😄
