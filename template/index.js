@@ -49,7 +49,10 @@ inquirer
         return console.log(err);
       }
 
-      console.log(`Post created at ${postPath}, start writing 😃`);
+      console.log(`Post created as a draft, at ${postPath}, start writing 😃`);
+      console.log(
+        `Remember to remove the "isPublic: false" to publish your post`
+      );
       console.log(
         "Don't know mdx? You could guide yourself by seeing other .mdx files or see https://www.gatsbyjs.org/docs/mdx/markdown-syntax/"
       );
@@ -69,8 +72,18 @@ description: {{description}}
 {{#imageURL}}
 image: {{imageURL}}
 {{/imageURL}}
+isPublic: false # this post is a draft, you can share it's link to 
+# other people to review your post. Remove this property to publish it.
 ---
 
 Your content in markdown but with the power of JSX. MDX!`,
     view
   );
+
+// TODO:
+// Validate title, description, author, imageURL
+// Add tags
+// Tags, description recommend based on analytics keyword
+// Store author id
+// Automatic author based on github profile
+// Automatic date based on commit date
