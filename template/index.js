@@ -1,17 +1,21 @@
 // TODO:
-// Validate author
 // Add tags
 // Tags, description recommend based on analytics keyword
 // Store author id
 // Automatic author based on github profile
 // Automatic date based on commit date
 
+const yaml = require("js-yaml");
 const fs = require("fs");
 const inquirer = require("inquirer");
 const Joi = require("@hapi/joi");
 
 const generateTemplateOf = require("./template");
 const postFrom = require("./post-from");
+
+const authors = yaml
+  .safeLoad(fs.readFileSync("src/posts/author.yaml"))
+  .map(x => x.id);
 
 const SEOsuggestion = (length, url) =>
   `Please don't exceed ${length} characters, this is for SEO purposes 😉. \n` +
@@ -69,8 +73,10 @@ inquirer
       )
     },
     {
+      type: "list",
       name: "author",
-      message: "Identify you, by putting your author id - see authors.yml:"
+      message: "Identify you, by putting your author id - see authors.yml:",
+      choices: authors
     },
     {
       name: "imageURL",
