@@ -3,14 +3,14 @@ title: "CoreNLP: Un tutorial"
 description: "Extrayendo entidades y relaciones de noticias"
 date: "2019-08-07"
 author: diana
-tags: ["coreNLP", "extractor", "NLP"]
+tags: ["coreNLP", "extractor", "NLP", "tutorial"]
+image: /images/corenlp.png
 ---
 
 > Mira el resultado final en: [Demo](https://extractor.qpdiam.now.sh/).
 
 Este post toma un enfoque totalmente práctico,
 dado un texto de un website se mostrará un grafo de entidades reconocidas en ese texto. Para este resultado se tiene el siguiente flujo:
-
 Obtener conjunto de textos --> Reconocer las entidades y relaciones en el texto --> Mostrar el grafo
 
 Cada paso se detalla en los siguientes párrafos:
@@ -18,8 +18,9 @@ Cada paso se detalla en los siguientes párrafos:
 ### Obtener un conjunto de textos
 
 Los textos son obtenidos de sitios web de noticias, alguno de estos son:
-⋅⋅\* https://intercambio.pe/la-mision-que-abrio-una-epoca/
-⋅⋅\* https://ojo-publico.com/93/los-duenos-de-la-salud-privada-en-el-peru
+
+-   https://intercambio.pe/la-mision-que-abrio-una-epoca/
+-   https://ojo-publico.com/93/los-duenos-de-la-salud-privada-en-el-peru
 
 Bueno ahora ¿Como obtendremos el texto de esas noticias?
 
@@ -49,10 +50,10 @@ Listo, se realizo la primera tarea, vayamos al siguiente paso.
 ### Reconocer las entidades y relaciones en el texto
 
 Bueno, y ahora ¿Como obtendremos las entidades y relaciones en los textos? Aqui viene [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/) al rescate.
-Stanford CoreNLP integra muchas herramientas de Procesamiento de lenguaje natural, entre nos sera de utilidad: Named Entity Recognizer (NER) y Relation Extractor Annotator.
+Stanford CoreNLP integra muchas herramientas de Procesamiento de lenguaje natural, entre ellas, nos sera de utilidad: Named Entity Recognizer (NER) y Relation Extractor Annotator.
 
-Para usar estas herramientas desplegaremos el CoreNLP Server, esto requiere que descarguemos: [corenlp.zip](https://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip) y [modelo en español](https://nlp.stanford.edu/software/stanford-spanish-corenlp-2018-10-05-models.jar);
-luego se descomprime el corenlp.zip y se coloca en una carpeta ambos archivos, digamos la carpeta **corenlp**.
+Para usar estas herramientas desplegaremos el CoreNLP Server, esto requiere que descarguemos: [corenlp .jar](https://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip) y [modelo entrenado en español .jar](https://nlp.stanford.edu/software/stanford-spanish-corenlp-2018-10-05-models.jar);
+luego colocaremos estos jar en una carpeta llamada **corenlp**.
 
 Algo importante que se me olvido mencionar, es tener instalado Java 8.
 
@@ -86,7 +87,7 @@ Una vez ejecutado este comando, se tendra el siguiente [link](localhost:9000), e
 
 El resultado contiene un un objeto con la propiedad **sentences**, el cual contiene un arreglo de oraciones, cada oracion contiene estas propiedades: "index", "basicDependencies", "enhancedDependencies", "enhancedPlusPlusDependencies", "openie", "kbp", "entitymentions" y "tokens". Para este caso usaremos tomaremos como referencia una oracion y obtendremos su propiedad **entitymentions** y **openie**.
 
-###### Oracion de referencia:
+#### Oracion de referencia:
 
 > Este hecho motivó la reacción de un grupo de indígenas , quienes ingresaron a las instalaciones de la Estación Nº 6 de PETROPERÚ , golpearon a los líderes manifestantes , así como a el Comandante PNP Miguel Montenegro , quien estaba a el mando de un contingente de 37 policías a el interior de la estación , para finalmente ultimar a 12 policías en el cerro ubicado frente a la sede petrolera.
 
@@ -203,7 +204,7 @@ draw(data["nodes"][index], data["edges"][index]);
 Luego de todo este trabajo, obtendremos un resultado similar a la siguiente image.
 
 <figure>
-    <img src="/images/corenlp.png" />
+    <img src="/images/corenlp.png" style="width:100%;" />
     <figcaption>
         <a href="https://extractor.qpdiam.now.sh">Link de demo</a> Grafo de
         entidades y sus relaciones
