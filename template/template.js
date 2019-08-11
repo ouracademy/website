@@ -6,7 +6,7 @@ const generateTemplateOf = post =>
 title: {{title}}
 date: {{date}}
 author: {{author}}
-tags: [tag-1, tag-2]
+tags: [{{tags}}]
 {{#description}}
 description: {{description}}
 {{/description}}

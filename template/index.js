@@ -1,5 +1,4 @@
 // TODO:
-// Add tags
 // Tags, description recommend based on analytics keyword
 // Store author id
 // Automatic author based on github profile
@@ -87,6 +86,10 @@ inquirer
           .allow("")
           .uri()
       )
+    },
+    {
+      name: "tags",
+      message: "Tag your post (separated by commas):"
     }
   ])
   .then(answers => {
