@@ -26,8 +26,20 @@ inquirer
       message: "Enter it's title:",
       validate: validateInput(
         Joi.string()
-          .allow("")
           .max(60)
+          .error(errors =>
+            errors.map(error => {
+              switch (error.type) {
+                case "string.max":
+                  error.message = SEOsuggestion(
+                    error.context.limit,
+                    "https://moz.com/learn/seo/title-tag"
+                  );
+              }
+
+              return error;
+            })
+          )
       )
     },
     {
@@ -37,6 +49,19 @@ inquirer
         Joi.string()
           .allow("")
           .max(160)
+          .error(errors =>
+            errors.map(error => {
+              switch (error.type) {
+                case "string.max":
+                  error.message = SEOsuggestion(
+                    error.context.limit,
+                    "https://www.seoclarity.net/resources/knowledgebase/write-perfect-meta-description-seo-17115/"
+                  );
+              }
+
+              return error;
+            })
+          )
       )
     },
     {
