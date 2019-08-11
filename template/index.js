@@ -6,16 +6,12 @@
 // Automatic author based on github profile
 // Automatic date based on commit date
 
-const slugify = require("slugify");
 const fs = require("fs");
-const path = require("path");
 const inquirer = require("inquirer");
 const Joi = require("@hapi/joi");
 
 const generateTemplateOf = require("./template");
-
-const slug = text => slugify(text).toLowerCase();
-const getPostPath = text => path.join("src/posts", slug(text) + ".mdx");
+const postFrom = require("./post-from");
 
 const SEOsuggestion = (length, url) =>
   `Please don't exceed ${length} characters, this is for SEO purposes 😉. \n` +
@@ -88,23 +84,11 @@ inquirer
     }
   ])
   .then(answers => {
-    const format = require("date-fns/format");
-    const view = {
-      ...answers,
-      date: format(new Date(), "yyyy-MM-dd"),
-      tags: ["historia", "personajes del software", "desarrollo de software"]
-    };
-
-    const postPath = getPostPath(view.title);
-    fs.writeFile(postPath, generateTemplateOf(view), function(err) {
-      if (err) {
-        return console.log(err);
-      }
-
-      console.log(
-        `Post created as a draft, at ${postPath}, start writing 😃\n` +
-          `Remember to remove the "isPublic: false" to publish your post\n` +
-          "Don't know mdx? You could guide yourself by seeing other .mdx files or see https://www.gatsbyjs.org/docs/mdx/markdown-syntax/"
-      );
-    });
+    const post = postFrom(answers);
+    fs.writeFileSync(post.path, generateTemplateOf(post));
+    console.log(
+      `Post created as a draft, at ${post.path}, start writing 😃\n` +
+        `Remember to remove the "isPublic: false" to publish your post\n` +
+        "Don't know mdx? You could guide yourself by seeing other .mdx files or see https://www.gatsbyjs.org/docs/mdx/markdown-syntax/"
+    );
   });
