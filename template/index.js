@@ -4,35 +4,54 @@ const slugify = require("slugify");
 const fs = require("fs");
 const path = require("path");
 const inquirer = require("inquirer");
+const Joi = require("@hapi/joi");
 
 const slug = text => slugify(text).toLowerCase();
 const getPostPath = text => path.join("src/posts", slug(text) + ".mdx");
+
+const SEOsuggestion = (length, url) =>
+  `Please don't exceed ${length} characters, this is for SEO purposes 😉. \n` +
+  `More on ${url} \n`;
+
+const validateInput = schema => input => {
+  const { error } = Joi.validate(input, schema);
+  return error ? error.message : true;
+};
 
 console.log("Hi 🤖! I'll help you write a post");
 inquirer
   .prompt([
     {
       name: "title",
-      type: "input",
-      message: "Enter it's title:"
+      message: "Enter it's title:",
+      validate: validateInput(
+        Joi.string()
+          .allow("")
+          .max(60)
+      )
     },
     {
       name: "description",
-      type: "input",
-      message:
-        "Describe it but in an engaging way to people - please don't exceed 160 characters, this is for SEO purposes 😉. \n" +
-        "More on https://www.seoclarity.net/resources/knowledgebase/write-perfect-meta-description-seo-17115/ \n"
+      message: "Describe it but in an engaging way",
+      validate: validateInput(
+        Joi.string()
+          .allow("")
+          .max(160)
+      )
     },
     {
       name: "author",
-      type: "input",
       message: "Identify you, by putting your author id - see authors.yml:"
     },
     {
       name: "imageURL",
-      type: "input",
       message:
-        "Enter an image url, this is used when you share your post on Twitter or Facebook:"
+        "Enter an image url, this is used when you share your post on Twitter or Facebook:",
+      validate: validateInput(
+        Joi.string()
+          .allow("")
+          .uri()
+      )
     }
   ])
   .then(answers => {
@@ -81,7 +100,7 @@ Your content in markdown but with the power of JSX. MDX!`,
   );
 
 // TODO:
-// Validate title, description, author, imageURL
+// Validate author
 // Add tags
 // Tags, description recommend based on analytics keyword
 // Store author id
