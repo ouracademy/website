@@ -89,7 +89,7 @@ tags: [tag-1, tag-2]
 description: {{description}}
 {{/description}}
 {{#imageURL}}
-image: {{imageURL}}
+image: {{{imageURL}}}
 {{/imageURL}}
 isPublic: false # this post is a draft, you can share it's link to 
 # other people to review your post. Remove this property to publish it.
