@@ -1,10 +1,18 @@
-const Mustache = require("mustache");
+// TODO:
+// Validate author
+// Add tags
+// Tags, description recommend based on analytics keyword
+// Store author id
+// Automatic author based on github profile
+// Automatic date based on commit date
 
 const slugify = require("slugify");
 const fs = require("fs");
 const path = require("path");
 const inquirer = require("inquirer");
 const Joi = require("@hapi/joi");
+
+const generateTemplateOf = require("./template");
 
 const slug = text => slugify(text).toLowerCase();
 const getPostPath = text => path.join("src/posts", slug(text) + ".mdx");
@@ -88,46 +96,15 @@ inquirer
     };
 
     const postPath = getPostPath(view.title);
-    fs.writeFile(postPath, newPost(view), function(err) {
+    fs.writeFile(postPath, generateTemplateOf(view), function(err) {
       if (err) {
         return console.log(err);
       }
 
-      console.log(`Post created as a draft, at ${postPath}, start writing 😃`);
       console.log(
-        `Remember to remove the "isPublic: false" to publish your post`
-      );
-      console.log(
-        "Don't know mdx? You could guide yourself by seeing other .mdx files or see https://www.gatsbyjs.org/docs/mdx/markdown-syntax/"
+        `Post created as a draft, at ${postPath}, start writing 😃\n` +
+          `Remember to remove the "isPublic: false" to publish your post\n` +
+          "Don't know mdx? You could guide yourself by seeing other .mdx files or see https://www.gatsbyjs.org/docs/mdx/markdown-syntax/"
       );
     });
   });
-
-const newPost = view =>
-  Mustache.render(
-    `---
-title: {{title}}
-date: {{date}}
-author: {{author}}
-tags: [tag-1, tag-2]
-{{#description}}
-description: {{description}}
-{{/description}}
-{{#imageURL}}
-image: {{{imageURL}}}
-{{/imageURL}}
-isPublic: false # this post is a draft, you can share it's link to 
-# other people to review your post. Remove this property to publish it.
----
-
-Your content in markdown but with the power of JSX. MDX!`,
-    view
-  );
-
-// TODO:
-// Validate author
-// Add tags
-// Tags, description recommend based on analytics keyword
-// Store author id
-// Automatic author based on github profile
-// Automatic date based on commit date
