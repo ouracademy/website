@@ -12,11 +12,13 @@ Para responder estas preguntas, primero debemos tener claro que son los escenari
 
 > Un escenario es una secuencia de pasos que describen una interaccion entre un usuario y un sistema. - Martin Fowler, UML Distilled
 
-Veamos un ejemplo, en una tienda web, podriamos tener un escenario de comprar un producto, como el siguiente:
+Veamos un ejemplo, en una tienda web, cuando una persona desea comprar un producto:
 
-> "El cliente navega en un catalogo y agrega articulos deseados a una canasta de compras. Cuando el cliente desea pagar, el cliente describe la informacion de envio como de su tarjeta de credito y confirma la venta. El sistema verifica la autorizacion de la tarjeta de credito y confirma la venta inmediatamente y con un mensaje a su correo."
+> "El cliente navega en un catalogo y agrega articulos deseados a una canasta de compras. Cuando el cliente desea pagar, el cliente describe la informacion de envio (como la dirección donde vive) y de su tarjeta de credito, y confirma la venta. El sistema verifica la autorizacion de la tarjeta de credito y indica que la venta fue realizada exitosamente y envia el comprobante de pago al correo del cliente."
 
-Este escenario es algo que puede pasar. Sin embargo, la autorizacion de la tarjeta de credito pudo haber fallado (puede que el usuario por equivocación haya ingresado mal el número de la tarjeta). Este seria un escenario separado. Ademas, que pasa si un cliente regular, previamente se registro al sistema, en ese caso quizá no sea necesario ingresar la información de su tarjeta de crédito o incluso información de envio, el sistema podría quiza tomar la información que previamente ingreso para facilitar el proceso de compra, este seria otro escenario.
+Este es un escenario usual, que muchas de las personas que hemos comprado algo por internet hemos tenido. Sin embargo, muchas cosas pudieron salir distintas. La autorizacion de la tarjeta de credito pudo haber fallado (a veces simplemente como usuarios nos equivocamos al ingresar mal un número de nuestra tarjeta), esto sería otro escenario.
+
+Ademas, que pasa si soy un cliente habitual -un cliente que previamente se ha registrado en el sistema- en ese caso quizá no sea necesario ingresar la información de mi tarjeta de crédito o incluso información de envio, ya que el sistema podría tomar la información que previamente ingrese para facilitar el proceso de compra, este seria otro escenario.
 
 Hemos visto 3 escenarios distintos pero que tienen algo en similar, el usuario tiene la misma meta: Comprar un producto.
 

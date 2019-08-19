@@ -7,25 +7,25 @@ tags: [historia, "personajes del software", "desarrollo de software"]
 image: https://pbs.twimg.com/media/D-ZG3OWXsAAruSS?format=png&name=small
 ---
 
-Es casi seguro que alguna vez hayas usado UML (Unified Modelling Language, o Lenguaje Unificado de Modelado en castellano) en alguna parte de tu carrera sea bien en algún curso de la universidad, bien usando RUP o algúna métodologia ágil, o al momento de analizar y diseñar un sistema, o simplemente al explicar a compañeros de trabajo cierta parte de un sistema, [o de muchas otras formas](/posts/uml-y-sus-modos-de-uso).
+Es casi seguro que alguna vez hayas usado UML (Unified Modelling Language, o Lenguaje Unificado de Modelado en castellano) en alguna parte de tu carrera sea bien en algún curso de la universidad al momento de analizar y diseñar un sistema, o al explicar a compañeros de trabajo cierta parte de un sistema, [o de muchas otras formas](/posts/uml-y-sus-modos-de-uso).
 
-Quiza tambien te hayas preguntado de donde viene ese nombre de Unificado, por que bueno lo de Lenguaje de Modelado es obvio. Pues bueno este post trata de explicar de donde viene eso, la parte de "Unificado" de UML, además de su relación con el famosa RUP y como la historia que explicaremos se vuelve a repetir en lenguajes de programación y métodos de desarrollo de software como los agiles y lean. Así que empecemos 😃!!
+Quizá tambien te hayas preguntado de donde viene ese nombre de Unificado, por que bueno lo de Lenguaje de Modelado es obvio. Pues bueno este post trata de explicar de donde viene esa parte "Unificado" de UML, además de su relación con el famoso RUP y como la historia que explicaremos se vuelve a repetir en los métodos de desarrollo de software como los Agiles y Lean. Así que empecemos 😃!!
 
 ## Como nace UML?
 
-En los años 80s, la programación orientada a objetos (OO) salio del mundo cientifico y llegó al mundo de los negocios, previamente solo laboratorios como los de XEROX PARC eran los afortunados de usar OO. En esa época Smalltalk, un lenguaje bastante flexible (padre de Ruby), salia de XEROX y estaba estabilizando su plataforma, por otro lado, C++ recien estaba naciendo. Como usar OO era algo nuevo, hubo muchas dudas sobre como los métodos de diseño/análisis de esa época podian usarlo, ya que en esos tiempos ya existian muchos métodos de trabajo nacidos en los años 70 (como el modelo [HIPO][1]).
+En los años 80s, la programación orientada a objetos (OO) estaba saliendo del mundo cientifico y entrando al mundo de los negocios, previamente solo laboratorios como los de XEROX PARC eran los afortunados de usar OO. En esa época Smalltalk, un lenguaje bastante flexible (padre de Ruby), salia de XEROX y estaba estabilizando su plataforma. Por otro lado, C++ recién estaba naciendo. Como usar OO era algo nuevo, hubo muchas dudas sobre como los métodos de diseño y análisis de sistemas de esa época podian usar OO, ya que en esos tiempos ya existian muchos métodos de trabajo nacidos en los años 70 (como el modelo [HIPO][1]).
 
-De ello es que nacen distintas ideas:
+De ello es que nacen distintas ideas de distintos autores:
 
-- Peter Coad y Ed Yourdon desarrollaron enfoques ligeros orientados a prototipos - aquí muchas de las ideas de MVP del mundo de startups.
-- Rebecca Wirfs-Brock trae el concepto de Responsability Driven Design (RDD) - el que hace famoso el termino Driven, que ahora vemos en otras prácticas o técnicas como Test Driven Development o Domain Driven Design
+- Peter Coad y Ed Yourdon desarrollaron enfoques ligeros orientados a prototipos -muchas de las ideas de MVP del mundo de UI/UX.
+- Rebecca Wirfs-Brock traía el concepto de Responsability Driven Design (RDD) - el que hace famoso el termino Driven, que ahora vemos en otras prácticas o técnicas como Test Driven Development o Domain Driven Design.
 - Kent Beck trae la idea de usar tarjetas CRC (Class Responsability Collaboration) para enseñar y diseñar objetos.
 - [Grady Booch][3] había escrito el libro más popular sobre análisis y diseño orientado a objetos, de donde salio el método Booch
-- [Ivar Jacobson][4] introdujo la idea de casos de uso (Use cases) como parte de su método Object-Oriented Software Engineering (OOSE) en base a su trabajo.
+- [Ivar Jacobson][4] introdujo la idea de Casos de Uso (Use cases) como parte de su método Object-Oriented Software Engineering (OOSE) en base a su trabajo.
 - [Jim Rumbaugh][5] había creado un libro muy popular sobre un método llamado técnica para modelar objetos (Objecto Modelling Technique - OMT)
-- Así como muchos otros personas muy reconocidas como Jim Odell (con su trabajo de modelos conceptuales) o Steve Mellor (con un enfoque de diseño recursivo).
+- Así como muchos otros personas muy reconocidas como Jim Odell (con su trabajo de modelos conceptuales) o Steve Mellor.
 
-Al igual que estas ideas llegaron a aparecer [alrededor de 50 métodos][6]. Como cuenta Martin Fowler era un panorama muy dividido y competido, cada autor tenia su grupo de personas que estaban de acuerdo con sus ideas, por lo que fue conocido está epoca como "la guerra de métodos". En sí, los métodos eran muy parecidos, aunque tenian diferencias menores en terminología y en notación.
+Al igual que estas ideas llegaron a aparecer [alrededor de 50 métodos][6]. Como cuenta Martin Fowler era un panorama muy dividido y competido, a cada autor le rodeaba personas que estaban de acuerdo con sus ideas, por lo que fue conocido está epoca como "la guerra de métodos". En sí, los métodos eran muy parecidos, aunque tenian diferencias menores en terminología y en notación.
 
 | UML           | Clase          | Asociación | Generalización | Agregación  |
 | ------------- | -------------- | ---------- | -------------- | ----------- |
@@ -35,16 +35,18 @@ Al igual que estas ideas llegaron a aparecer [alrededor de 50 métodos][6]. Como
 | Rumbaugh      | Clase          | Asociación | Generalización | Agregación  |
 | Shlaer/Mellor | Objeto         | Relación   | Subtipo        | N/ A        |
 
-**Términos usados por cada método en ese entonces, tan solo para el diagrama de clases**
+**Términos usados para el modelado de clases por cada método en esa época**
 
 Ello perjudicaba en mucho la comunicación... ¿Te suena familiar a lo que se está viviendo en el mundo agil? Con el boom de métodos y prácticas ágiles:
 
 ![Agile Landscape](https://i.imgur.com/fR6Ynq9.gif)
 Agile Landscape [de Deloitte](http://blog.deloitte.com.au/navigating-the-agile-landscape/)
 
-La forma de solucionar estos problemas era la estandarización, aunque algunas personas se opusieron a esta idea, por ejemplo como dijo Martin Fowler, un equipo del Object Mangement Group (OMG) - que sería el estandarizador de UML posteriormente- al intentarlo logró una carta de protesta por parte de los metodólogos más importantes 😂. De forma simular le sucedio Grady Booch.
+De igual manera esto se puede extrapolar al mundo de lenguajes de programación, que una clase diga que cierto atributo es privado [es distinto en diferentes lenguajes](https://martinfowler.com/bliki/AccessModifier.html).
 
-Sin embargo en OOSPLA '94 (la conferencia más importante de Orientación a Objetos, actualmente parte de SPLASH), la gran noticia fue que Jim Rumbaugh se unio a Grady Booch en Rational Software (actualmente parte de IBM), con la intención de unificar sus métodos. Al siguiente año, juntos obtuvieron la versión 0.8 del método Unificado (asi se llamaba antes de UML). Ese mismo año Ivar Jacobson se unio al equipo, formando el grupo conocido como los "3 amigos".
+La forma de solucionar estos problemas era la estandarización, aunque algunas personas se opusieron a esta idea, por ejemplo como dijo Martin Fowler, un equipo del Object Mangement Group (OMG) - que posteriormente sería el estandarizador de UML - al intentarlo logró una carta de protesta por parte de los metodólogos más importantes 😂. De forma simular le sucedio a Grady Booch.
+
+Sin embargo en el OOSPLA '94 (la conferencia más importante de Orientación a Objetos), la gran noticia fue que Jim Rumbaugh se unio a Grady Booch en Rational Software (actualmente parte de IBM), con la intención de unificar sus métodos, el método Booch y el OMT. Al siguiente año, juntos obtuvieron la versión 0.8 del método Unificado (asi se llamaba antes de UML). Ese mismo año Ivar Jacobson se unio al equipo, formando el grupo conocido como los "3 amigos".
 
 ![Los 3 amigos](https://pbs.twimg.com/media/D-ZG3OWXsAAruSS?format=png&name=small)
 
@@ -52,11 +54,13 @@ Los 3 amigos y sus métodos juntan sus cerebros para formar UML.
 
 Durante el año 96, los "3 amigos" formaron un consorcio con muchas organizaciones como IBM, HP, Oracle, Microsoft, entre otros. Todo ello condujo a la 1ra versión de UML.
 
-> El término Unificado nace de la idea de unificar fuerzas de distintos metodologos conocidos para tener un método estándar.
+> El término **Unificado** nace de la idea de unificar fuerzas de distintos metodologos conocidos para tener un método estándar.
 
-Actualmente UML está en su versión 2.5 luego de muchos cambios de sintaxis y nuevos tipos de diagramas. Ha sido usado por muchas organizaciones y ha sido aplicado a distintos contextos. Sin
+Al desarrollar UML, permitieron separar la idea de lenguaje de método. El lenguaje en sí era la notación de como expresar ciertas "cosas interesantes" sobre un sistema. Cosas como un objeto y sus atributos o las relaciones entre clases. El método que describe los pasos o el proceso de desarrollo. Siendo asi UML un lenguaje de modelado. Muchos de los conceptos desarrollados por los métodos OO serían parte del lenguaje mientras otras simplemente técnicas o buenas prácticas para diseñar o analizar objetos, por ejemplo la idea de al leer los requisitos de un sistema extraer los Objetos, atributos y relaciones de un sistema a partir de los sustantivos, verbos y adjetivos.
 
-> Nota: Además de UML, los "3 amigos" desarrollaron el Rational Objectory Process, Rational por el nombre de Rational Software, Objectory por el nombre de la organización de Ivar Jacobson, Objectory. Posteriormente fue renombrado a Rational Unified Process (RUP) como lo conocemos el día de hoy.
+> Los "3 amigos" desarrollaron el Rational Objectory Process, Rational por el nombre de Rational Software, Objectory por el nombre de la organización de Ivar Jacobson, Objectory. Posteriormente fue renombrado a Rational Unified Process (RUP) como lo conocemos el día de hoy.
+
+Actualmente UML está en su versión 2.5 luego de muchos cambios de sintaxis y nuevos tipos de diagramas, OMG se encargo de estandarizarla, a parte de otros estándares como CORBA - Objetos Distribuidos sea cual fuese el lenguaje de programación, el predecesor de grpc. Ha sido usado por muchas organizaciones y ha sido aplicado a distintos contextos, por su puesto muchas personas han contribuido al desarrollo de la misma.
 
 Referencias:
 

@@ -1,0 +1,199 @@
+---
+title: "El patron Repository: implementacion y buenas practicas"
+date: 2019-08-11
+author: arthur
+tags: [diseño, patron, objetos]
+description: Implementando el patron Repository descrito por Martin Fowler y Eric Evans en DDD.
+image: https://res.cloudinary.com/our-academy/image/upload/v1565569671/articles/anemic_domain_model.png
+---
+
+El patrón Repository (o Repositorio, en español) es probablemente uno de los más populares, entre los patrones catalogados por Eric Evans. Probablemente debido a que la persistencia de datos ha sido y es un tema muy tocado en el desarrollo de software durante mucho tiempo.
+
+Uno de sus principales problemas se da al usar la Orientación a Objetos, quizá el enfoque de desarrollo de software más popular, con un sistema de almacenamiento externo, como una base de datos relacional o incluso NoSQL, ya que no es facil adecuar (o mapear) el formato entre ellas, a esto a menudo se le conoce como el problema de [impedance mismatch](http://www.agiledata.org/essays/impedanceMismatch.html). Toda una industria artesanal ha surgido en torno a herramientas y técnicas para lidiar con ella.
+
+Para sistemas empresariales -aquellas que realizan tareas críticas de negocio pero usualmente a una escala no tan alta- a menudo usamos herramientas de mapeo de objetos (ORM en caso de una BD relacional, ODM en caso de BD documental...) como Hibernate (en Java), Eloquent o Doctrine (en PHP), TypeORM (en javascript), etc. Estas herramientas hacen un excelente trabajo en lidiar con todos los tornillos y tuercas que conlleva convertir tipos y formatos de datos, sin embargo, el desarrollador se queda con la tarea de modelar de la mejor forma el concepto de persistir y retribuir objetos en su Modelo de Dominio y en el [Lenguaje Ubicuo](https://martinfowler.com/bliki/UbiquitousLanguage.html) de sus sistema.
+
+Por muchos años, la forma usual de persistir un Modelo de Dominio era a traves de usar objetos **especializados**, como DAOs y otros tipos de Data Mappers, para convertir objetos de tu modelo de dominio a sus equivalentes persistidos (e.g. tablas). Estos patrones de diseño resuelven muchos de los díficiles problemas de diseño como el acoplamiento y la cohesión, sin embargo estos pertenecen a la capa de infrastructura, y como tal integrarlas en tu Lenguaje Ubicuo no es algo sencillo.
+
+El patron Repository, como lo cataloga Eric Evans y Martin Fowler, ofrece una buena forma de integrar las necesidades de persistencia de datos y el Lenguaje Ubicuo. En su libro, Domain-Driven Design, Evans define el patron Repository como un "mecánismo de encapsular el comportamiento de almacenamiento, retribución y búsqueda, de una forma similar (emulada) a una Colección de objetos". Estas colecciones emuladas son fácilmente asimiladas como parte del Lenguaje Ubicuo y son fáciles de implementar para los ingenieros y de entender para los expertos del dominio.
+
+## Poniendo nombres
+
+El concepto de Repository como simplemente una lista de objetos suena simple de entender, pero de alguna forma u otra es muy común ver que las clases Repository que escribimos terminen teniendo métodos que no se relacionan para nada a una lista. Varias veces cuando hago coaching a equipos sobre Domain-Driven Design, he visto una y otra vez clases que empiezan muy bien siendo Repositorios y terminan siendo versiones feas de DAOs.
+
+Para mi, una de las mejores formas de evitar este problema es al poner un buen nombre a tus clases, de tal forma que las haga super faciles de identificar cuando un método no debe estar dentro del Repository. Hace muchos años atrás, Rodrigo Yoshima, me mostró una forma muy interesante de nombrar Repositorios. En vez del estilo de nombrado usual, como se ve abajo:
+
+```java
+class OrderRepository {
+    List<Order> getOrders(Account a){...}
+}
+```
+
+A él le gustaba modelar sus clases como:
+
+```java
+class AllOrders {
+    List<Order> belongingTo(Account a){...}
+}
+```
+
+Lo de arriba pareciese que fuese un cambio pequeñito, pero en mi experiencia, es extremadamente útil en mantener Repositorios sanos.
+
+Por ejemplo, veamos 2 formas distintas de implementar un Repository. Ambas contienen un método que consideró que debe estar en otro lugar, en otra clase. En cual de las 2 implementaciones crees que es más fácil saber donde está el error?
+
+```java
+//estilo clasico de nombrado
+class UserRepository{
+ User retrieveUserByLogin(String login){...}
+ void submitOrder(Order order){...}
+}
+
+//codigo que lo llama- codigo cliente
+User u = userRepository.retrieveUserByLogin("pcalcado");
+userRepository.submitOrder(new Order());
+```
+
+```java
+//estilo de nombrado de Yoshima
+class AllUsers{
+ User withLogin(String login){...}
+ void submitOrder(Order order){...}
+}
+
+//codigo que lo llama- codigo cliente
+User u = allusers.withLogin("pcalcado");
+allusers.submitOrder(new Order());
+```
+
+Para mi, usar un vocabulario más preciso cuando se nombra a objetos y métodos hace mucho más fácil atrapar incongruencias como la de arriba. Como un corolario, usar nombres muy generic o prefijos como `get`, `find` o `retrieve` hace mucho más díficil encontrar estos malos olores (bad smells) en nuestros modelos.
+
+## Evitando una explosión de métodos
+
+Más importante que usar un vocabulario reestringido, un Repository bien definido debería exponer conceptos del Modelo de Dominio como parte de su [interfaz pública](http://martinfowler.com/ieeeSoftware/published.pdf).
+
+Como ejemplo, asumamos que una regla de negocio dice que todo pedido hecho en un fin de semana tiene una carga de 10% más. Ahora si quisieramos obtener esos tipos de pedidos, podriamos hacer algo como:
+
+```java
+// pedidos sobrecargados
+List<Order> surchargedOrders = allOrders.placed(user, IN_A_SATURDAY);
+surchargedOrders.addAll(allOrders.placed(user, IN_A_SUNDAY));
+return surchargedOrders;
+```
+
+Para 1 caso esta bien, pero estamos dejando **conceptos clave** aquí, que podrían aparecer en cualquier otra parte del sistema a medida que este crezca, causando que repitamos, dupliquemos, este mismo código en muchas partes. Si un sobrecargo es un concepto importante en tu dominio, deberías asegurarte que los objetos que implementan el concepto (el modelo) - el Repository es uno de esos objetos-pongan ese término como **primera-clase**. Esta es una de las ideas centrales de Domain-Driven design: hacer que conceptos implicitos del dominio sean explicitos, usualmente al modelarlas (ser parte de) como objetos y métodos.
+
+Bajo ello, sería mejor hacer:
+
+```java
+return allOrders.surchargedFor(user);
+```
+
+Este enfoque trae sus propios problemas. Asumiendo que un sobrecargo es uno de los muchos estados que puede tener un pedido, siguiendo este patron, nos llenariamos de métodos (una explosión), un método para cada estado. Claro que esto no es un problema si tenemos pocos estados, pero en sí este enfoque no escala muy bien para atributos con muchos estados posibles.
+
+Evans y Fowler sugieren una forma para enfrentar este tipo de problemas: el [patron Specification](http://www.martinfowler.com/apsupp/spec.pdf). Evans describe una Specification como "un [objeto] predicado que determina si un objeto cumple o no un criterio". Para evitar la explosión de métodos en nuestro Repository, podriamos agregar un método que tome como parametro un objeto Specification y retorne los objetos que cumplen con ella. Por ejemplo, podriamos hacer algo como:
+
+```java
+return allOrders.thatAre(user, OrderSpecifications.SURCHARGED);
+```
+
+Además existe otra estrategia que me gusta: usar multiples Repositorios. En nuestro ejemplo, no hay razon para no tener 2 Repositorios, uno para todas las ordenes y otra para solo aquellas con sobrecargo.
+
+Una forma de implementarla es parametrizando el Repository cuando creemos el objeto, algo como:
+
+```java
+//a base Repository
+class Orders {
+private Orders.Status desiredStatus = null;
+
+public Orders(){
+    this(Order.Status.ANY);
+}
+
+public Orders(Order.Status desiredStatus){
+    this.desiredStatus = desiredStatus;
+}
+
+public List<Order> from(User user) {...}
+}
+```
+
+podriamos usarla así:
+
+```java
+//instantiated somewhere as
+Orders allOrders = new Orders();
+Orders surchargedOrders = new Orders(Order.Status.SURCHARGED);
+
+//returns all orders
+return allOrders.from(user);
+
+//returns only orders with applied surcharge
+return surchargedOrders.from(user)
+```
+
+Podríamos implementar cada variación como una subclase. En este diseño, es importante asegurarse que no reemplacemos la explosión de métodos con una explosión de clases.
+
+## Solo un Tipo
+
+Otro problema común sucede cuando los Repositorios empiezan a parecerse a un objeto "base de datos" generico en vez de una colección cohesiva. Por ejemplo, en un sistema que trabaje, teniamos en nuestro Modelo de Dominio un Repository así:
+
+```java
+public interface AllServices {
+    List<Service> belongingTo(List<Account> accounts);
+    Service withNumber(String serviceNumber);
+    List<Service> relatedTo(Service otherService);
+}
+```
+
+Despúes de muchas Sprints, estabamos avanzando historias de usuario que necesitaban crear otros objetos (a parte de nuestro objeto Service). Un compañero de mi equipo pensó "Oh, no creare una clase solo para este objeto. Solo agregaré un método aquí solo por ahora...". Eso sucedio varias veces, el principio YAGNI se fue para otro lado 😂, despues de unas semanas nuestro Repository se miraba como:
+
+```java
+public interface AllServices {
+
+    List<Service> belongingTo(List<Account> accounts);
+
+    Service withNumber(String serviceNumber);
+
+    List<Service> relatedTo(Service otherService);
+
+    List<Product> allActiveProductsBelongingTo(List<Account> accounts);
+
+    List<Product> allProductsBelongingTo(List<Account> accounts);
+
+    ContractDetails retrieveContractDetails(String serviceNumber);
+}
+```
+
+Algo interesante que paso es que seguiamos las convenciones de nombrado de Yoshima. Claro los métodos se leian raro cuando te ponias a pensar en el nombre del tipo (`AllServices.allProductsBelongingTo`??). Aprendí que nada para a un ingeniero cuando no se molesta refactorizar ...
+
+```java
+// mind = blown 😂
+AllServices allProducts = new AllServices();
+// ...
+return allProducts.allActiveProductsBelongingTo(accounts);
+```
+
+Podemos clasificar como design smell cuando los métodos de un Repository retornan más de un único tipo. Esta bien retornar tipos base como enteros, strings o booleanos, pero si tu Repository retorna más de un tipo de objeto de dominio, será mejor si las divides en colecciones distintas:
+
+```java
+public interface AllServices {
+    List<Service> belongingTo(List<Account> accounts);
+    Service withNumber(String serviceNumber);
+    List<Service> relatedTo(Service otherService);
+}
+
+public interface AllProducts {
+    List<Product> activeBelongingTo(List<Account> accounts);
+    List<Product> belongingTo(List<Account> accounts);
+}
+
+public interface AllContractDetails {
+    ContractDetails forServiceNumber(String serviceNumber);
+}
+```
+
+## No solo Persistencia
+
+El principal beneficio de usar Repositorios es hacer explicito de donde vienen los objetos y hacerlas parte del Lenguaje Ubicuo. Aunque los Repositorios se usen para modelar la persistencia de objetos en bases de datos o cosas similares, está no es el único lugar donde son útiles. Los Repositorios pueden ser usado para implmentar colecciones trasientes (en memoria!), pueden ser utiles para retornar ValueObjects, e incluso encapsular código (del cliente) usado para invocar servicios remotos.
+
+> Traducido del articulo original de [Phil Calçado: How to write a Repository](https://philcalcado.com/2010/12/23/how_to_write_a_repository.html)

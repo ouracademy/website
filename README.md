@@ -4,7 +4,7 @@
 
 This website is created using [Gatsby](#resources), MDX & Grommet for UI. It uses many Gatsby plugins for offline, analytics (through Google Tag Manager), Syntax Highlight (through Prismjs) and GraphQL for fetching Github (to automatically generate versioning of posts).
 
-It also has a `new-post` script to help you create new posts.
+It also has a `new-post` script to help you create new posts using inquirer.js.
 
 ---
 

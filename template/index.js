@@ -1,76 +1,103 @@
-const Mustache = require("mustache");
+// TODO:
+// Tags, description recommend based on analytics keyword
+// Store author id
+// Automatic author based on github profile
+// Automatic date based on commit date
 
-const slugify = require("slugify");
+const yaml = require("js-yaml");
 const fs = require("fs");
-const path = require("path");
 const inquirer = require("inquirer");
+const Joi = require("@hapi/joi");
 
-const slug = text => slugify(text).toLowerCase();
-const getPostPath = text => path.join("src/posts", slug(text) + ".mdx");
+const generateTemplateOf = require("./template");
+const postFrom = require("./post-from");
+
+const authors = yaml
+  .safeLoad(fs.readFileSync("src/posts/author.yaml"))
+  .map(x => x.id);
+
+const SEOsuggestion = (length, url) =>
+  `Please don't exceed ${length} characters, this is for SEO purposes 😉. \n` +
+  `More on ${url} \n`;
+
+const validateInput = schema => input => {
+  const { error } = Joi.validate(input, schema);
+  return error ? error.message : true;
+};
 
 console.log("Hi 🤖! I'll help you write a post");
 inquirer
   .prompt([
     {
       name: "title",
-      type: "input",
-      message: "Enter it's title:"
+      message: "Enter it's title:",
+      validate: validateInput(
+        Joi.string()
+          .max(60)
+          .error(errors =>
+            errors.map(error => {
+              switch (error.type) {
+                case "string.max":
+                  error.message = SEOsuggestion(
+                    error.context.limit,
+                    "https://moz.com/learn/seo/title-tag"
+                  );
+              }
+
+              return error;
+            })
+          )
+      )
     },
     {
       name: "description",
-      type: "input",
-      message:
-        "Describe it but in an engaging way to people - please don't exceed 160 characters, this is for SEO purposes 😉. \n" +
-        "More on https://www.seoclarity.net/resources/knowledgebase/write-perfect-meta-description-seo-17115/ \n"
+      message: "Describe it but in an engaging way",
+      validate: validateInput(
+        Joi.string()
+          .allow("")
+          .max(160)
+          .error(errors =>
+            errors.map(error => {
+              switch (error.type) {
+                case "string.max":
+                  error.message = SEOsuggestion(
+                    error.context.limit,
+                    "https://www.seoclarity.net/resources/knowledgebase/write-perfect-meta-description-seo-17115/"
+                  );
+              }
+
+              return error;
+            })
+          )
+      )
     },
     {
+      type: "list",
       name: "author",
-      type: "input",
-      message: "Identify you, by putting your author id - see authors.yml:"
+      message: "Identify you, by putting your author id - see authors.yml:",
+      choices: authors
     },
     {
       name: "imageURL",
-      type: "input",
       message:
-        "Enter an image url, this is used when you share your post on Twitter or Facebook:"
+        "Enter an image url, this is used when you share your post on Twitter or Facebook:",
+      validate: validateInput(
+        Joi.string()
+          .allow("")
+          .uri()
+      )
+    },
+    {
+      name: "tags",
+      message: "Tag your post (separated by commas):"
     }
   ])
   .then(answers => {
-    const format = require("date-fns/format");
-    const view = {
-      ...answers,
-      date: format(new Date(), "yyyy-MM-dd"),
-      tags: ["historia", "personajes del software", "desarrollo de software"]
-    };
-
-    const postPath = getPostPath(view.title);
-    fs.writeFile(postPath, newPost(view), function(err) {
-      if (err) {
-        return console.log(err);
-      }
-
-      console.log(`Post created at ${postPath}, start writing 😃`);
-      console.log(
+    const post = postFrom(answers);
+    fs.writeFileSync(post.path, generateTemplateOf(post));
+    console.log(
+      `Post created as a draft, at ${post.path}, start writing 😃\n` +
+        `Remember to remove the "isPublic: false" to publish your post\n` +
         "Don't know mdx? You could guide yourself by seeing other .mdx files or see https://www.gatsbyjs.org/docs/mdx/markdown-syntax/"
-      );
-    });
+    );
   });
-
-const newPost = view =>
-  Mustache.render(
-    `---
-title: {{title}}
-date: {{date}}
-author: {{author}}
-tags: [tag-1, tag-2]
-{{#description}}
-description: {{description}}
-{{/description}}
-{{#imageURL}}
-image: {{imageURL}}
-{{/imageURL}}
----
-
-Your content in markdown but with the power of JSX. MDX!`,
-    view
-  );
