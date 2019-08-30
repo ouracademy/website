@@ -33,65 +33,58 @@ const getTags = posts => {
   return uniq(tags);
 };
 
-exports.createPages = ({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
-  return new Promise((resolve, reject) => {
-    resolve(
-      graphql(
-        `
-          {
-            allMdx {
-              edges {
-                node {
-                  id
-                  parent {
-                    ... on File {
-                      name
-                      sourceInstanceName
-                      relativePath
-                    }
-                  }
-                  frontmatter {
-                    tags
-                  }
+  const result = await graphql(
+    `
+      {
+        allMdx {
+          edges {
+            node {
+              id
+              parent {
+                ... on File {
+                  name
+                  sourceInstanceName
+                  relativePath
                 }
+              }
+              frontmatter {
+                tags
               }
             }
           }
-        `
-      ).then(result => {
-        if (result.errors) {
-          console.log(result.errors);
-          reject(result.errors);
         }
+      }
+    `
+  );
 
-        // Create blog posts pages.
-        const posts = result.data.allMdx.edges;
-        posts.forEach(({ node }) => {
-          createPage({
-            path: `/${node.parent.sourceInstanceName}/${node.parent.name}`,
-            component: path.resolve("./src/components/posts/template.js"),
-            context: {
-              id: node.id,
-              workspacePath: `src/${node.parent.sourceInstanceName}/${
-                node.parent.relativePath
-              }`
-            }
-          });
-        });
+  if (result.errors) {
+    reporter.panicOnBuild('🚨  ERROR: Loading "createPages" query');
+  }
 
-        const tags = getTags(posts);
-        tags.forEach(tag => {
-          createPage({
-            path: `/tags/${kebabCase(tag)}/`,
-            component: path.resolve("./src/components/tags/template.js"),
-            context: {
-              tag
-            }
-          });
-        });
-      })
-    );
+  // Create blog posts pages.
+  const posts = result.data.allMdx.edges;
+  posts.forEach(({ node }) => {
+    createPage({
+      path: `/${node.parent.sourceInstanceName}/${node.parent.name}`,
+      component: path.resolve("./src/components/posts/template.js"),
+      context: {
+        id: node.id,
+        workspacePath: `src/${node.parent.sourceInstanceName}/${node.parent.relativePath}`
+      }
+    });
+  });
+
+  const tags = getTags(posts);
+  tags.forEach(tag => {
+    createPage({
+      path: `/tags/${kebabCase(tag)}/`,
+      component: path.resolve("./src/components/tags/template.js"),
+      context: {
+        tag
+      }
+    });
   });
 };
 
