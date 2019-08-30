@@ -1,32 +1,40 @@
 ---
 title: "CoreNLP: Un tutorial"
-description: "Extrayendo entidades y relaciones de noticias"
+description: "Extrayendo entidades y relaciones de ciertas paginas web"
 date: "2019-08-07"
 author: diana
 tags: ["coreNLP", "extractor", "NLP", "tutorial"]
 image: /images/corenlp.png
 ---
 
-> Mira el resultado final en: [Demo](https://extractor.qpdiam.now.sh/).
+El procesamiento de lenguaje natural (NLP), uno de las áreas de Inteligencia Artificial (AI), tiene un gran crecimiento en en el desarrollo de aplicaciones: las vemos en Bots, en los asistentes personales (como Siri). Una de las aplicaciones muy utiles es el procesamiento de información, obtener **"insights"**. Este post trata de explicar como usar NLP para extraer información de periodicos, imaginate desarrollar una aplicación que lea noticias de diarios como Washington Post o el New York Times y de ello poder sacar "insights". Sin embargo, en vez de ello la usaremos para analizar noticias de Perú, un país con una muy buena comida pero con muchos problemas politicos (sus ultimos 3 presidentes procesados judicialmente 😂). Imaginate analizar las redes de politica de tu país, pues bien, eso es lo que haremos con Perú!
 
-Este post toma un enfoque totalmente práctico,
-dado un texto de un website se mostrará un grafo de entidades reconocidas en ese texto. Para este resultado se tiene el siguiente flujo:
-Obtener conjunto de textos --> Reconocer las entidades y relaciones en el texto --> Mostrar el grafo
+Bueno no tanto, eso tomaría mucho tiempo. En este tutorial, solo analizaremos los textos de ciertas paginas web sobre política (El comercio), extraeremos las entidades (por ejemplo nombre de personas, lugares, organizaciones) y con ello mostraremos las relaciones entre ellas, formando una red! 😄. Tomaremos un enfoque totalmente práctico y usaremos muchas librerías en diferentes lenguajes de programación.
 
-Cada paso se detalla en los siguientes párrafos:
+En sí el proceso que haremos es el siguiente:
 
-### Obtener un conjunto de textos
+1. Obtener los textos a procesar
+2. Reconocer las entidades y relaciones en ella
+3. Mostrar un grafo (de relaciones)
 
-Los textos son obtenidos de sitios web de noticias, alguno de estos son:
+Comenzemos por el paso 1:
 
--   https://intercambio.pe/la-mision-que-abrio-una-epoca/
--   https://ojo-publico.com/93/los-duenos-de-la-salud-privada-en-el-peru
+### 1.- Obtener los textos a procesar
 
-Bueno ahora ¿Como obtendremos el texto de esas noticias?
+Primero lo primero, identificar de donde sacar las noticias, como dijimos la sacaremos de diarios de Perú, por ejemplo:
 
-Para esto, el concepto de web scraping nos sera de ayuda, básicamente es hacer petición a estos enlaces, obtener el html y mediante librerias de analisis de documentos HTML (por ejemplo Beautiful Soup), obtener el texto.
+-   Links de noticias que se muestran en: https://elcomercio.pe/politica
+    -   Url 1
+    -   Url 2
+    -   ...
 
-Felizmente hay una libreria que incluye todo esto, [Newspaper3k: Article scraping & curation](https://newspaper.readthedocs.io/en/latest/) 👍
+Bueno ahora **¿Como obtendremos el texto de esas noticias?**
+
+Para esto, el concepto de [Web Scraping](https://es.wikipedia.org/wiki/Web_scraping) nos sera de ayuda, básicamente es hacer una petición Http a estos sitios web, obtener el html y mediante librerias de analisis de documentos HTML (por ejemplo, [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/) si usas Python), obtener el texto.
+
+Felizmente existe una libreria en python que incluye todo esto, [Newspaper3k: Article scraping & curation](https://newspaper.readthedocs.io/en/latest/) 👍
+
+Lo único que debemos hacer es descargar la librería ejecutando en nuestra terminal `pip3 install newspaper3` y crear un archivo (por ejemplo, `news.py`) que contenga algo como:
 
 ```python
 from newspaper import Article
@@ -36,28 +44,33 @@ def extract_text(url):
     article.download()
     article.parse()
     return article.text
+
+urls = ['url 1','url2',...]
+texts = list(map( extract_text, urls ))
 ```
 
-Ahora extraeremos los textos de los links:
+Con lo siguiente descargariamos los textos de una lista de `urls` (nuestras noticias), con tan solo muy pocas lineas de código!
 
-```python
-  urls = ['your_url1','your_url2',...]
-  texts = list(map( extract_text, urls ))
-```
+Con ello, hemos realizado la primera tarea, vayamos al siguiente paso.
 
-Listo, se realizo la primera tarea, vayamos al siguiente paso.
+### 2.- Reconocer las entidades y relaciones en el texto
 
-### Reconocer las entidades y relaciones en el texto
+El texto de por si no es útil si es que no es interpretado, datos no es lo mismo que información. Es aquí donde usaremos NLP para interpretar el texto, y de ello obtener las entidades (como las personas o lugares que aparecen en las noticias) y también que relaciones a las entidades.
 
-Bueno, y ahora ¿Como obtendremos las entidades y relaciones en los textos? Aqui viene [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/) al rescate.
-Stanford CoreNLP integra muchas herramientas de Procesamiento de lenguaje natural, entre ellas, nos sera de utilidad: Named Entity Recognizer (NER) y Relation Extractor Annotator.
+Pero la pregunta ahora es **¿Como obtendremos las entidades y relaciones en los textos?** Aqui viene [CoreNLP](https://stanfordnlp.github.io/CoreNLP/) al rescate.
 
-Para usar estas herramientas desplegaremos el CoreNLP Server, esto requiere que descarguemos: [corenlp .jar](https://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip) y [modelo entrenado en español .jar](https://nlp.stanford.edu/software/stanford-spanish-corenlp-2018-10-05-models.jar);
-luego colocaremos estos jar en una carpeta llamada **corenlp**.
+CoreNLP, es una librería desarrollada por la Universidad de Standford en Java, que integra muchas herramientas de Procesamiento de Lenguaje Natural, entre ellas, nos serán de utilidad: Named Entity Recognizer (NER), que se encarga de reconocer las entidades, y el Relation Extractor Annotator, encargado de reconocer las relaciones.
 
-Algo importante que se me olvido mencionar, es tener instalado Java 8.
+Una de las características muy potentes de CoreNLP es su capacidad ser usada como un servidor, es decir podemos hacerle peticiones HTTP. Por ejemplo solicitarle las entidades de un texto (GET entities?text='.......'), de esta forma podríamos integrarla con cualquier lenguaje de programación.
 
-Luego de esto, se debe ubicar en la carpeta **corenlp**, y ejecutar lo
+Nosotros usaremos CoreNLP de esa forma.
+
+Así que primero levantemos CoreNLP, primero lo primero, dado que CoreNLP está desarrollado en Java, lo primero es [descargarlo](https://openjdk.java.net/install/index.html) al menos en su versión 8, puedes verificarlo asi: `java -version`
+
+Luego descargar en sí CoreNLP, esto requiere que descarguemos: [corenlp .jar](https://nlp.stanford.edu/software/stanford-corenlp-full-2018-10-05.zip), y dado que analizaremos noticias en español, necesitamos descargar el [.jar que contiene el modelo entrenado para el lenguaje español ](https://nlp.stanford.edu/software/stanford-spanish-corenlp-2018-10-05-models.jar);
+luego pondremos estos jar en una carpeta llamada **corenlp** (o el nombre que prefieras).
+
+Luego de esto, nos ubicaremos en la carpeta **corenlp**, y ejecutaremos lo
 siguiente:
 
 ```shell
@@ -69,55 +82,94 @@ java -cp "\*" -Xmx4g edu.stanford.nlp.pipeline.StanfordCoreNLPServer \
  -maxCharLength 1000000 -port 9000
 ```
 
-Una vez ejecutado este comando, se tendra el siguiente [link](localhost:9000), el cual mostrara en tu maquina un contenido igual a [este link](https://corenlp.run/). Al cual se le podra hacer peticiones web para obtener las entidades y relaciones, para esto usaremos la libreria **pycorenlp**.
+Esto levanta el servicio de CoreNLP en el puerto 9000, con una serie de opciones, por ejemplo el flag `-preload`, indica que debemos tokenizar ('tokenize' - Tokeniza el texto a procesar y devuelve la lista de 'tokens' en el Response), puedes ver más acerca de estas opciones [en su documentación.]
+
+Una vez ejecutado este comando, podremos ver en localhost:9000, un contenido igual a [este link](https://corenlp.run/).
+
+Ahora podemos hacer peticiones web para obtener las entidades y relaciones, y dado que usamos python usaremos la librería **pycorenlp** para que CoreNLP lea los textos `texts` que hemos descargado en el paso anterior:
 
 ```python
-  from pycorenlp import StanfordCoreNLP
-  nlp = StanfordCoreNLP('http://localhost:9000')
+# código del paso 1.
+# ...
+texts = list(map( extract_text, urls ))
 
-  def recognizer(text):
-      return nlp.annotate(text,
-                    properties={
-                        'annotators': 'tokenize,ssplit,pos,ner,depparse,openie,kbp',
-                        'outputFormat': 'json',
-                        'timeout': 90000,
-                    })
-  corenlp_by_texts = list(map(recognizer, texts))
+from pycorenlp import StanfordCoreNLP
+nlp = StanfordCoreNLP('http://localhost:9000')
+
+def recognizer(text):
+    return nlp.annotate(text,
+                properties={
+                    'annotators': 'tokenize,ssplit,pos,ner,depparse,openie,kbp',
+                    'outputFormat': 'json',
+                    'timeout': 90000,
+                })
+response = list(map(recognizer, texts))
 ```
 
-El resultado contiene un un objeto con la propiedad **sentences**, el cual contiene un arreglo de oraciones, cada oracion contiene estas propiedades: "index", "basicDependencies", "enhancedDependencies", "enhancedPlusPlusDependencies", "openie", "kbp", "entitymentions" y "tokens". Para este caso usaremos tomaremos como referencia una oracion y obtendremos su propiedad **entitymentions** y **openie**.
+En la solicitud web (request) se le especifica una lista de [annotators](https://stanfordnlp.github.io/CoreNLP/annotators.html), que son tipos de analisis que se le aplicara al texto a procesar: tokenize,ssplit,pos,ner,depparse,openie,kbp.
 
-#### Oracion de referencia:
+La respuesta a la peticion web (`response`) veremos la propiedad **sentences**, el cual contiene un arreglo de oraciones del texto a procesar, cada oracion contiene estas propiedades:
+"tokens", "index", "basicDependencies", "enhancedDependencies", "enhancedPlusPlusDependencies","entitymentions","openie", "kbp".
 
-> Este hecho motivó la reacción de un grupo de indígenas , quienes ingresaron a las instalaciones de la Estación Nº 6 de PETROPERÚ , golpearon a los líderes manifestantes , así como a el Comandante PNP Miguel Montenegro , quien estaba a el mando de un contingente de 37 policías a el interior de la estación , para finalmente ultimar a 12 policías en el cerro ubicado frente a la sede petrolera.
+Para este caso solo usaremos **entitymentions** (que nos da a conocer las entidades) y **openie** (que nos da a conocer las relaciones).
 
-**entitymentions** contiene un arreglo de entidades reconocidas:
+Por ejemplo, haciendole peticion a https://corenlp.run/, con el texto: `Donald Trump is president USA` obtendremos:
 
 ```json
 {
-    "docTokenBegin": 113,
-    "docTokenEnd": 114,
-    "tokenBegin": 18,
-    "tokenEnd": 19,
-    "text": "Estación",
-    "characterOffsetBegin": 592,
-    "characterOffsetEnd": 600,
-    "ner": "LOCATION"
+    "docDate": "2019-08-18T22:43:06",
+    "sentences": [
+        {
+            "index": 0,
+            "openie": [
+                {
+                    "subject": "Donald Trump",
+                    "subjectSpan": [0, 2],
+                    "relation": "is",
+                    "relationSpan": [2, 3],
+                    "object": "president USA",
+                    "objectSpan": [3, 5]
+                }
+            ],
+            "entitymentions": [
+                {
+                    "docTokenBegin": 0,
+                    "docTokenEnd": 2,
+                    "tokenBegin": 0,
+                    "tokenEnd": 2,
+                    "text": "Donald Trump",
+                    "characterOffsetBegin": 0,
+                    "characterOffsetEnd": 12,
+                    "ner": "PERSON"
+                },
+                {
+                    "docTokenBegin": 3,
+                    "docTokenEnd": 4,
+                    "tokenBegin": 3,
+                    "tokenEnd": 4,
+                    "text": "president",
+                    "characterOffsetBegin": 16,
+                    "characterOffsetEnd": 25,
+                    "ner": "TITLE"
+                },
+                {
+                    "docTokenBegin": 4,
+                    "docTokenEnd": 5,
+                    "tokenBegin": 4,
+                    "tokenEnd": 5,
+                    "text": "USA",
+                    "characterOffsetBegin": 26,
+                    "characterOffsetEnd": 29,
+                    "ner": "COUNTRY"
+                }
+            ]
+        }
+    ]
 }
 ```
 
-**openie** contien un arreglo de relaciones reconocidas:
-
-```json
-{
-    "subject": "quienes",
-    "subjectSpan": [11, 12],
-    "relation": "golpearon",
-    "relationSpan": [24, 25],
-    "object": "manifestantes",
-    "objectSpan": [28, 29]
-}
-```
+El texto de ejemplo solo contiene una oracion, pero en casos reales, el texto contendra muchas oraciones, por lo que la propiedad `sentences` sera un arreglo con muchos elementos.
+Bueno ya obtuvimos las entidades y relaciones, ahora nos toca el ultimo paso, mostrar el grafo.
 
 ### Mostrar el grafo
 
@@ -137,7 +189,7 @@ Mostramos un ejemplo del resultado de una oracion, sabemos que por texto CoreNLP
                   "type": "PERSON",
                   "color": "#04dbf4
               } ...
-              ]
+            ]
           "1": [ ... ],
           "2": [ ... ],
           ...
