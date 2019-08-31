@@ -4,6 +4,7 @@ import { MDXRenderer } from "gatsby-plugin-mdx";
 import { MDXProvider } from "@mdx-js/react";
 import { Box, Heading } from "grommet";
 import { Tag as TagIcon, Clock } from "grommet-icons";
+import { Youtube } from "../youtube";
 import { Tag } from "../../pages/tags";
 
 import Layout from "../layout";
@@ -68,7 +69,8 @@ const PostPageTemplate = ({ data: { mdx, github }, location }) => {
         <MDXProvider
           components={{
             blockquote: DesignSystem.Blockquote,
-            img: DesignSystem.Image
+            img: DesignSystem.Image,
+            Youtube
           }}
         >
           <MDXRenderer>{body}</MDXRenderer>
