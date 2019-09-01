@@ -3,6 +3,7 @@ title: La función filter
 date: 2019-01-19
 author: arthur
 tags: ["programacion funcional"]
+description: que es filter? con ejemplos en javascript, python, java y php
 ---
 
 La función filter es uno de los Higher Order Functions (HOF) comúnes, aunque inicialmente no estaban en muchos lenguajes de programación, hoy en día están prácticamente en todos. Java (8+), Javascript, C# (3+), Ruby, Python, ... Smalltalk, Lisp.
@@ -146,7 +147,7 @@ const evens = numbers.filter(x => x % 2 == 0);
 Que tal python?
 
 ```python
-evens = filter(lambda x: x%2 == 0, [1,2,3,4,5,8,2])
+evens = list(filter(lambda x: x%2 == 0, [1,2,3,4,5,8,2]))
 # o usando list comprenhension
 evens = [x for x in [1,2,3,4,5,8,2] if x%2 == 0]
 ```
