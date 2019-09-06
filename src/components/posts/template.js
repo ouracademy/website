@@ -15,6 +15,7 @@ import DesignSystem from "../design-system";
 
 import { format } from "date-fns";
 import { parseHeader } from "parse-commit-message";
+import { PostItem } from "../../pages";
 
 const Tags = ({ tags }) => (
   <Box pad="small" direction="row" align="center" gap="small" wrap>
@@ -77,6 +78,41 @@ const PostPageTemplate = ({ data: { mdx, github }, location }) => {
         </MDXProvider>
         {showHistory && <History commits={history} />}
         <Share title={title} description={description} url={url} />
+      </Box>
+      <Box>
+        <Heading level="3">Quiza te pueda interesar...</Heading>
+        <Box direction="row">
+          {[
+            {
+              id: 1,
+              fields: { slug: "/formato-al-codigo" },
+              frontmatter: { title: "Formato al codigo" },
+              excerpt:
+                "Consejos y prácticas para tener un formato de código común en un equipo de desarollo."
+            },
+            {
+              id: 2,
+              fields: { slug: "/duck-debugging" },
+              frontmatter: {
+                title: "Cuando estes estancado habla con el pato"
+              },
+              excerpt:
+                "Alguna vez te haz estancado en un problema y, para resolverlo, empiezas a hablarte a ti mismo, o a un patito de goma en tu escritorio?"
+            },
+
+            {
+              id: 3,
+              fields: { slug: "/software-engineering-history" },
+              frontmatter: {
+                title: "La historia de la ingeniería de software"
+              },
+              excerpt:
+                "Un resumen del articulo realizado por Grady Booch por el aniversario de los 50 años de la Ingeniería de software: The History of Software Engineering"
+            }
+          ].map(node => (
+            <PostItem key={node.id} {...node}></PostItem>
+          ))}
+        </Box>
       </Box>
       {/* <Comments id={id} title={title} url={url} /> */}
     </Layout>

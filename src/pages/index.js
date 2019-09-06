@@ -107,7 +107,7 @@ export default ({ data: { allMdx } }) => (
   </Layout>
 );
 
-const PostItem = ({ fields, frontmatter, excerpt }) => (
+export const PostItem = ({ fields, frontmatter, excerpt }) => (
   <Box elevation="medium" pad="medium">
     <PostHeader>
       <StyledLink to={`/posts${fields.slug}`}>
@@ -118,7 +118,7 @@ const PostItem = ({ fields, frontmatter, excerpt }) => (
           color: "#bbb"
         }}
       >
-        —{frontmatter.date}
+        {frontmatter.date && `—${frontmatter.date}`}
       </span>
     </PostHeader>
     {frontmatter.image ? (
