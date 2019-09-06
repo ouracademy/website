@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-const StartLine = styled.p`
-  font-weight: bold;
-
-  :first-letter {
+// Use to starts your posts with a giant capitalized letter like in books (in Harry Potter!)
+// see for example: existe-tal-cosa-llamada-analisis-oo article
+export const CapitalizeNextLine = styled.div`
+  + p:first-letter {
     font-size: 72px;
     float: left;
     padding: 10px;
@@ -14,5 +14,3 @@ const StartLine = styled.p`
     line-height: 70px;
   }
 `;
-
-export default StartLine;
