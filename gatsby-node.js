@@ -33,6 +33,22 @@ const getTags = posts => {
   return uniq(tags);
 };
 
+const orderBy = require("lodash/orderBy");
+const levenshtein = require("js-levenshtein");
+
+const index = ({ frontmatter }) =>
+  frontmatter.title + " " + frontmatter.tags.join();
+
+const getSimilar = (posts, post, limit = 3) => {
+  return orderBy(
+    posts
+      .filter(x => x.id !== post.id) // except the same
+      .map(x => ({ ...x, cost: levenshtein(index(x), index(post)) })),
+    ["cost"],
+    ["asc"]
+  ).slice(0, limit);
+};
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
   const result = await graphql(
@@ -51,7 +67,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
               }
               frontmatter {
                 tags
+                title
+                description
               }
+              fields {
+                slug
+              }
+              excerpt
             }
           }
         }
@@ -64,14 +86,15 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   // Create blog posts pages.
-  const posts = result.data.allMdx.edges;
-  posts.forEach(({ node }) => {
+  const posts = result.data.allMdx.edges.map(x => x.node);
+  posts.forEach(node => {
     createPage({
       path: `/${node.parent.sourceInstanceName}/${node.parent.name}`,
       component: path.resolve("./src/components/posts/template.js"),
       context: {
         id: node.id,
-        workspacePath: `src/${node.parent.sourceInstanceName}/${node.parent.relativePath}`
+        workspacePath: `src/${node.parent.sourceInstanceName}/${node.parent.relativePath}`,
+        recommendedContent: getSimilar(posts, node)
       }
     });
   });
