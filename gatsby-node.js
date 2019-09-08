@@ -39,15 +39,17 @@ const levenshtein = require("js-levenshtein");
 const index = ({ frontmatter }) =>
   frontmatter.title + " " + frontmatter.tags.join();
 
-const getSimilar = (posts, post, limit = 3) => {
-  return orderBy(
+const getSimilar = (posts, post, limit = 3) =>
+  orderBy(
     posts
-      .filter(x => x.id !== post.id) // except the same
-      .map(x => ({ ...x, cost: levenshtein(index(x), index(post)) })),
+      .filter(({ node }) => node.id !== post.id) // except the same
+      .map(({ node }) => ({
+        ...node,
+        cost: levenshtein(index(node), index(post))
+      })),
     ["cost"],
     ["asc"]
   ).slice(0, limit);
-};
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
@@ -86,8 +88,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   // Create blog posts pages.
-  const posts = result.data.allMdx.edges.map(x => x.node);
-  posts.forEach(node => {
+  const posts = result.data.allMdx.edges;
+  posts.forEach(({ node }) => {
     createPage({
       path: `/${node.parent.sourceInstanceName}/${node.parent.name}`,
       component: path.resolve("./src/components/posts/template.js"),
