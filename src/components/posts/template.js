@@ -81,7 +81,7 @@ const PostPageTemplate = ({ data: { mdx, github }, location, pageContext }) => {
       </Box>
       <Box>
         <Heading level="3">Quiza te pueda interesar...</Heading>
-        <Box direction="row">
+        <Box direction="row-responsive">
           {pageContext.recommendedContent.map(node => (
             <PostItem key={node.id} {...node}></PostItem>
           ))}
