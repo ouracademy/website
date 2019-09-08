@@ -65,7 +65,9 @@ class MobileMenu extends Component {
         {showLayer && (
           <Layer full>
             <Box fill background="light-1" pad="large">
-              <Close onClick={() => this.setState({ showLayer: false })} />
+              <Box align="end">
+                <Close onClick={() => this.setState({ showLayer: false })} />
+              </Box>
               <Box
                 fill
                 gap="xlarge"
