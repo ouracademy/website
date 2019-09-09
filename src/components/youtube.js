@@ -8,15 +8,14 @@ export const Youtube = ({ src = "", title }) => {
   );
 
   return (
-    <div>
-      <iframe
-        width="560"
-        height="315"
-        src={url}
-        frameBorder="0"
-        allowFullScreen
-        title={title}
-      />
-    </div>
+    <iframe
+      width="560"
+      height="315"
+      src={url}
+      style={{ display: "block", marginTop: "10px" }}
+      frameBorder="0"
+      allowFullScreen
+      title={title}
+    />
   );
 };
