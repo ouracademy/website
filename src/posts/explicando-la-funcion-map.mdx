@@ -4,20 +4,21 @@ date: 2019-01-15
 author: diana
 tags: ["programacion funcional"]
 image: /images/map.png
+description: que es map? con ejemplos en javascript y python
 ---
 
 **Primero una imagen, ¿que observas?**
 
 ![](/images/map.png)
 
-Dices observo un cambio, un conjunto de elementos que se transforma en otro, observo una **transformacióm**
+Seguramente observarás un cambio, un conjunto de elementos que se transforma en otro (de figuras en 2D a 3D), lo que observas es una **transformación**, eso es la función **map**!
 
-**Ahora un escenario de transformación**
+**Veamos un ejemplo**
 
-Se tiene una lista de precios, y te piden que apliques un descuento de 10% a cada precio.
-Entonces tu dices, con javascript seria asi:
+Si tienes una lista de precios, y te piden que apliques un descuento de 10% a cada precio. Entonces podrías hacerlo usando `for` tradicionales, algo como:
 
 ```javascript
+// en javascript
 let prices = [10, 15.4, 23.6];
 let pricesWithDesc = [];
 for (let i = 0, max = prices.length; i < max; i++) {
