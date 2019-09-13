@@ -31,7 +31,8 @@ const links = [
   },
   {
     label: "Tags",
-    href: "/tags"
+    href: "/tags",
+    primary: true
   }
 ];
 
@@ -97,12 +98,11 @@ class MobileMenu extends Component {
 
 const DesktopNavButtons = () => (
   <Box direction="row" gap="xsmall">
-    <Link to="/about">
-      <Button label="Nosotros" />
-    </Link>
-    <Link to="/tags">
-      <Button label="Tags" primary />
-    </Link>
+    {links.map(({ href, label, primary }) => (
+      <Link to={href}>
+        <Button label={label} primary={primary} />
+      </Link>
+    ))}
   </Box>
 );
 
