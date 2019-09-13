@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Layout from "../components/layout";
 import { graphql, Link } from "gatsby";
-import { Heading, Box, Image, Anchor, Text } from "grommet";
+import { Heading, Box, Image, Anchor, Paragraph } from "grommet";
 import { Github } from "grommet-icons";
 
 const PostHeader = styled.h3`
@@ -88,16 +88,43 @@ export default ({ data: { allMdx } }) => (
   <Layout>
     <Banner />
     <Box>
-      <Text>
-        Un lugar dedicado a ayudarte a mejorar tus habilidades de desarrollo de
-        software
-      </Text>
-      <Text>
-        Encontrarás <strong>técnicas, prácticas y principios</strong> que te
-        ayudarán por el resto de tu carrera.
-      </Text>
-      <Text>De Agil, Programación Funcional, DevOps, Machine Learning...</Text>
-      <Text>Y tecnologías, frameworks, lenguajes de la actualidad</Text>
+      <Box>
+        <Box
+          direction="row-responsive"
+          gap="small"
+          justify="between"
+          align="center"
+        >
+          <Box width="large" responsiveBreakpoint="medium" pad="medium">
+            <Paragraph>
+              Un lugar dedicado a ayudarte a mejorar tus habilidades de
+              desarrollo de software, donde podrás encontrar{" "}
+              <strong>técnicas, prácticas y principios</strong> que te ayudarán
+              por el resto de tu carrera.
+            </Paragraph>
+            <Paragraph>
+              En temas como Agile, DevOps, Diseño, Machine Learning...
+            </Paragraph>
+            <Paragraph>
+              Y tecnologías, frameworks, lenguajes de la actualidad
+            </Paragraph>
+          </Box>
+          <Box height="medium" width="large">
+            <Image
+              fit="contain"
+              src="images/theory-banner.png"
+              alt="Temas"
+            ></Image>
+          </Box>
+          <Box height="medium" width="large">
+            <Image
+              fit="contain"
+              src="images/tech-banner.png"
+              alt="Tecnologias"
+            ></Image>
+          </Box>
+        </Box>
+      </Box>
     </Box>
     <Posts>
       {allMdx.edges.map(({ node }) => (

@@ -18,7 +18,7 @@ const Container = ({ children }) => (
   <ResponsiveContext.Consumer>
     {size => (
       <Box align="center" pad="small">
-        <Box width={size !== "small" ? "70vw" : "full"}>{children}</Box>
+        <Box width={size !== "small" ? "75vw" : "full"}>{children}</Box>
       </Box>
     )}
   </ResponsiveContext.Consumer>
@@ -30,8 +30,8 @@ const links = [
     href: "/about"
   },
   {
-    label: "Tags",
-    href: "/tags",
+    label: "Bliki",
+    href: "/bliki",
     primary: true
   }
 ];
@@ -99,7 +99,7 @@ class MobileMenu extends Component {
 const DesktopNavButtons = () => (
   <Box direction="row" gap="xsmall">
     {links.map(({ href, label, primary }) => (
-      <Link to={href}>
+      <Link key={href} to={href}>
         <Button label={label} primary={primary} />
       </Link>
     ))}
