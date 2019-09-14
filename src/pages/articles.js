@@ -4,10 +4,12 @@ import styled from "styled-components";
 import { graphql, Link } from "gatsby";
 
 import { Box, Image } from "grommet";
+import { Tags } from "./tags";
 
 const Posts = styled.div`
   display: grid;
   grid-gap: 5px;
+  margin: 2vh 0;
 
   & div {
     height: 330px;
@@ -75,6 +77,9 @@ export const PostItem = ({ fields, frontmatter, excerpt }) => (
 export default ({ data: { allMdx } }) => (
   <Layout>
     <h1>Articulos</h1>
+    <Box margin="small">
+      <Tags tags={allMdx.group} />
+    </Box>
     <Posts>
       {allMdx.edges.map(({ node }) => (
         <PostItem key={node.id} {...node} />
@@ -104,6 +109,10 @@ export const query = graphql`
           }
           excerpt
         }
+      }
+      group(field: frontmatter___tags) {
+        fieldValue
+        totalCount
       }
     }
   }

@@ -1,18 +1,9 @@
 import React from "react";
 import { Link, graphql } from "gatsby";
-import { Box, Button, Text } from "grommet";
+import { Box, Button } from "grommet";
 import { Tag as TagIcon } from "grommet-icons";
-import styled from "styled-components";
 import Layout from "../components/layout";
 import kebabCase from "lodash/kebabCase";
-
-const TagQuantity = styled.div`
-  background: #ababab;
-  width: 25px;
-  color: white;
-  border: 10%;
-  text-align: center;
-`;
 
 const Container = ({ children }) => (
   <Box direction="row" align="center" gap="small">
@@ -20,15 +11,12 @@ const Container = ({ children }) => (
   </Box>
 );
 
-export const Tag = ({ name, children }) => (
-  <Link to={`/tags/${kebabCase(name)}/`}>
-    <Button hoverIndicator="light-1" onClick={() => {}}>
-      <Container>
-        <Text>{name}</Text>
-        {children}
-      </Container>
-    </Button>
-  </Link>
+export const Tag = ({ name }) => (
+  <Box pad="xxsmall">
+    <Link to={`/tags/${kebabCase(name)}/`}>
+      <Button label={name} />
+    </Link>
+  </Box>
 );
 
 export default ({
@@ -37,18 +25,22 @@ export default ({
   }
 }) => (
   <Layout title="Tags">
+    <Tags tags={group} />
+  </Layout>
+);
+
+export const Tags = ({ tags }) => (
+  <Box>
     <Container>
       <TagIcon />
-      <h1>Tags</h1>
+      <h2>Tags</h2>
     </Container>
-    <Box gap="small">
-      {group.map(tag => (
-        <Tag name={tag.fieldValue} key={tag.fieldValue}>
-          <TagQuantity>{tag.totalCount}</TagQuantity>
-        </Tag>
+    <Box gap="xsmall" direction="row" wrap={true}>
+      {tags.map(tag => (
+        <Tag name={tag.fieldValue} key={tag.fieldValue}></Tag>
       ))}
     </Box>
-  </Layout>
+  </Box>
 );
 
 export const pageQuery = graphql`
