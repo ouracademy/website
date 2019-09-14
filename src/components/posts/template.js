@@ -15,7 +15,7 @@ import DesignSystem from "../design-system";
 
 import { format } from "date-fns";
 import { parseHeader } from "parse-commit-message";
-import { PostItem } from "../../pages";
+import { PostItem } from "../../pages/articles";
 
 const Tags = ({ tags }) => (
   <Box pad="small" direction="row" align="center" gap="small" wrap>
