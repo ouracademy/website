@@ -3,7 +3,7 @@ title: "CoreNLP: Un tutorial"
 description: "Extrayendo entidades y relaciones de ciertas paginas web"
 date: "2019-08-07"
 author: diana
-tags: ["coreNLP", "extractor", "NLP", "tutorial"]
+tags: ["NLP", "tutorial"]
 image: /images/corenlp.png
 ---
 
@@ -23,10 +23,10 @@ Comenzemos por el paso 1:
 
 Primero lo primero, identificar de donde sacar las noticias, como dijimos la sacaremos de diarios de Perú, por ejemplo:
 
--   Links de noticias que se muestran en: https://elcomercio.pe/politica
-    -   Url 1
-    -   Url 2
-    -   ...
+- Links de noticias que se muestran en: https://elcomercio.pe/politica
+  - Url 1
+  - Url 2
+  - ...
 
 Bueno ahora **¿Como obtendremos el texto de esas noticias?**
 
@@ -117,54 +117,54 @@ Por ejemplo, haciendole peticion a https://corenlp.run/, con el texto: `Donald T
 
 ```json
 {
-    "docDate": "2019-08-18T22:43:06",
-    "sentences": [
+  "docDate": "2019-08-18T22:43:06",
+  "sentences": [
+    {
+      "index": 0,
+      "openie": [
         {
-            "index": 0,
-            "openie": [
-                {
-                    "subject": "Donald Trump",
-                    "subjectSpan": [0, 2],
-                    "relation": "is",
-                    "relationSpan": [2, 3],
-                    "object": "president USA",
-                    "objectSpan": [3, 5]
-                }
-            ],
-            "entitymentions": [
-                {
-                    "docTokenBegin": 0,
-                    "docTokenEnd": 2,
-                    "tokenBegin": 0,
-                    "tokenEnd": 2,
-                    "text": "Donald Trump",
-                    "characterOffsetBegin": 0,
-                    "characterOffsetEnd": 12,
-                    "ner": "PERSON"
-                },
-                {
-                    "docTokenBegin": 3,
-                    "docTokenEnd": 4,
-                    "tokenBegin": 3,
-                    "tokenEnd": 4,
-                    "text": "president",
-                    "characterOffsetBegin": 16,
-                    "characterOffsetEnd": 25,
-                    "ner": "TITLE"
-                },
-                {
-                    "docTokenBegin": 4,
-                    "docTokenEnd": 5,
-                    "tokenBegin": 4,
-                    "tokenEnd": 5,
-                    "text": "USA",
-                    "characterOffsetBegin": 26,
-                    "characterOffsetEnd": 29,
-                    "ner": "COUNTRY"
-                }
-            ]
+          "subject": "Donald Trump",
+          "subjectSpan": [0, 2],
+          "relation": "is",
+          "relationSpan": [2, 3],
+          "object": "president USA",
+          "objectSpan": [3, 5]
         }
-    ]
+      ],
+      "entitymentions": [
+        {
+          "docTokenBegin": 0,
+          "docTokenEnd": 2,
+          "tokenBegin": 0,
+          "tokenEnd": 2,
+          "text": "Donald Trump",
+          "characterOffsetBegin": 0,
+          "characterOffsetEnd": 12,
+          "ner": "PERSON"
+        },
+        {
+          "docTokenBegin": 3,
+          "docTokenEnd": 4,
+          "tokenBegin": 3,
+          "tokenEnd": 4,
+          "text": "president",
+          "characterOffsetBegin": 16,
+          "characterOffsetEnd": 25,
+          "ner": "TITLE"
+        },
+        {
+          "docTokenBegin": 4,
+          "docTokenEnd": 5,
+          "tokenBegin": 4,
+          "tokenEnd": 5,
+          "text": "USA",
+          "characterOffsetBegin": 26,
+          "characterOffsetEnd": 29,
+          "ner": "COUNTRY"
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -212,37 +212,37 @@ Dado este formato se visualizara el grafo usando **jsnetworkx.js**
 
 ```javascript
 function draw(nodes, edges) {
-    var G = new jsnx.DiGraph();
-    nodes_graph = nodes.map(node => [
-        node["name"],
-        { color: node["color"], size: 30 }
-    ]);
-    edges_graph = edges.map(node => [node["from"], node["to"]]);
-    G.addNodesFrom(nodes_graph);
-    G.addEdgesFrom(edges_graph);
+  var G = new jsnx.DiGraph();
+  nodes_graph = nodes.map(node => [
+    node["name"],
+    { color: node["color"], size: 30 }
+  ]);
+  edges_graph = edges.map(node => [node["from"], node["to"]]);
+  G.addNodesFrom(nodes_graph);
+  G.addEdgesFrom(edges_graph);
 
-    jsnx.draw(G, {
-        element: "#canvas",
-        withLabels: true,
-        nodeAttr: {
-            r: function(d) {
-                return d.data.size;
-            }
-        },
-        nodeStyle: {
-            fill: function(d) {
-                return d.data.color.replace("0", "5");
-            }
-        },
-        node_style: {
-            fill: "#999",
-            cursor: "pointer",
-            "stroke-opacity": "0",
-            stroke: "white"
-        },
-        labelStyle: { fill: "black", "font-weigth": "bold" },
-        stickyDrag: true
-    });
+  jsnx.draw(G, {
+    element: "#canvas",
+    withLabels: true,
+    nodeAttr: {
+      r: function(d) {
+        return d.data.size;
+      }
+    },
+    nodeStyle: {
+      fill: function(d) {
+        return d.data.color.replace("0", "5");
+      }
+    },
+    node_style: {
+      fill: "#999",
+      cursor: "pointer",
+      "stroke-opacity": "0",
+      stroke: "white"
+    },
+    labelStyle: { fill: "black", "font-weigth": "bold" },
+    stickyDrag: true
+  });
 }
 ```
 
@@ -256,11 +256,11 @@ draw(data["nodes"][index], data["edges"][index]);
 Luego de todo este trabajo, obtendremos un resultado similar a la siguiente image.
 
 <figure>
-    <img src="/images/corenlp.png" style="width:100%;" />
-    <figcaption>
-        <a href="https://extractor.qpdiam.now.sh">Link de demo</a> Grafo de
-        entidades y sus relaciones
-    </figcaption>
+  <img src="/images/corenlp.png" style="width:100%;" />
+  <figcaption>
+    <a href="https://extractor.qpdiam.now.sh">Link de demo</a> Grafo de
+    entidades y sus relaciones
+  </figcaption>
 </figure>
 
 Listo terminamos 😄 😄
