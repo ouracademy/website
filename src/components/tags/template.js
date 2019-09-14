@@ -1,8 +1,9 @@
 import React from "react";
-import { Link, graphql } from "gatsby";
+import { graphql } from "gatsby";
 import Layout from "../layout";
 import { Heading, Text } from "grommet";
 import { Tags } from "./tags";
+import { Posts } from "../../pages/articles";
 
 export default ({ pageContext, data }) => {
   const { tag } = pageContext;
@@ -14,18 +15,7 @@ export default ({ pageContext, data }) => {
         {tag} <Text>{`${totalCount} post${totalCount === 1 ? "" : "s"} `}</Text>
       </Heading>
       <Tags />
-      <ul>
-        {edges.map(({ node }) => {
-          const { title } = node.frontmatter;
-          const path = `posts${node.fields.slug}`;
-
-          return (
-            <li key={path}>
-              <Link to={path}>{title}</Link>
-            </li>
-          );
-        })}
-      </ul>
+      <Posts posts={edges} />
     </Layout>
   );
 };
@@ -40,12 +30,7 @@ export const pageQuery = graphql`
       totalCount
       edges {
         node {
-          frontmatter {
-            title
-          }
-          fields {
-            slug
-          }
+          ...PostInfo
         }
       }
     }

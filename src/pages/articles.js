@@ -6,7 +6,7 @@ import { graphql, Link } from "gatsby";
 import { Box, Image } from "grommet";
 import { Tags } from "../components/tags/tags";
 
-const Posts = styled.div`
+const Grid = styled.div`
   display: grid;
   grid-gap: 5px;
   margin: 2vh 0;
@@ -80,12 +80,16 @@ export default ({ data: { allMdx } }) => (
     <Box margin="small">
       <Tags />
     </Box>
-    <Posts>
-      {allMdx.edges.map(({ node }) => (
-        <PostItem key={node.id} {...node} />
-      ))}
-    </Posts>
+    <Posts posts={allMdx.edges} />
   </Layout>
+);
+
+export const Posts = ({ posts }) => (
+  <Grid>
+    {posts.map(({ node }) => (
+      <PostItem key={node.id} {...node} />
+    ))}
+  </Grid>
 );
 
 export const query = graphql`
@@ -97,17 +101,7 @@ export const query = graphql`
       totalCount
       edges {
         node {
-          id
-          fields {
-            slug
-          }
-          frontmatter {
-            title
-            date(formatString: "DD MMMM, YYYY", locale: "es")
-            image
-            description
-          }
-          excerpt
+          ...PostInfo
         }
       }
     }
