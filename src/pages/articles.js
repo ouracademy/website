@@ -78,7 +78,7 @@ export default ({ data: { allMdx } }) => (
   <Layout>
     <h1>Articulos</h1>
     <Box margin="small">
-      <Tags tags={allMdx.group} />
+      <Tags />
     </Box>
     <Posts>
       {allMdx.edges.map(({ node }) => (
@@ -109,10 +109,6 @@ export const query = graphql`
           }
           excerpt
         }
-      }
-      group(field: frontmatter___tags) {
-        fieldValue
-        totalCount
       }
     }
   }
