@@ -1,8 +1,7 @@
 import React from "react";
-import { Link, graphql } from "gatsby";
+import { Link } from "gatsby";
 import { Box, Button } from "grommet";
 import { Tag as TagIcon } from "grommet-icons";
-import Layout from "../components/layout";
 import kebabCase from "lodash/kebabCase";
 
 const Container = ({ children }) => (
@@ -11,22 +10,12 @@ const Container = ({ children }) => (
   </Box>
 );
 
-export const Tag = ({ name }) => (
+export const Tag = ({ name, ...rest }) => (
   <Box pad="xxsmall">
     <Link to={`/tags/${kebabCase(name)}/`}>
-      <Button label={name} />
+      <Button label={name} {...rest} />
     </Link>
   </Box>
-);
-
-export default ({
-  data: {
-    allMdx: { group }
-  }
-}) => (
-  <Layout title="Tags">
-    <Tags tags={group} />
-  </Layout>
 );
 
 export const Tags = ({ tags }) => (
@@ -42,14 +31,3 @@ export const Tags = ({ tags }) => (
     </Box>
   </Box>
 );
-
-export const pageQuery = graphql`
-  query {
-    allMdx(limit: 2000, filter: { fields: { isPublic: { eq: true } } }) {
-      group(field: frontmatter___tags) {
-        fieldValue
-        totalCount
-      }
-    }
-  }
-`;

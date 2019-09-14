@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { graphql, Link } from "gatsby";
 
 import { Box, Image } from "grommet";
-import { Tags } from "./tags";
+import { Tags } from "../components/tags/tags";
 
 const Posts = styled.div`
   display: grid;

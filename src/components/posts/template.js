@@ -5,7 +5,7 @@ import { MDXProvider } from "@mdx-js/react";
 import { Box, Heading } from "grommet";
 import { Tag as TagIcon, Clock } from "grommet-icons";
 import { Youtube } from "../youtube";
-import { Tag } from "../../pages/tags";
+import { Tag } from "../tags/tags";
 
 import Layout from "../layout";
 import SocialLinks from "./social-links";
@@ -21,7 +21,7 @@ const Tags = ({ tags }) => (
   <Box pad="small" direction="row" align="center" gap="small" wrap>
     <TagIcon />
     {tags.map(tag => (
-      <Tag key={tag} name={tag} />
+      <Tag key={tag} name={tag} plain />
     ))}
   </Box>
 );
