@@ -2,8 +2,9 @@ import React from "react";
 import { Link, graphql } from "gatsby";
 import Layout from "../layout";
 import { Heading, Text } from "grommet";
+import { Tags } from "./tags";
 
-const Tags = ({ pageContext, data }) => {
+export default ({ pageContext, data }) => {
   const { tag } = pageContext;
   const { edges, totalCount } = data.allMdx;
 
@@ -12,6 +13,7 @@ const Tags = ({ pageContext, data }) => {
       <Heading level="1">
         {tag} <Text>{`${totalCount} post${totalCount === 1 ? "" : "s"} `}</Text>
       </Heading>
+      <Tags />
       <ul>
         {edges.map(({ node }) => {
           const { title } = node.frontmatter;
@@ -27,8 +29,6 @@ const Tags = ({ pageContext, data }) => {
     </Layout>
   );
 };
-
-export default Tags;
 
 export const pageQuery = graphql`
   query($tag: String) {
