@@ -11,7 +11,7 @@ import {
   Text
 } from "grommet";
 import { theme } from "./our-theme";
-import { Menu as MenuIcon, Close, Article } from "grommet-icons";
+import { Menu as MenuIcon, Close } from "grommet-icons";
 import { navigate } from "@reach/router";
 
 const Container = ({ children }) => (
@@ -24,37 +24,16 @@ const Container = ({ children }) => (
   </ResponsiveContext.Consumer>
 );
 
-const PlainButton = ({ label, icon }) => (
-  <Button>
-    <Box
-      hoverIndicator="light-1"
-      pad="small"
-      direction="row"
-      align="center"
-      gap="small"
-    >
-      {icon}
-      <Text>{label}</Text>
-    </Box>
-  </Button>
-);
-
 const links = [
   {
     label: "Nosotros",
-    href: "/about",
-    component: () => <PlainButton label="Nosotros" />
+    href: "/about"
   },
 
   {
     label: "Articulos",
     href: "/articles",
-    component: () => <PlainButton label="Articulos" icon={<Article />} />
-  },
-  {
-    href: "/bliki",
-    label: "Bliki",
-    component: () => <Button label="Bliki" primary />
+    primary: true
   }
 ];
 
@@ -120,9 +99,9 @@ class MobileMenu extends Component {
 
 const DesktopNavButtons = () => (
   <Box direction="row" align="center" gap="xsmall">
-    {links.map(({ href, component }) => (
+    {links.map(({ href, label, ...rest }) => (
       <Link key={href} to={href}>
-        {component()}
+        <Button label={label} {...rest} />
       </Link>
     ))}
   </Box>
