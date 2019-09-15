@@ -1,3 +1,5 @@
+import { graphql } from "gatsby";
+
 export const query = graphql`
   fragment PostInfo on Mdx {
     id
