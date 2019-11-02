@@ -15,6 +15,8 @@ Una invariante indica una propiedad que no variara (que no cambiara) que siempre
 class Employee {
     // salary >= basic_salary_allowed_by_the_country
     Money salary;
+
+    // otros atributos, métodos...
 }
 ```
 
@@ -31,22 +33,28 @@ class Employee {
     public boolean passesInvariant() {
         return salary >= basic_salary_allowed_by_the_country
     }
-
-    // otro método como agregar bonificacion
-    public void addBono() {
-    ...    salary += 200;
-    }
 }
 ```
 
-Luego en nuestras pruebas, la usariamos antes y despues.
+Luego si tuvieramos que probar un método del Empleado, como agregar un bono (`addBono`), podriamos verificar que la invariante sigua cumpliendose antes y despúes de llamar al método.
 
 ```java
+class Empleado {
+    // ...
+
+    public void addBono(bono) {
+        salary += bono;
+    }
+}
+
+// En EmpleadoTest
 public void testAddBono() {
     Employee arthur = new Employee("Arthur", Money.of(2000, SOLES));
     assert arthur.passesInvariant()
-    arthur.addBono()
+    arthur.addBono(200)
     assert arthur.passesInvariant()
     assertEquals(Money.of(2200, SOLES), arthur.salary)
 }
 ```
+
+Claramente si pasamos como parametro un bono negativo muy grande, la invariante puede ser rota. Aquí, es donde entraría en utilidad está idea de TestInvariant, al avisarnos que algo está mal en `addBono`.
