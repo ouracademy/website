@@ -1,0 +1,52 @@
+---
+title: "TestInvariant: TDD y DbC"
+date: 2019-11-02
+author: arthur
+tags: [testing]
+description: Una idea que mezcla Test Driven Development (TDD) y Design by Contract (DbC).
+image: https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcREK2PVZsYJb8UOeTD3C39nbvvKG3sVFPHlSa_Y3NchS4JSi-Ip
+---
+
+Aunque siguen habiendo muchos debates si [Design By Contract (DbC)](https://www.eiffel.com/values/design-by-contract/introduction/) es mejor que Test Driven Development (TDD), o al reves. El otro día me tope con un [post de Martin Fowler](https://martinfowler.com/bliki/TestInvariant.html), que mostraba una idea que mezclaba la **invariante** de DbC en TDD.
+
+Una invariante indica una propiedad que no variara (que no cambiara) que siempre será verdadera en una clase, por ejemplo podríamos tener una clase Empleado, donde el salario siempre sea mayor o igual al salario permitido por el país (por ejemplo en Perú, 950 soles).
+
+```java
+class Employee {
+    // salary >= basic_salary_allowed_by_the_country
+    Money salary;
+}
+```
+
+Algunos lenguajes, como Eiffel permiten especificar la invariante de una clase y no solo eso sino que automaticamente chequean que está se cumpla siempre. Un fallo de ella, lanzaría una excepción.
+
+Aplicando está idea a TDD, significa que deberiamos tener un método que pruebe la invariante y usarlo en nuestras pruebas. Por ejemplo:
+
+```java
+class Employee {
+    Money basic_salary_allowed_by_the_country = Money.of(950, SOLES); // En Perú
+
+    Money salary;
+
+    public boolean passesInvariant() {
+        return salary >= basic_salary_allowed_by_the_country
+    }
+
+    // otro método como agregar bonificacion
+    public void addBono() {
+    ...    salary += 200;
+    }
+}
+```
+
+Luego en nuestras pruebas, la usariamos antes y despues.
+
+```java
+public void testAddBono() {
+    Employee arthur = new Employee("Arthur", Money.of(2000, SOLES));
+    assert arthur.passesInvariant()
+    arthur.addBono()
+    assert arthur.passesInvariant()
+    assertEquals(Money.of(2200, SOLES), arthur.salary)
+}
+```
