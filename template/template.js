@@ -3,7 +3,7 @@ const Mustache = require("mustache");
 const generateTemplateOf = post =>
   Mustache.render(
     `---
-title: {{title}}
+title: "{{title}}"
 date: {{date}}
 author: {{author}}
 tags: [{{tags}}]
