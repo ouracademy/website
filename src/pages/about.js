@@ -39,6 +39,10 @@ const Contact = ({ name, links }) => {
         const value = links[type];
         const key = `${type}_${name}`;
         switch (type) {
+          case "LinkedIn":
+            return <LinkedInAnchor key={key} username={value} />;
+          case "Trailhead":
+            return <TrailheadAnchor key={key} username={value} />;
           case "twitter":
             return <TwitterAnchor key={key} username={value} />;
           case "github":
@@ -53,6 +57,20 @@ const Contact = ({ name, links }) => {
   );
 };
 
+const LinkedInAnchor = ({ username }) => (
+  <Anchor
+    color="accent-6"
+    label={`@${username}`}
+    href={`https://www.linkedin.com/in/${username}`}
+  />
+);
+const TrailheadAnchor = ({ username }) => (
+  <Anchor
+    color="accent-6"
+    label={`@${username}`}
+    href={`https://trailblazer.me/id/${username}`}
+  />
+);
 const TwitterAnchor = ({ username }) => (
   <Anchor
     color="accent-6"
