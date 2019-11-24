@@ -18,7 +18,7 @@
     github: qpdian
 - id: EBP
   name: Elí Blas
-  avatar: images/authors/eli-blas.jpeg
+  avatar: /images/authors/eli-blas.jpeg
   description: Ranger Salesforce | Developer Salesforce
   links:
     linkedIn: elíbp
