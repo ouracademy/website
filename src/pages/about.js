@@ -4,6 +4,7 @@ import Layout from "../components/layout";
 import { graphql } from "gatsby";
 import { Heading, Anchor, Box, Paragraph, Image } from "grommet";
 import { Github, Link as LinkIcon, Linkedin } from "grommet-icons";
+import pickBy from "lodash/pickBy";
 
 export const Avatar = ({ size, ...rest }) => (
   <Box height={size} width={size} round="full" background="light-2">
@@ -35,7 +36,7 @@ export const Card = ({ name, avatar, links, description }) => (
 const Contact = ({ name, links }) => {
   return (
     <div>
-      {Object.keys(links).map(type => {
+      {Object.keys(pickBy(links)).map(type => {
         const value = links[type];
         const key = `${type}_${name}`;
         switch (type) {
@@ -43,7 +44,7 @@ const Contact = ({ name, links }) => {
             return <TwitterAnchor key={key} username={value} />;
           case "github":
             return <GithubAnchor key={key} username={value} />;
-          case "linkedin":
+          case "linkedIn":
             return <LinkedinAnchor key={key} username={value} />;
           case "website":
             return <WebsiteAnchor key={key} url={value} />;
@@ -172,6 +173,7 @@ export const query = graphql`
           links {
             twitter
             github
+            linkedIn
           }
         }
       }
