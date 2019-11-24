@@ -178,6 +178,8 @@ export const query = graphql`
           avatar
           description
           links {
+            LinkedIn
+            Trailhead
             twitter
             github
           }
