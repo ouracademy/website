@@ -3,7 +3,7 @@ import React from "react";
 import Layout from "../components/layout";
 import { graphql } from "gatsby";
 import { Heading, Anchor, Box, Paragraph, Image } from "grommet";
-import { Github, Link as LinkIcon } from "grommet-icons";
+import { Github, Link as LinkIcon, Linkedin } from "grommet-icons";
 
 export const Avatar = ({ size, ...rest }) => (
   <Box height={size} width={size} round="full" background="light-2">
@@ -43,6 +43,8 @@ const Contact = ({ name, links }) => {
             return <TwitterAnchor key={key} username={value} />;
           case "github":
             return <GithubAnchor key={key} username={value} />;
+          case "linkedin":
+            return <LinkedinAnchor key={key} username={value} />;
           case "website":
             return <WebsiteAnchor key={key} url={value} />;
           default:
@@ -66,6 +68,14 @@ const GithubAnchor = ({ username, project }) => (
     color="accent-6"
     icon={<Github />}
     href={`https://github.com/${username}${project ? `/${project}` : ``}`}
+  />
+);
+
+const LinkedinAnchor = ({ username }) => (
+  <Anchor
+    color="accent-6"
+    icon={<Linkedin />}
+    href={`https://www.linkedin.com/in/${username}`}
   />
 );
 
