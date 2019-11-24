@@ -15,10 +15,12 @@
   links:
     twitter: diam_qu
     github: qpdian
-- id: clara
-  name: Clara Justino
-  avatar: https://pbs.twimg.com/profile_images/1118633706292416514/6EWdxyRX_400x400.jpg
-  description: DevOps beginner & free software lover
+- id: EBP
+  name: Elí Blas
+  avatar: https://media.licdn.com/dms/image/C4E03AQE14zcDSGwffg/profile-displayphoto-shrink_200_200/0?e=1580342400&v=beta&t=G10R03pflJ2pytfrYxPGi5gK2GzHgNgqui-ZFbFaJqw
+  description: Ranger Salesforce | Developer Salesforce
   links:
-    twitter: claralikescrepe
-    github: clara081094
+    Linkedin: elíbp
+    Trailhead: https://trailblazer.me/id/eblaspagola
+    github: EliBlas
+
