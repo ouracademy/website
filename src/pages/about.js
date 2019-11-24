@@ -40,16 +40,12 @@ const Contact = ({ name, links }) => {
         const value = links[type];
         const key = `${type}_${name}`;
         switch (type) {
-          case "LinkedIn":
-            return <LinkedInAnchor key={key} username={value} />;
-          case "Trailhead":
-            return <TrailheadAnchor key={key} username={value} />;
           case "twitter":
             return <TwitterAnchor key={key} username={value} />;
           case "github":
             return <GithubAnchor key={key} username={value} />;
           case "linkedIn":
-            return <LinkedinAnchor key={key} username={value} />;
+            return <LinkedInAnchor key={key} username={value} />;
           case "website":
             return <WebsiteAnchor key={key} url={value} />;
           default:
@@ -60,20 +56,6 @@ const Contact = ({ name, links }) => {
   );
 };
 
-const LinkedInAnchor = ({ username }) => (
-  <Anchor
-    color="accent-6"
-    label={`@${username}`}
-    href={`https://www.linkedin.com/in/${username}`}
-  />
-);
-const TrailheadAnchor = ({ username }) => (
-  <Anchor
-    color="accent-6"
-    label={`@${username}`}
-    href={`https://trailblazer.me/id/${username}`}
-  />
-);
 const TwitterAnchor = ({ username }) => (
   <Anchor
     color="accent-6"
@@ -90,7 +72,7 @@ const GithubAnchor = ({ username, project }) => (
   />
 );
 
-const LinkedinAnchor = ({ username }) => (
+const LinkedInAnchor = ({ username }) => (
   <Anchor
     color="accent-6"
     icon={<Linkedin />}
@@ -189,11 +171,10 @@ export const query = graphql`
           avatar
           description
           links {
-            LinkedIn
-            Trailhead
             twitter
             github
             linkedIn
+            website
           }
         }
       }
