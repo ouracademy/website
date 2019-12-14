@@ -1,0 +1,71 @@
+---
+title: "Detestable: testing"
+date: 2019-12-14
+author: arthur
+tags: [testing]
+description: Tu sistema no es testeable?, bueno aquí un término para ese problema
+isPublic: false # this post is a draft, you can share it's link to
+# other people to review your post. Remove this property to publish it.
+---
+
+El otro día me encontre con un [post muy corto de Martin Fowler][1], quizá el más corto que he leido, sobre un término de testing, bien puntual pero potente.
+Aquí lo que decía, en su post:
+
+(Aquí algo para que lo agregues a tu diccionario.)
+
+> Detestable (adjetivo): software que no es testeable (capaz de ser probado).
+
+## Ejemplos?
+
+Esos códigos altamente acoplados, enredados, spaguetti 🍝....que ocasionan que los tests fallen de vez en cuando y que sin saber no sabemos porqué (esos test para nada deterministicos).
+
+A nivel super pero super simple, como ejemplo podríamos poner una función que nos diga si hoy es de mañana, noche, tarde...
+
+```csharp
+// C#
+public static string GetTimeOfDay()
+{
+    DateTime time = DateTime.Now;
+    if (time.Hour >= 0 && time.Hour < 6)
+    {
+        return "Night";
+    }
+    if (time.Hour >= 6 && time.Hour < 12)
+    {
+        return "Morning";
+    }
+    if (time.Hour >= 12 && time.Hour < 18)
+    {
+        return "Afternoon";
+    }
+    return "Evening";
+}
+```
+
+Su prueba, podría ser algo como:
+
+```csharp
+[TestMethod]
+public void GetTimeOfDay_At6AM_ReturnsMorning()
+{
+    string timeOfDay = GetTimeOfDay();
+    Assert.AreEqual("Morning", timeOfDay);
+}
+```
+
+El error?, bueno dependiendo de la hora que ejecutes el test puede que funcione o falle, si ejecutas la prueba a las 8pm...fallara. Existen muchas formas de solucionarla, una configurando la hora del sistema a una hora fija (y claro lo mismo para cada `if` de `GetTimeOfDay`) u otra simplemente agregar como parametro la hora a la función `GetTimeOfDay`
+
+Claro este es un ejemplo sencillo. Ahora imaginate esa función pero no como una función en sí sino como unas lineas parte de una función ABC de +1000 lineas...imaginate intentar crear el test para la función ABC. A eso le llamo **detestable**.
+
+A menudo, estos tipos de problemas se dan por funciones altamente acopladas y gigantes (de cientos o miles de lineas de codigo) que manejan un valor global cambiante, ya sea una variable o método propio del lenguaje o una librería (como el DateTime.Now) o por el uso de propiedades de clases (`static`). Confieso, que esto me ha pasado un par de veces, aunque [a Martin Fowler][2] tambien y a muchos desarrolladores bien conocidos tambien, por lo que evito usar `static`, y sino eso no te convence de no usar static, bueno te dejo un video para que te convenza 😉
+
+<Youtube src="https://www.youtube.com/watch?v=5VVVV192_oo" />
+
+Referencias:
+
+- Martin Fowler, [Detestable][1]
+- Martin Fowler, [ErraticTestFailure][2]
+- Toptal, [Por que escribir codigo testable?](https://www.toptal.com/qa/how-to-write-testable-code-and-why-it-matters)
+
+[1]: https://martinfowler.com/bliki/detestable.html
+[2]: https://martinfowler.com/bliki/ErraticTestFailure.html
