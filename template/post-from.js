@@ -4,7 +4,7 @@ const format = require("date-fns/format");
 
 const slug = text =>
   slugify(text, {
-    remove: /[*+~.()'"!:@]/g, // regex to remove characters
+    remove: /[,*+~.()'"!:@]/g, // regex to remove characters
     lower: true // result in lower case
   });
 
