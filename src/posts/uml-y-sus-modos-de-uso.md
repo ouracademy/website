@@ -1,7 +1,7 @@
 ---
 title: UML y sus modos de uso
 author: arthur
-tags: [lenguajes, modelado, puntos de vista]
+tags: [uml, puntos de vista]
 description: ¿UML no sirve? UML está muerto? o aún es muy útil? Un articulo que contesta el porque de las distintas opiniones sobre UML.
 date: 2019-03-17
 image: https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/UML_diagrams_overview.svg/600px-UML_diagrams_overview.svg.png
