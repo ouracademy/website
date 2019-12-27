@@ -1,0 +1,34 @@
+---
+title: "Cycle time, que es?"
+date: 2019-12-27
+author: arthur
+tags: [agil, lean, continous delivery]
+description: Una de las metricas mas importantes en un proyecto de software y que muchas veces es olvidada
+image: http://www.extremeuncertainty.com/wp-content/uploads/2016/03/cycletime.png
+---
+
+> Tu jefe te pide que muestres las nuevas grandes funcionalidades de tu aplicación al cliente, pero no puedes mostrarle nada, está casi completo pero tomará un par de dias en subirlo a un ambiente de producción.
+>
+> Estás probando el sistema en producción y encuentras un pequeño bug, sabes como arreglarlo, es un pequeño cambio, agregar una nueva columna a una tabla de la BD, pero subir el nuevo cambio al ambiente de producción tomara un par de horas...horas que necesitas puesto que están en los limites del proyecto.
+>
+> -- <cite>Continous Delivery de Jez humble & David farley</cite>
+
+Algúna vez te topaste con uno de estos casos? A mi si me ha pasado, no solo una vez sino muchas veces. De hecho son algo muy común en nuestra industría de software, pero lo más importante es que estos casos y muchos otros son evitables!
+
+Lanzar una nueva versión de un software (o en sí de muchos productos) es algo que puede hacerse rápidamente. De hecho, muchas compañias hacen multiples releases al día, cientos y miles!, **el tiempo entre decidir hacer un cambio (encontraste un bug y decides arreglarlo, deseas agregar una nueva funcionalidad, ...) y tenerlo en producción es conocido como cycle time.**
+
+Usando los casos anteriores, el 1er caso sería "el par de días que tome en subirlo a producción" 😢 + "el costo de diseñar el software de tal manera que funcione sin necesidad de que todas las funcionalidades esten completas" (existen muchas técnicas para ello, mira por ejemplo Feature Flags).
+
+Pero por que esto es importante? El concepto en sí es útil porque nos puede ayudar a servir como métrica y con ello podemos definir metas. Por ejemplo si vemos que el cycle time de un proyecto es grande de semanas o meses incluso de años 🤐, podemos decir que algo anda mal. Pero porque algo anda mal? El desarrollo de software, al igual que de cualquier otro producto o servicio, no es útil hasta que no este en las manos del cliente y le ofrezca valor. Un cycle time grande tiene **costos de oportunidad** para el cliente. Como dicen Jez Humble & David Farley, para compañias grandes cada semana de retraso entre tener una idea y lanzarla puede representar millones de dolares en costos de oportunidad. Sin embargo a menudo estas son las que tienen cycle time más largos.
+
+No solo eso, sino que un cycle time puede ayudar al feedback. Imaginate tener un cycle time de 6 meses, esto indicaría que cada 6 meses el cliente vería una nueva versión del producto. Quiza para ese tiempo tu cliente se sorprenda en encontrar que el software no estaba diseñado de la forma que quería (y claro pedira por favor cambia estos botones de por aquí y por allá), o simplemente no era lo que quería o peor para ese tiempo encontro otras opciones mas economicas y simplemente ya no le es útil. Si te hicieran a ti lo mismo? te dieran un abrigo bonito (o al menos aceptable) que querías cuando era invierno y hacía frio, pero ahora es verano y el sol está insoportable, que harías?
+
+Esto muestra otro punto, que un cycle time pequeño ayuda al feedback, si el producto es mostrado al cliente cada día o incluso cada semana, las opiniones sobre ella pueden hacerse notar y por lo tanto el equipo puede actuar frente a esas opiniones y propuestas de cambio.
+
+## Puntos clave:
+
+- Definición: tiempo entre decidir hacer un cambio y tenerlo en producción.
+- Beneficios de cycle time cortos:
+  1. Un cycle time pequeño indica que el software está disponible para el uso de sus clientes. Es decir, puede ofrecer valor
+  2. Reduce el costo de oportunidad
+  3. Ayuda a mejorar el feedback
