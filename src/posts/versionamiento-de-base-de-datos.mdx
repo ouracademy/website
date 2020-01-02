@@ -1,0 +1,43 @@
+---
+title: "Versionamiento de base de datos"
+date: 2020-01-01
+author: arthur
+tags: [control de versiones, refactorizacion, base de datos, practica]
+description: La gestion de configuracion (configuration management) para base de datos, o que cosas Git o SVN debe versionar en mi BD
+---
+
+Hace un par de días estuve leyendo mi nuevo libro (recien comprado 😄) refactorizar base de datos [1], y me hizo recordar uno de las prácticas mas útiles que he aprendido en mi corta carrera en la industria del software: versiona todo!
+
+En especifico una base de datos (BD) debemos versionar (ponerlo bajo control de Git, SVN, o nuestro controlador de versiones preferido):
+
+- **Los scripts que generan nuestro esquema de base de datos**:
+  Si usamos SQL puro, el Lenguaje de definicion de datos (DDL), debemos versionar esto. Si usamos un framework para crear tablas, indices...como Flyway o Liquibase (en Java), Laravel Migrations (en PHP), Django migrations (en Python), Rails migrations (en Ruby)...; debemos versionar esos archivos (.py, .php, .java o .sql)
+- **Los scripts de carga, extracción y migraciones**
+- **Nuestro modelo de datos**: usualmente cuando desarrollamos una BD iniciamos con un modelo (usualmente uno visual, un diagrama!), si es que modelamos nuestra base de datos con un CASE (como Toad, Erwin, IBM Data architect), debemos versionar los archivos generados por estos CASE.
+- **Data de referencia**: esa data que usamos en muchas funcionalidades de nuestras aplicaciones, por ejemplo, la clásica tabla "Paises".
+- **Data de prueba**: data que usamos en nuestros casos de prueba
+- **Scripts de generacion de datos de prueba**
+- **Scripts de prueba**
+
+En caso que usemos una base de datos relacional debemos además versionar
+
+- Definiciones de stored procedures y triggers
+- Definiciones de vistas (views)
+- Reestricciones de integridad referencial (FK)
+- Otros objetos de bases de datos como secuencias, indices y demás
+- La metadata de mapeo relacional/objetos (ORM): Si es que usamos un ORM, es decir por ejemplo si es que nuestra metadata es mapeada en un archivo aparte (como en el caso de usar archivos XML en Hibernate o yaml en Doctrine, entre otros) debemos versionar estos archivos (aunque usualmente están atados a nuestro código usando Anotaciones o Decoradores).
+
+De una forma similar sucedería con cualquier base de datos, en las NoSQL por ejemplo versionar nuestra metadata de mapeo relacional/documental en el caso de usar una base de datos documental como MongoDB o los procedures de nuestro Neo4J. Incluso, en general, díria "cualquier data" que usemos en nuestro codigo fuente debe ser versionada (no solo Base de Datos).
+
+## Razón?
+
+La razon es la misma del porque versionar todo [2]. Pero en especial en bases de datos, versionar es una técnica fundamental al refactorizar bases de datos y en general desarrollar bases de datos de forma evolutiva (iterativa e incremental). La razón es que nos brinda la capacidad de hacer "roll-backs", retroceder a una versión anterior en caso que las cosas hayan salido mal. Por ejemplo, como dice [1], al renombrar la columna FName de la tabla Customers (clientes) a FirstName, puede que exista un error o simplemente el costo de renombrar la columna es muy caro, quiza esa tabla es usada por muchas aplicaciones!. Claro esto último, de tener muchas aplicaciones que usen la misma BD, significa que nuestra BD está siendo usada como un integrador de aplicaciones [3], algunos dirán que esto es un antipatron por otro lado otros dirán que es un patron [4], sin embargo lo claro es que dificulta cambios a la Base de Datos, por el acoplamiento que consigo trae...
+
+> Nota que versionar bases de datos muchas veces es conocido como **migrar** bases de datos. En este articulo me refiero a versionar como parte de la gestión de la configuración, en palabras simples "el uso de un versionador" como Git, SVN, entre otros. Ambos conceptos están muy relacionados pero son distintos.
+
+## Referencias:
+
+1. Ambler, S. W., & Sadalage, P. J. (2006). Refactoring Databases: Evolutionary Database Design (paperback). Pearson Education. https://databaserefactoring.com/
+2. Por que usar un controlador de versiones? https://www.git-tower.com/learn/git/ebook/en/desktop-gui/basics/why-use-version-control
+3. Integration Database https://martinfowler.com/bliki/IntegrationDatabase.html
+4. Shared database https://microservices.io/patterns/data/shared-database.html
