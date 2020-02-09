@@ -1,0 +1,84 @@
+---
+title: "Microservicios: que son, cuando usarlos y como construirlos"
+date: 2020-02-09
+author: arthur
+tags: [microservicios]
+description: Una guia o serie de recursos para aprender de microservicios (microservices)
+---
+
+> Una traducción de [Microservices Guide](https://www.martinfowler.com/microservices/) de Martin Fowler
+
+"Una guia o serie de recursos para aprender de microservicios (microservices)"
+
+En pocas palabras, microservicios es un estilo de arquitectura, un enfoque para desarrollar **una aplicación como un conjunto de servicios pequeños**, cada uno ejecutandose en su propio proceso (quizá en el misma computadora o en otra aparte) y comunicandose a través de mecanismos livianos, muy a menudo a tráves de una **API de recursos HTTP** (ver REST). Estos servicios se construyen en base a las capacidades del **negocio** y son **independientemente desplegables** por un sistema completamente automatizado (ver Continous Delivery). Estos servicios poseen una gestión centralizada pero minima (ver Centralized Services: Circuit Breaker, Aggregated Log, Service Mesh...), donde los servicios pueden estar escritos en diferentes lenguajes de programación y usando diferentes tecnologías para almacenar datos (ver SQL y NoSQL).
+
+-- [James Lewis and Martin Fowler (2014)](https://www.martinfowler.com/articles/microservices.html)
+
+## Deberíamos usarlo o no? ... Pero primero, en sí, que rayos significa?
+
+[![Charla sobre microservicios](https://www.martinfowler.com/microservices/ms-talk.png)](https://www.martinfowler.com/videos.html#microservices)
+
+Si eres de los que aprende escuchando y viendo videos, te recomiendo ver la charla de introducción a los microservicios por Martin Fowler, que dura aprox. 25 min, donde explica sus caracteristicas principales, las compara con monolitos y indica las cosas principales que deberías primero hacer antes de lanzar microservicios en producción.
+
+## Que son los microservicios?
+
+A finales del 2013, existia toda una discusión de lo que era microservicios, no existia una clara definición de lo que eran (un problema que causo muchos muchos problemas en SOA). Así que Martin Fowler y James Lewis, decidieron escribir:
+
+[![Microservicios: Articulo](https://www.martinfowler.com/microservices/ms-article.png)](https://www.martinfowler.com/articles/microservices.html)
+
+El articulo provee una definición clara de lo que es este estilo de arquitectura: microservicios, a través de listar las caracteristicas más comunes que vimos:
+
+- Componentizacion via Servicios
+- Organidos en base a las capacidades del negocio (Business Capabilities)
+- Productos no Proyectos
+- Endpoints inteligentes y pipes tontos (dumb pipes)
+- Governanza descentralizada
+- Gestión de datos decentralizada
+- Automatización de infrastructura
+- Diseño enfocado a fallas
+- Diseño evolutivo (Evolutionary Design)
+
+Además de contestar las preguntas comunes como "que tan grande o pequeño debe ser un microservicio?" y "cual es la diferencia entre microservicios y Arquitectura Orientada a Servicios (SOA)"
+
+## Cuando usar microservicios?
+
+Todo estilo de arquitectura tiene sus trade-offs: sus ventajas y desventajas que debemos evaluar cuando queremos usarla en un determinado proyecto. Esto sucede claramente al usar microservicios. Aunque puede ser muy útil usar microservicios - en muchos casos es mejor ir por un monolito.
+
+**Los microservices proveen beneficios...**
+
+- Strong Module Boundaries: Microservices reinforce modular structure, which is particularly important for larger teams.
+- Independent Deployment: Simple services are easier to deploy, and since they are autonomous, are less likely to cause system failures when they go wrong.
+- Technology Diversity: With microservices you can mix multiple languages, development frameworks and data-storage technologies.
+
+**...pero tienen costos**
+
+- Distribution: Distributed systems are harder to program, since remote calls are slow and are always at risk of failure.
+- Eventual Consistency: Maintaining strong consistency is extremely difficult for a distributed system, which means everyone has to manage eventual consistency.
+- Operational Complexity: You need a mature operations team to manage lots of services, which are being redeployed regularly.
+
+Mira más en:
+
+- [Los trade-offs de microservicios](https://www.martinfowler.com/articles/microservice-trade-offs.html)
+- [Prerequisitos de microservicios](https://www.martinfowler.com/bliki/MicroservicePrerequisites.html): Lo que debes saber antes de aplicar microservicios de lo contrario tendrás serias dificultades
+- [Microservicios es algo Premium](https://www.martinfowler.com/bliki/MicroservicePremium.html): los serios problemas que una arquitectura de microservicios puede traer, aprietos que solo son manejados cuando un equipo es maduro.
+
+## Como construir microservicios?
+
+Construir microservicios no es una tarea nada fácil, pero organizaciones la han adoptado y han aprendido de muchos errores, existen ahora muchos libros, articulos, sitios web por donde empezar a construir microservicios.
+
+- [Si empiezas con microservicios mejor empieza construyendo un monolito](https://www.martinfowler.com/bliki/MonolithFirst.html)
+- [O tal vez empieza de frente con microservicios](https://www.martinfowler.com/articles/dont-start-monolith.html)
+- [Como dividir un monolito en microservicios](https://www.martinfowler.com/articles/break-monolith-into-microservices.html): útil en sistemas legados
+- [Como hacer testing en microservicios](https://www.martinfowler.com/articles/microservice-testing)
+- [Micro Frontends](https://www.martinfowler.com/articles/micro-frontends.html) o como aplicar microservicios en el mundo del frontend
+
+Prerequisitos de microservicios y temas relacionados:
+
+- [Infraestructura como código, Infrastructure as Code (IaC)](https://www.martinfowler.com/bliki/InfrastructureAsCode.html)
+- [DevOps](https://www.martinfowler.com/bliki/DevOpsCulture.html)
+- [Circuit breaker](https://www.martinfowler.com/bliki/CircuitBreaker.html)
+
+Libros:
+
+- Microservice Patterns
+- [Building Microservices](https://www.amazon.com/gp/product/1491950358)
