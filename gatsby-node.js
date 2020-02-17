@@ -37,7 +37,7 @@ const orderBy = require("lodash/orderBy");
 const levenshtein = require("js-levenshtein");
 
 const index = ({ frontmatter }) =>
-  frontmatter.title + " " + frontmatter.tags.join();
+  frontmatter.title + " " + (frontmatter.tags.join()).repeat(3);
 
 const getSimilar = (posts, post, limit = 3) =>
   orderBy(
