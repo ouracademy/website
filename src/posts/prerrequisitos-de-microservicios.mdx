@@ -1,0 +1,30 @@
+---
+title: "Prerrequisitos de microservicios"
+date: 2020-02-11
+author: arthur
+tags: [microservicios]
+description: Que debes conocer y aplicar antes de usar microservicios, microservices, o sino tendras graves problemas
+image: https://www.martinfowler.com/bliki/images/microservicePrerequisites/sketch.png
+---
+
+> Basado en [MicroservicePrerequisites](https://www.martinfowler.com/bliki/MicroservicePrerequisites.html) de Martin Fowler
+
+[Los microservicios (microservices)][1] han estado de moda en estos últimos 5 años. Los desarrolladores a menudo hablan de los grandes beneficios de trabajar con microservices. Sin embargo, como cualquier arquitectura tiene sus trade-offs. En particular, [existen serias consecuencias][1], en especial para los de operaciones, quienes tendran que gestionar muchos servicios en vez de un solo "bien definido" monolito. Por lo que **si no tienes una linea base de competencias, no deberías considerar usar microservicios.**
+
+![Debes ser de esta "altura" para poder usar microservicios](https://www.martinfowler.com/bliki/images/microservicePrerequisites/sketch.png)
+
+- **Despliegue rápido de aplicaciones**: con muchos servicios que se deben desarrollar, necesitas ser capaz de desplegarlos rapidamente en cada ambiente (producción, test...), por que imagina, si te demoras 4 horas en desplegar un microservicio y tienes 20 microservicios... Esto involucra un [DeploymentPipeline (un pipeline de despliegue)](https://www.martinfowler.com/bliki/DeploymentPipeline.html) que se encargue de desplegar un microservicio en segundos, minutos e incluso 1 hora, pero no más de un par de horas (nota que esto influye al punto de abajo **Aprovisionamiento rápido**). Claro quiza al inicio empiezes desplegando manualmente, automatizando alguna parte del DeploymentPipeline, pero gradualmente llegando a automatizar prácticamente todo.
+
+- **Aprovisionamiento rápido**: debes ser capaz de levantar y correr un nuevo servidor (servidores donde están alojados tus microservicios) en cuestión de horas. Claro, esto es algo natural si usas [CloudComputing](https://www.martinfowler.com/bliki/CloudComputing.html), pero tambien es algo que se puede hacer aún cuando no se usa un servicio cloud (como AWS, Google o Azure). Para ser capaz de aprovisionar rapidamente, es necesario **mucha automatización** - quizá no automatizando todo al inicio, pero a medida que desarrollas microservicios, si quieres algo serio, será necesario.
+
+- **Monitoreo básico**: con muchos servicios (con bajo acoplamiento y que colaboran entre sí) en producción, es muy muy probable que algo salga mal, y saldrán mal de maneras que son muy dificiles de detectar en cualquier ambiente (incluso en uno de pruebas). Como resultado, es esencial que exista **un régimen de monitoreo para detectar problemas serios rápidamente.** Aquí lo fundamental es detectar problemas técnicos (contar errores, la disponibilidad de los microservicios, etc) pero además monitorear problemas de negocio (como detectar caidas en las ventas). **Si un problema aparece entonces debes asegurarte de que puedas arreglarlo rápidamente.**
+
+Estas **competencias implican un cambio organizacional** - muy cercano a la colaboración entre desarrolladores y operaciones de la [cultura DevOps](https://www.martinfowler.com/bliki/DevOpsCulture.html). Está colaboración es necesaria para asegurar que el aprovisionamiento y el despliegue sean rápidos, como para reaccionar rápidamente cuando, gracias al monitoreo, se evidencie un problema. En particular, cualquier incidente de gestión necesita involucrar al equipo de desarrollo como al de operaciones, tanto en arreglar el problema inmediatamente como para encontrar la causa subyacente y asegurar que este sea corregido.
+
+Con esta base, estas listo para desarrollar un sistema que use microservicios, desplegarlo y usarlo en producción, claro eso sí, a medida que lo desarrolles aprenderas mucho sobre mantener el sistema saludable y asegurar un buena cultura DevOps. Es buena idea darse un tiempo en mejorar estas competencias, **crecer más en estas competencias antes de empezar a incrementar el número de microservicios** de tu sistema, por que eso sí es otra cosa trabajar con 500 microservicios a simplemente trabajar con 10 o 20 microservicios.
+
+**Si aún no tienes estas competencias, deberías asegurar que tu equipo los desarrolle**, de tal forma que esten preparados cuando llegue el tiempo de poner un sistema de microservicios en producción. De hecho, **debes buscar tener estas competencias al desarrollar la mayoría de sistemas de software**, incluso al desarrollar un monolito. Aunque no esten universalmente presentes en cualquier organización de software, existen muy pocos lugares donde estás no deberían ser prioridad.
+
+Cuando trabajes con más de decenas de microservicios, necesitaras muchas otras cosas más. Necesitaras formas de poder ver el trazo de una transacción de negocio (muy a menudo una transacción involucrará llamar a muchos servicios), además de automatizar el aprovisionamiento y el despliegue al seguir completamente [ContinuousDelivery](https://www.martinfowler.com/bliki/ContinuousDelivery.html). Además necesitarás empezar a cambiar el enfoque de equipos centrados en proyectos a [equipos centrados en productos](https://www.martinfowler.com/articles/microservices.html#OrganizedAroundBusinessCapabilities). Necesitaras organizar tu ambiente de desarrollo de tal forma que los desarrolladores puedan facilmente cambiar entre multiples repositorios, librerias y lenguajes, ¿quiza usando monorepos?. Además, quiza sea necesario [un modelo de madurez](https://www.martinfowler.com/bliki/MaturityModel.html) que ayude a las organizaciones a medida que empiezan a usar microservicios.
+
+[1]: /posts/microservicios-que-son-cuando-usarlos-y-como-construirlos
