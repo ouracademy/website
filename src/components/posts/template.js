@@ -61,7 +61,7 @@ const PostPageTemplate = ({ data: { mdx, github }, location, pageContext }) => {
       image={image}
       type="article"
     >
-      <Box as="article">
+      <article>
         <Heading>{title}</Heading>
         <Box direction="row-responsive" align="center" justify="between">
           <Author {...author} />
@@ -78,7 +78,7 @@ const PostPageTemplate = ({ data: { mdx, github }, location, pageContext }) => {
         </MDXProvider>
         {showHistory && <History commits={history} />}
         <Share title={title} description={description} url={url} />
-      </Box>
+      </article>
       <Box>
         <Heading level="3">Quiza te pueda interesar...</Heading>
         <Box direction="row-responsive">
