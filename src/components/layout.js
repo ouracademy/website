@@ -164,7 +164,7 @@ export default ({ children, title, description, image, type = "website" }) => (
                             </linearGradient>
                         </defs>
                         <path
-                            d="M0,180 C200,130 350,150 700,180 L700,00 L0,0 Z"
+                            d="M0,130 C180,165 400,140 700,130 L700,00 L0,0 Z"
                             style={{ stroke: "none", fill: "url(#Gradient1)" }}
                         />
                     </svg>
