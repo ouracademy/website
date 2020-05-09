@@ -3,13 +3,13 @@ title: Explicando la funcion map
 date: 2019-01-15
 author: diana
 tags: ["programacion funcional"]
-image: /images/map.png
+# image: /posts/map.png TODO:
 description: que es map? con ejemplos en javascript y python
 ---
 
 **Primero una imagen, ¿que observas?**
 
-![](/images/map.png)
+![](./map.png)
 
 Seguramente observarás un cambio, un conjunto de elementos que se transforma en otro (de figuras en 2D a 3D), lo que observas es una **transformación**, eso es la función **map**!
 
@@ -30,7 +30,7 @@ Hemos aplicado un cambio a cada elemento del arreglo 'prices' y puesto el result
 
 ```javascript
 let prices = [10, 15.4, 23.6];
-let pricesWithDesc = prices.map(price => price * 0.9);
+let pricesWithDesc = prices.map((price) => price * 0.9);
 ```
 
 Mas corto eh, ahora explicaremos su definicion a detalle.
@@ -54,8 +54,8 @@ Ahora ¿si queremos aplicar otros porcentajes a descontar?, uhm entonces hagamas
 
 ```javascript
 let prices = [10, 15.4, 23.6];
-let multiplier = percentage => (100 - percentage) / 100;
-let discountAPercentageOf = percentage => price =>
+let multiplier = (percentage) => (100 - percentage) / 100;
+let discountAPercentageOf = (percentage) => (price) =>
   price * multiplier(percentage);
 let result = prices.map(discountAPercentageOf(10));
 ```

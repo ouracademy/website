@@ -13,7 +13,7 @@ Este es un articulo un poco difícil de escribir. No tenia planeado escribir sob
 
 Primero, **el performance importa**. Aunque la [ley de Moore](https://es.wikipedia.org/wiki/Ley_de_Moore) nos ayuda a que nuestros programas sean menos lentos, es fastidioso que un programa te pida mejorar tu máquina (sea tu memoria RAM o CPU) para poder usar su nueva versión 😠. La pregunta es, ¿Como lograr hacer programas veloces?
 
-![alan kay sobre bloatware](/images/optimization.png)
+![alan kay sobre bloatware](./optimization.png)
 
 Figura 1. Alan Kay hablando sobre como cargar un documento word, ahora tarda mucho más que hace 10 años.
 
