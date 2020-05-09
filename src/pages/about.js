@@ -1,10 +1,9 @@
-import React from "react";
-
-import Layout from "../components/layout";
 import { graphql } from "gatsby";
-import { Heading, Anchor, Box, Paragraph, Image, Button } from "grommet";
+import { Anchor, Box, Heading, Image, Paragraph } from "grommet";
 import { Github, Link as LinkIcon, Linkedin } from "grommet-icons";
 import pickBy from "lodash/pickBy";
+import React from "react";
+import Layout from "../components/layout";
 
 export const Avatar = ({ size, ...rest }) => (
   <Box height={size} width={size} round="full" background="light-2">
@@ -139,7 +138,7 @@ const Project = ({ name, description, imageURL, links }) => (
       <Heading level="2" size="medium" margin="0">
         {name}
       </Heading>
-      <a href={links.website} target="_blank">
+      <a href={links.website} target="_blank" rel="noopener noreferrer">
         <Box height="medium" width="medium">
           <Image src={imageURL} fit="contain" />
         </Box>
