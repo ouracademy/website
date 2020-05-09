@@ -1,28 +1,23 @@
-import React from "react";
+import { MDXProvider } from "@mdx-js/react";
+import { format } from "date-fns";
 import { graphql, Link } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
-import { MDXProvider } from "@mdx-js/react";
 import { Box, Heading } from "grommet";
-import { Tag as TagIcon, Clock } from "grommet-icons";
-import { Youtube } from "../youtube";
-import { Tag } from "../tags/tags";
-
-import Layout from "../layout";
-import SocialLinks from "./social-links";
-import { Avatar } from "../../pages/about";
-
-import DesignSystem from "../design-system";
-
-import { format } from "date-fns";
+import { Clock, Tag as TagIcon } from "grommet-icons";
 import { parseHeader } from "parse-commit-message";
+import React from "react";
+import { Avatar } from "../../pages/about";
 import { PostItem } from "../../pages/articles";
+import DesignSystem from "../design-system";
+import Layout from "../layout";
+import { HorizontalBulletTags } from "../tags/tags";
+import { Youtube } from "../youtube";
+import SocialLinks from "./social-links";
 
 const Tags = ({ tags }) => (
   <Box pad="small" direction="row" align="center" gap="small" wrap>
     <TagIcon />
-    {tags.map(tag => (
-      <Tag key={tag} name={tag} plain />
-    ))}
+    <HorizontalBulletTags tags={tags}></HorizontalBulletTags>
   </Box>
 );
 
@@ -35,12 +30,12 @@ const Author = ({ name, avatar }) => (
   </Link>
 );
 
-const onlyDocCommits = commits =>
+const onlyDocCommits = (commits) =>
   commits
-    .filter(commit => commit.message.startsWith("docs"))
-    .map(commit => ({
+    .filter((commit) => commit.message.startsWith("docs"))
+    .map((commit) => ({
       ...commit,
-      message: parseHeader(commit.message).subject
+      message: parseHeader(commit.message).subject,
     }));
 
 const PostPageTemplate = ({ data: { mdx, github }, location, pageContext }) => {
@@ -71,7 +66,7 @@ const PostPageTemplate = ({ data: { mdx, github }, location, pageContext }) => {
           components={{
             blockquote: DesignSystem.Blockquote,
             img: DesignSystem.Image,
-            Youtube
+            Youtube,
           }}
         >
           <MDXRenderer>{body}</MDXRenderer>
@@ -82,7 +77,7 @@ const PostPageTemplate = ({ data: { mdx, github }, location, pageContext }) => {
       <Box>
         <Heading level="3">Quiza te pueda interesar...</Heading>
         <Box direction="row-responsive">
-          {pageContext.recommendedContent.map(node => (
+          {pageContext.recommendedContent.map((node) => (
             <PostItem key={node.id} {...node}></PostItem>
           ))}
         </Box>
@@ -98,7 +93,7 @@ const History = ({ commits }) => (
       <Clock />
       <Heading level="3">Cambios y revisiones:</Heading>
     </Box>
-    {commits.map(commit => (
+    {commits.map((commit) => (
       <div key={commit.oid}>
         <p>
           {format(new Date(commit.authoredDate), "dd/MM/yyyy")}:{" "}
@@ -109,7 +104,7 @@ const History = ({ commits }) => (
   </div>
 );
 
-const Share = props => (
+const Share = (props) => (
   <Box direction="row-responsive" align="center" justify="between">
     <span>
       Si te fue útil este artículo, por favor compártelo. Apreciamos los
