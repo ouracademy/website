@@ -2,7 +2,7 @@ import React from "react";
 
 import Layout from "../components/layout";
 import { graphql } from "gatsby";
-import { Heading, Anchor, Box, Paragraph, Image } from "grommet";
+import { Heading, Anchor, Box, Paragraph, Image, Button } from "grommet";
 import { Github, Link as LinkIcon, Linkedin } from "grommet-icons";
 import pickBy from "lodash/pickBy";
 
@@ -36,7 +36,7 @@ export const Card = ({ name, avatar, links, description }) => (
 const Contact = ({ name, links }) => {
   return (
     <div>
-      {Object.keys(pickBy(links)).map(type => {
+      {Object.keys(pickBy(links)).map((type) => {
         const value = links[type];
         const key = `${type}_${name}`;
         switch (type) {
@@ -89,43 +89,70 @@ const projects = [
     id: 1,
     name: "Essboard",
     description:
-      "Herramienta colaborativo para la dirección y monitoreo de desarrollo de software usando Essence",
+      "Herramienta colaborativo para la dirección y monitoreo de desarrollo de software usando el framework Essence de SEMAT",
     links: {
-      website: "https://essboard.netlify.com/"
+      website: "https://essboard.netlify.com/",
     },
-    avatar:
-      "https://essboard.netlify.com/assets/images/logo/logo-horizontal.png"
+    imageURL:
+      "https://res.cloudinary.com/our-academy/image/upload/v1589001148/essboard-proposal.png",
   },
   {
     id: 2,
     name: "SOPIOS",
-    description: "Sociedad Peruana de Investigación Operativa y de Sistemas",
+    description:
+      "Diseño y desarrollo de la página web para la Sociedad Peruana de Investigación Operativa y de Sistemas (SOPIOS)",
     links: {
-      website: "http://sopios.org.pe/"
+      website: "http://sopios.org.pe/",
     },
-    avatar:
-      "http://res.cloudinary.com/sopios/image/upload/v1513311519/sopios.png"
-  }
+    imageURL:
+      "https://res.cloudinary.com/our-academy/image/upload/v1589000587/sopios-website.png",
+  },
+  {
+    id: 3,
+    name: "Keratoconus predict",
+    description:
+      "Desarrollo e investigación de machine learning en diagnostico de Keratoconus",
+    links: {
+      website: "https://oftalmosalud.pe/",
+    },
+    imageURL:
+      "https://www.researchgate.net/profile/Afshin_Lotfi2/publication/283975156/figure/fig3/AS:296598736261124@1447726057264/Preoperative-Pentacam-4-map-refractive-of-a-patient-with-keratoconus-who-planned-for-2.png",
+  },
 ];
 
 const Projects = () => (
   <Box>
-    <Heading level="3" size="large" />
-    Proyectos
-    {projects.map(project => (
-      <Project key={project.id} {...project} />
-    ))}
+    <Heading level="3" size="large">
+      Proyectos
+    </Heading>
+    <Box direction="row-responsive">
+      {projects.map((project) => (
+        <Project key={project.id} {...project} />
+      ))}
+    </Box>
   </Box>
 );
 
-const Project = ({ name, description, avatar, links }) => (
-  <Card name={name} avatar={avatar} description={description} links={links} />
+const Project = ({ name, description, imageURL, links }) => (
+  <Box>
+    <Box pad="xsmall" margin="xsmall">
+      <Heading level="2" size="medium" margin="0">
+        {name}
+      </Heading>
+      <a href={links.website} target="_blank">
+        <Box height="medium" width="medium">
+          <Image src={imageURL} fit="contain" />
+        </Box>
+      </a>
+      <Paragraph size="small">{description}</Paragraph>
+    </Box>
+  </Box>
 );
 
 export default ({
   data: {
-    allAuthorYaml: { edges }
-  }
+    allAuthorYaml: { edges },
+  },
 }) => (
   <Layout title="Nosotros">
     <Heading level="3" size="large">
