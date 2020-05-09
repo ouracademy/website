@@ -7,8 +7,8 @@ import { Tags } from "../components/tags/tags";
 
 const Grid = styled.div`
     display: grid;
-    grid-gap: 5px;
-    margin: 2vh 0;
+    grid-gap: 20px;
+    margin: 6vh 0;
 
     & div {
         height: 330px;
