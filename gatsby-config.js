@@ -13,9 +13,9 @@ module.exports = {
   },
   plugins: [
     `gatsby-transformer-yaml`,
-    `gatsby-plugin-sharp`,
-    `gatsby-transformer-sharp`,
-    `gatsby-remark-images`,
+    // `gatsby-plugin-sharp`,
+    // `gatsby-transformer-sharp`,
+    // `gatsby-remark-images`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
@@ -24,9 +24,9 @@ module.exports = {
           {
             resolve: `gatsby-remark-prismjs`,
           },
-          {
-            resolve: `gatsby-remark-images`,
-          },
+          // {
+          //   resolve: `gatsby-remark-images`,
+          // },
         ],
       },
     },
