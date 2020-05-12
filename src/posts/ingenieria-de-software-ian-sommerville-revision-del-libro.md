@@ -3,6 +3,7 @@ title: "Ingenieria de software, Ian Sommerville: revision del libro"
 date: 2020-05-04
 author: arthur
 tags: ["ingenieria de software"]
+image: /images/sommerville.jpg
 ---
 
 Este es un libro clásico de ingenieria de software que resume muchos temas de esta carrera, es incluso uno de los libros oficialmente recomendados por ACM.
