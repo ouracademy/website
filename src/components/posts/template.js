@@ -65,7 +65,7 @@ const PostPageTemplate = ({ data: { mdx, github }, location, pageContext }) => {
         <MDXProvider
           components={{
             blockquote: DesignSystem.Blockquote,
-            // img: DesignSystem.Image,
+            img: DesignSystem.Image,
             Youtube,
           }}
         >

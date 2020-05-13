@@ -148,29 +148,30 @@ export default ({ children, title, description, image, type = "website" }) => (
   </Grommet>
 );
 
-const BackgroundCurve = () => (
-  <svg
-    style={{
-      zIndex: 1,
-      position: "absolute",
-      top: 0,
-      background: "#f4f6fa",
-    }}
-    viewBox="0 0 700 700"
-    preserveAspectRatio="xMinYMin meet"
-  >
-    <defs>
-      <linearGradient id="Gradient1" x1="0" x2="1" y1="0" y2="1">
-        <stop offset="0%" stopColor="white" />
-        <stop offset="100%" stopColor="white" />
-      </linearGradient>
-    </defs>
-    <path
-      d="M0,130 C180,165 400,140 700,130 L700,00 L0,0 Z"
-      style={{ stroke: "none", fill: "url(#Gradient1)" }}
-    />
-  </svg>
-);
+// Diana svg code
+// const BackgroundCurve = () => (
+//   <svg
+//     style={{
+//       zIndex: 1,
+//       position: "absolute",
+//       top: 0,
+//       background: "#f4f6fa",
+//     }}
+//     viewBox="0 0 700 700"
+//     preserveAspectRatio="xMinYMin meet"
+//   >
+//     <defs>
+//       <linearGradient id="Gradient1" x1="0" x2="1" y1="0" y2="1">
+//         <stop offset="0%" stopColor="white" />
+//         <stop offset="100%" stopColor="white" />
+//       </linearGradient>
+//     </defs>
+//     <path
+//       d="M0,130 C180,165 400,140 700,130 L700,00 L0,0 Z"
+//       style={{ stroke: "none", fill: "url(#Gradient1)" }}
+//     />
+//   </svg>
+// );
 
 const SEO = ({ title, description, type, image }) => (
   <Helmet>
