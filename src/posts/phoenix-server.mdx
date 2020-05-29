@@ -1,0 +1,47 @@
+---
+title: "Phoenix Server"
+date: 2020-05-28
+author: arthur
+tags: [control de versiones, continuous delivery]
+description: Que es un phoenix server o un servidor fenix, o por que un servidor debe ser capaz de volver a nacer
+image: https://insights-images.thoughtworks.com/phoenixserver01_0d6c7858197a30f0db1a59abbaa39119.png
+---
+
+¿No te ha pasado alguna vez que por equivocación derramaste agua (o un café, en mi caso un poco de sopa 😟) a tu computadora personal? ¿Que es lo que harías si en caso jamas vuelve a prender por más que lo hayas llevado a un técnico?...toda la información, las aplicaciones instaladas, las contraseñas y configuraciones (de de tus aplicaciones, de tu editor de código, lo tanto que demoraste en personalizar tu editor, todas esas horas gastadas en personalizarla!), todo se perdería. Pero, ¿serías capaz de recuperarla en cuestión de minutos?
+
+De hecho, esta idea loca de borrar todo en tu computadora personal, es algo que incitan David Thomas y Andrew Hunt [1], como un desafio para mostrar tu habilidad en manejar control de versiones, y no es algo que solo sea aplicable a tu compatura, de hecho es aplicable a servidores. Recuerdo haber visto una charla de Jez Humble [2], donde mencionaba un test de Martin Fowler, sobre como verificar la continuidad de tu negocio, el cual dice algo así [3]:
+
+> Un día tuve esa fantasía de empezar mi brindar un servicio de certificación para los de operaciones (los DevOps). La evaluación de esa certificación consistiria en que yo entre al datacenter de la empresa, que vaya donde los servidores de producción, y con un bate de beisbol y una pistola de agua los haga caer! La evaluación estaría basada en saber en cuanto tiempo al equipo de operaciones permite que todas las aplicaciones vuelvan a funcionar de nuevo.
+
+Suena bien loco no?
+
+De eso se trata phoenix server...
+
+## Que es un phoenix server (servidor fenix)?
+
+Servidores (no necesariamente fisicos, sino tambien virtuales) que son capaces de renacer, de volver a funcionar de nuevo, como un fenix!
+
+## Importancia
+
+Pero porqué habría de hacer esa estúpida certificación? Bueno no te digo que quemes o eches agua a tu laptop o tu servidor. Pero debes ser capaz de poder hacerlo funcionar de nuevo. La idea central de ello es evitar [configuration drifts (acumulaciones y desvios en configuraciones)](http://kief.com/configuration-drift.html) que no haz registrado, si esos cambios ad-hoc que haces en producción, esos hot-fix, que te olvidas versionarlas! y que no estan dentro de esos scripts que levantan a tu servidor instantaneamente!. Si haces esos cambios ad-hoc, claramente al querer levantar otro servidor (o otra PC con las mismas configuraciones que tu PC), verás que son distintos! y peor... puede que llegues al punto de haber hecho tantos cambios que jamas puedas reemplazar esos servidores, el punto de tener miedo que alguien toque tu servidor por que si sucede algo, uy 😧 (este punto tiene un nombre, los [SnowflakeServers [4]](https://martinfowler.com/bliki/SnowflakeServer.html)).
+
+## Como lograr un PhoenixServer
+
+Para ello debes ser capaz de sincronizar toda cambio (cualquier configuracion) al servidor, cambios que deben ser versionados.
+
+La virtualización (VM) y en especial la Contenerización (como docker), ayudan a lograr Phoenix Servers, puesto que podemos rapidamente volver a la vida servidores, sin embargo si el proceso de volver a construir VM o containers es lento, fácilmente los desarrolladores se veran tentados a hacer cambios ad-hoc..
+
+Otra idea es reaplicar toda la configuración (que usualmente está en algún script), en el servidor cada cierto tiempo, tal como dice Fowler [3], aunque esto tiene el problema de que quiza se haga un cambio en algún lugar donde el script no tiene control.
+
+## Ejecutando la certificación
+
+Pensaste que era broma la certificación de Fowler?, bueno no!
+
+Bueno si lo es, pero aún puede aplicarse, Netflix lo hace (claro a nivel virtual, no fisico!) usando la herramienta [chaos monkey](http://techblog.netflix.com/2011/07/netflix-simian-army.html), con el fín de mostrar que su sistema es resiliente...de hecho hoy en día existen distintas herramientas de resiliencia, tu turno de buscar!
+
+## Referencias:
+
+1. Hunt, A. (2019), The Pragmatic Programmer, 20th Anniversary Edition
+2. Humble, J. (2012), Continuous Delivery, Obtenido de https://youtu.be/skLJuksCRTw?t=1544
+3. Fowler, M. (2012), PhoenixServer
+4. Fowler, M. SnowflakeServer
