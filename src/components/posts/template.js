@@ -1,4 +1,5 @@
 import { MDXProvider } from "@mdx-js/react";
+import { MdxEmbedProvider } from "@pauliescanlon/gatsby-mdx-embed";
 import { format } from "date-fns";
 import { graphql, Link } from "gatsby";
 import { MDXRenderer } from "gatsby-plugin-mdx";
@@ -69,7 +70,9 @@ const PostPageTemplate = ({ data: { mdx, github }, location, pageContext }) => {
             Youtube,
           }}
         >
-          <MDXRenderer>{body}</MDXRenderer>
+          <MdxEmbedProvider>
+            <MDXRenderer>{body}</MDXRenderer>
+          </MdxEmbedProvider>
         </MDXProvider>
         {showHistory && <History commits={history} />}
         <Share title={title} description={description} url={url} />
