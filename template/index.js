@@ -14,14 +14,14 @@ const postFrom = require("./post-from");
 
 const authors = yaml
   .safeLoad(fs.readFileSync("src/posts/author.yaml"))
-  .map(x => x.id);
+  .map((x) => x.id);
 
 const SEOsuggestion = (length, url) =>
   `Please don't exceed ${length} characters, this is for SEO purposes 😉. \n` +
   `More on ${url} \n`;
 
-const validateInput = schema => input => {
-  const { error } = Joi.validate(input, schema);
+const validateInput = (schema) => (input) => {
+  const { error } = schema.validate(input);
   return error ? error.message : true;
 };
 
@@ -34,8 +34,8 @@ inquirer
       validate: validateInput(
         Joi.string()
           .max(60)
-          .error(errors =>
-            errors.map(error => {
+          .error((errors) =>
+            errors.map((error) => {
               switch (error.type) {
                 case "string.max":
                   error.message = SEOsuggestion(
@@ -47,7 +47,7 @@ inquirer
               return error;
             })
           )
-      )
+      ),
     },
     {
       name: "description",
@@ -56,8 +56,8 @@ inquirer
         Joi.string()
           .allow("")
           .max(160)
-          .error(errors =>
-            errors.map(error => {
+          .error((errors) =>
+            errors.map((error) => {
               switch (error.type) {
                 case "string.max":
                   error.message = SEOsuggestion(
@@ -69,30 +69,26 @@ inquirer
               return error;
             })
           )
-      )
+      ),
     },
     {
       type: "list",
       name: "author",
       message: "Identify you, by putting your author id - see authors.yml:",
-      choices: authors
+      choices: authors,
     },
     {
       name: "imageURL",
       message:
         "Enter an image url, this is used when you share your post on Twitter or Facebook:",
-      validate: validateInput(
-        Joi.string()
-          .allow("")
-          .uri()
-      )
+      validate: validateInput(Joi.string().allow("").uri()),
     },
     {
       name: "tags",
-      message: "Tag your post (separated by commas):"
-    }
+      message: "Tag your post (separated by commas):",
+    },
   ])
-  .then(answers => {
+  .then((answers) => {
     const post = postFrom(answers);
     fs.writeFileSync(post.path, generateTemplateOf(post));
     console.log(

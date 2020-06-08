@@ -30,7 +30,7 @@ Hemos aplicado un cambio a cada elemento del arreglo 'prices' y puesto el result
 
 ```javascript
 let prices = [10, 15.4, 23.6];
-let pricesWithDesc = prices.map(price => price * 0.9);
+let pricesWithDesc = prices.map((price) => price * 0.9);
 ```
 
 Mas corto eh, ahora explicaremos su definicion a detalle.
@@ -54,8 +54,8 @@ Ahora ¿si queremos aplicar otros porcentajes a descontar?, uhm entonces hagamas
 
 ```javascript
 let prices = [10, 15.4, 23.6];
-let multiplier = percentage => (100 - percentage) / 100;
-let discountAPercentageOf = percentage => price =>
+let multiplier = (percentage) => (100 - percentage) / 100;
+let discountAPercentageOf = (percentage) => (price) =>
   price * multiplier(percentage);
 let result = prices.map(discountAPercentageOf(10));
 ```
