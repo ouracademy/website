@@ -1,0 +1,52 @@
+---
+title: "Refactoring databases"
+date: 2020-06-07
+author: arthur
+tags: [base de datos, agil, diseño]
+description: Refactorizar bases de datos o como evolucionar bases de datos, en vez de diseñar bases de datos al inicio de un proyecto
+image: https://pbs.twimg.com/media/EVXp9H8X0AAd50J?format=jpg&name=large
+---
+
+Es muy pero muy común escuchar en los desarrolladores (o capacitadores, profesores...) que una de las cosas básicas que un proyecto debe tener al inicio es una base de datos definida. Sin embargo esto no tiene porque ser así, de hecho rompe el enfoque agil, aquí es donde refactorizar bases de datos (database refactoring) ayuda y mucho.
+
+Si bien, refactoring es una técnica muy conocida en el desarrollo de software, una técnica disciplinada para reestructurar código con el fin de hacer más mantenible el software [1], permite el diseño de software evolutivo ([evolutionary design](https://martinfowler.com/tags/evolutionary%20design.html)),que en el fondo ayuda a lograr la agilidad. El término refactoring es usualmente es solo referido al código fuente de la aplicación (el código escrito en lenguajes como java, python, javascript, php...), cuando puede aplicarse a bases de datos.
+
+Al igual que en el refactoring tradicional, database refactoring ayuda al diseño evolutivo, más especifico al diseño evolutivo de bases de datos, claro para ello distintas técnicas son necesarias, como el [modelado de datos agil](http://www.agiledata.org/essays/bestPractices.html). De nuevo, esto habilita la agilidad, recuerda sin prácticas técnicas cosas como [scrum flácido pueden suceder](https://martinfowler.com/bliki/FlaccidScrum.html).
+
+Pero a primera vista pensaras que database refactoring debe ser lo mismo a hacer un refactoring tradicional, y la verdad es mucho más dificil!. Debido a el riesgo de borrar información, peor aún este riesgo incrementa cuando una base de datos es usada por muchas aplicaciones (lo cual es usual), llamado el patrón (o antipatron) [integration database](https://martinfowler.com/bliki/IntegrationDatabase.html).
+
+Imaginate cambiar el nombre de un campo de la tabla `customer` de `f_name` a `first_name`, uno podría ejecutar un simple `UPDATE` pero las cosas no son tan faciles, será necesario actualizar toda referencia a ella en tus aplicaciones, si usas un ORM, cambiar su mapeo, de:
+
+```java
+class Person {
+    @Column("f_name")
+    String fistName;
+}
+```
+
+```java
+class Person {
+    @Column("first_name")
+    String fistName;
+}
+```
+
+Además toda query que usen las aplicaciones, sean estas planas o usando algun query del ORM, por ejemplo de `SELECT f_name, last_name, ... FROM customer` a `SELECT first_name, last_name, ... FROM customer`.
+
+Más aún cuando se tiene 2 o más aplicaciones que acceden a la BD, se deberan cambiar ambas, sin embargo esto no siempre es posible! Si, muchas veces otras aplicaciones son desarrolladas o mantenidas por otros equipos (pueden estar incluso fuera de tu organización!), no todos podran realizar el cambio de manera inmediata. Incluso, la base de datos puede estar siendo usada por otras bases de datos, datawarehouses (o datamarts), ... (de vez en cuando te topas con esas mounstrosidades 🙊)
+
+Así que cuando tengas integration databases, las cosas se complican y mucho...un simple `UPDATE` no es la solución, será necesario crear un mecanismo que permita a las aplicaciones se adapten a los nuevos bases de datos, sin afectar a las otras aplicaciones, darles un **periodo de transicion**, hasta que estas actualicen al nuevo esquema (usen `first_name` en vez de `f_name`)
+
+Y como es usual, **refactoring necesita de testing**, igual sucede en refactoring databases, uno no simplemente ejecuta un `UPDATE` y espera que todo este bien.
+
+El libro de Scott Ambler y Pramod Sadalage es un libro fascinante, diria incluso muy adelantado a su época, da unas prácticas pilares para el diseño evolutivo de bases de datos, como developer sandboxes, donde cada desarrollador tiene su propia BD donde pueda testear los cambios (los refactorings) y que este debe ser facilmente levantado con un comando (notas algo de relacion con docker? 🤔) o [sobre versionar todo en una base de datos, sus tablas, stored procedures, test data](/posts/versionamiento-de-base-de-datos.mdx), da esa discusión en detalle sobre IntegrationDatabases y bases de datos aisladas, y da en sí el catalogo de refactorings aplicado a ambos tipos de bases de datos, además de discusión de como desarrollar y desplegar esos refactorings.
+
+<Tweet tweetLink="artmadeit/status/1249161759266672641/photo/1" />
+
+Mi libro refactoring databases, tuve 2 likes de los propios autores 🤐
+
+El libro es excelente, hay algunos refactorings básicos, siento que a un estudiante le ayudaría un monton (aunque a un experto puede cansarlo un poco), sin embargo el libro es un poco antiguo, está enfocado a bases de datos relacionales (en esa época prácticamente eran los unicos), por lo que seria interesante ver otros libros aplicados a bases de datos NoSQL, además en esa época habia muy pocas herramientas para ayudar a refactorizar (aunque siento que como se las imagino en el libro, es algo que aún las herramientas actuales deben seguir), hoy en día prácticamente para cada lenguaje y sus frameworks existen distintas [Flyway](https://flywaydb.org/), [laravel migrations](https://laravel.com/docs/7.x/migrations), [django migrations](https://docs.djangoproject.com/en/3.0/topics/migrations/), [typeorm](https://typeorm.io/#/migrations)...sin embargo, existe un post muy pero muy bueno donde ver como cambio el libro luego de [más de 5 años y que toca el tema en si de evolutionary databases](https://martinfowler.com/articles/evodb.html)
+
+## Referencias
+
+1. Fowler, M. (2018). Refactoring: improving the design of existing code. Addison-Wesley Professional.
