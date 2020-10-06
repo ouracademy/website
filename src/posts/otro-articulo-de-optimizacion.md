@@ -2,9 +2,9 @@
 title: Otro articulo más de optimización
 author: arthur
 tags: [optimizacion, codigo, practica, arquitectura]
-description: Un articulo sobre los principios que debes tomar en cuenta antes de mejorar el performance de tu aplicación.
+description: Un articulo sobre los principios que debes tomar en cuenta antes de mejorar el performance de tu aplicación traducido de Martin Fowler
 date: 2019-02-11
-image: https://assets-keycdn.ej-technologies.com/products/jprofiler/top10/probes_fsa-3e9a30c402ac6f81612e2e291f0927f3.png
+image: https://www.ej-technologies.com/assets/products/jprofiler/whatsnew/http_hotspots-73fd1eae06bdb52cc5186c664ad717f6.png
 ---
 
 > Una traducción del articulo de Martin Fowler: [Yet another optimization article](https://martinfowler.com/ieeeSoftware/yetOptimization.pdf).
@@ -25,9 +25,9 @@ El performance no es algo que se pueda lograr de esta forma. Involucra una **dis
 
 Para optimizar un programa se debe seguir una serie de pasos específicos. Primero, se necesita un **_profiler_** -un programa que puede analizar que tanto tiempo tu programa tarda en realizar cada una de sus funciones (métodos, rutinas...). El performance de un software tiene la regla famosa del 80/20: 80% del tiempo del programa se gasta en solo el 20% del código. Tratar de optimizar el performance de todo el código no vale la pena, asi que lo primero que se debe hacer es buscar ese 20% del código. Tratar de deducir donde el programa gasta la mayor parte de su tiempo, también no vale la pena. Sin embargo, conozco muchos programadores experimentados que siempre hacen eso. Debes usar un profiler!.
 
-![Ejemplo de profiler](https://assets-keycdn.ej-technologies.com/products/jprofiler/top10/probes_fsa-3e9a30c402ac6f81612e2e291f0927f3.png)
+![Ejemplo de profiler](https://www.ej-technologies.com/assets/products/jprofiler/whatsnew/http_hotspots-73fd1eae06bdb52cc5186c664ad717f6.png)
 
-Figura 2. Ejemplo de un profiler (JProfiler) donde una gran porción (75%) del tiempo se gasta en realizar un método remoto.
+Figura 2. Ejemplo de un profiler (JProfiler) donde una gran porción (42%) del tiempo se gasta en realizar un método remoto.
 
 El profiler necesitara que ejecutes algo de código, para ello podríamos ejecutarlo en un código que simule el programa bajo situaciones comunes (de uso de tu sistema). Un test suite automatizado es un buen punto de inicio, pero recuerda estar seguro de que este simule situaciones comunes. Otro punto importante, es el punto que mi amigo [Dave Rice](https://www.thoughtworks.com/profiles/david-rice) recalca: "Nunca optimices un sistema multi-usuarios con tests que se centren en un solo usuario". Errores tras errores, nos han enseñado que un sistema (por ejemplo una Base de datos) tiene distintos cuellos de botella que un sistema para un único usuario - a menudo enfocados en transacciones. Un mal conjunto de pruebas fácilmente te puede conducir al equivocado 20% de código.
 
@@ -35,7 +35,7 @@ Una vez que hayas encontrado los cuellos de botellas, tienes 2 opciones: **mejor
 
 Vale la pena además conocer algunos trucos de optimización, muchos de los cuales son particulares del lenguaje y ambiente de programación. Lo más importante que se debe recordar es que **los trucos no siempre funcionarán** como dice el dicho de los sastres: "Mide dos veces, recorta solo una vez". Sin embargo, a diferencia de un sastre, deberás medir 2 veces el rendimiento: antes y después de aplicar la optimización. Solo luego podrás saber si la optimización ha tenido un efecto. Es bastante común ver que tan poco efecto- o incluso uno negativo- tiene una optimización.
 
-![Antes y despúes](https://cdn.amasty.com/media/extensions/google-page-speed-optimizer/magento-google-page-speed-optimizer.png)
+![Antes y despúes](https://image.slidesharecdn.com/googlepagespeedoptimizeruserguide-160511104834/95/google-page-speed-optimizer-11-638.jpg?cb=1468325231)
 
 Figura 3. Medir el antes y después de mejorar una página web usando Google Page Speed.
 

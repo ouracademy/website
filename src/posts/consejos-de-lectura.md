@@ -4,6 +4,7 @@ date: 2020-06-21
 author: arthur
 tags: [puntos de vista, escritura]
 description: Tips de lectura y aprendizaje, que debes tomar en cuenta antes, mientras, al finalizar de leer un libro, articulo o cualquier cosa
+isPublic: false
 ---
 
 Aquí algunos tips que debes tomar en cuenta antes, mientras, al finalizar de leer un libro, articulo o cualquier cosa:

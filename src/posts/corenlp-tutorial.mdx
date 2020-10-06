@@ -5,6 +5,7 @@ date: "2019-08-07"
 author: diana
 tags: ["NLP", "tutorial"]
 image: /images/corenlp.png
+isPublic: false
 ---
 
 El procesamiento de lenguaje natural (NLP), uno de las áreas de Inteligencia Artificial (AI), tiene un gran crecimiento en en el desarrollo de aplicaciones: las vemos en Bots, en los asistentes personales (como Siri). Una de las aplicaciones muy utiles es el procesamiento de información, obtener **"insights"**. Este post trata de explicar como usar NLP para extraer información de periodicos, imaginate desarrollar una aplicación que lea noticias de diarios como Washington Post o el New York Times y de ello poder sacar "insights". Sin embargo, en vez de ello la usaremos para analizar noticias de Perú, un país con una muy buena comida pero con muchos problemas politicos (sus ultimos 3 presidentes procesados judicialmente 😂). Imaginate analizar las redes de politica de tu país, pues bien, eso es lo que haremos con Perú!
@@ -213,11 +214,11 @@ Dado este formato se visualizara el grafo usando **jsnetworkx.js**
 ```javascript
 function draw(nodes, edges) {
   var G = new jsnx.DiGraph();
-  nodes_graph = nodes.map(node => [
+  nodes_graph = nodes.map((node) => [
     node["name"],
-    { color: node["color"], size: 30 }
+    { color: node["color"], size: 30 },
   ]);
-  edges_graph = edges.map(node => [node["from"], node["to"]]);
+  edges_graph = edges.map((node) => [node["from"], node["to"]]);
   G.addNodesFrom(nodes_graph);
   G.addEdgesFrom(edges_graph);
 
@@ -225,23 +226,23 @@ function draw(nodes, edges) {
     element: "#canvas",
     withLabels: true,
     nodeAttr: {
-      r: function(d) {
+      r: function (d) {
         return d.data.size;
-      }
+      },
     },
     nodeStyle: {
-      fill: function(d) {
+      fill: function (d) {
         return d.data.color.replace("0", "5");
-      }
+      },
     },
     node_style: {
       fill: "#999",
       cursor: "pointer",
       "stroke-opacity": "0",
-      stroke: "white"
+      stroke: "white",
     },
     labelStyle: { fill: "black", "font-weigth": "bold" },
-    stickyDrag: true
+    stickyDrag: true,
   });
 }
 ```

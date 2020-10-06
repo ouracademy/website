@@ -3,7 +3,8 @@ title: ¿Existe tal cosa llamada análisis orientado a objetos?
 date: 2018-03-25
 author: arthur
 tags: [analisis, diseño, objetos]
-image: https://goo.gl/M8HxZi
+image: https://isg2.pbworks.com/f/1194887553/analisis_vs_dise%C3%B1o_v1.1.jpg
+description: que es analisis orientado a objetos (OOA) y cual es la diferencia con diseño orientado a objetos
 ---
 
 import { CapitalizeNextLine } from "$components/capitalize";
@@ -19,7 +20,10 @@ Las personas imaginan que es fácil construir un sistema de computación. Buscas
 En teoría, el análisis describe el dominio del problema, sin decir nada acerca de la solución. Esta descripción no debería construir nada en el dominio del problema y debería ser independiente de toda tecnología. Los desarrolladores luego simplemente diseñarían la solución a esta descripción. Lástima que las cosas no funcionan así.
 
 <figure>
-  <img alt="Modelo Independiente de Plataformas" src="https://goo.gl/M8HxZi" />
+  <img
+    alt="Modelo Independiente de Plataformas"
+    src="https://www.researchgate.net/profile/Tom_Cerny/publication/296958169/figure/fig5/AS:336595694702594@1457262075069/Model-driven-architecture-transformation.png"
+  />
   <figcaption>
     En teoría el mismo modelo de análisis no depende de nada, en base a ella se
     puede construir muchas soluciones- igual que en MDA, un solo modelo y
@@ -43,7 +47,10 @@ Para responder esta nueva pregunta de utilidad, debemos entender para que estamo
 Mi opinion es que es perfectamente razonable que un modelo de análisis se incline hacia la tecnología de implementación que intentas usar, como resultado, el modelo es más útil en entender el problema en el que estas trabajando. Para mi, la diferencia esencial entre el análisis y el diseño es que el análisis trata primariamente en entender el dominio, mientras que el diseño trata de _entender como el software apoya a ese dominio_. Claramente ambos están estrechamente conectados, y los límites entre ellos pueden convertirse, a menudo, borrosos. Pero los límites no necesitan ser nítidos. No deberíamos dejar que la pureza este antes que la utilidad. En teoría, tener un modelo que es tanto de análisis y diseño, es un híbrido que no es bueno para ninguno, sin embargo yo creo que estos tipos de híbridos son los que hacen los mejores modelos.
 
 <figure>
-  <img alt="analisis y diseño" src="https://goo.gl/yZe3ts" />
+  <img
+    alt="analisis y diseño"
+    src="https://isg2.pbworks.com/f/1194887553/analisis_vs_dise%C3%B1o_v1.1.jpg"
+  />
   <figcaption>
     La forma en como usualmente vemos al análisis y el diseño con objetivos
     distintos, separados por una linea, que en realidad es borrosa, como muchas
