@@ -12,11 +12,8 @@ Junto con el libro de Roger Pressman (titulado Ingenieria de software: un enfoqu
 
 Algunos dirán pero el Software Engineering Book of Knowledge (SWEBOK) cubre más aspectos de ingenieria de sofware que este libro. Y esto es cierto, sin embargo al ser una guia (no un libro) la forma en que esta escrita es más formal, lo cual impide la lectura para estudiantes de ingenieria de software incluso prácticantes de este campo.
 
-<figure style="float:left;max-height:500px;width:100%;max-width:400px;margin-right:20px;margin-left:0">
-    <img src="/images/sommerville.jpg" alt="Mi copia de sommerville" style="margin: none; margin-bottom: 10px;" />
-    <figcaption style="font-size:15px;">Mi copia del libro. Uno de los libros más importantes que he leido, el 2do libro que lei en la universidad. Gracias a mi madre 🙂</figcaption>
-
-</figure>
+<Image src="/images/sommerville.jpg" alt="Mi copia de sommerville" direction="left"
+description="Mi copia del libro. Uno de los libros más importantes que he leido, el 2do libro que lei en la universidad. Gracias a mi madre 🙂" />
 
 Este libro da un panorama de las distintas etapas del desarrollo de software: requerimientos, análisis, diseño, implementación, testing y mantenimiento. Y de los procesos o métodos de desarrollo de software (planificados y agiles) y como estos afectan a cada una de estas etapas (como el diseño es hecho en agile es distinto a como lo es en procesos dirigidos por un plan).
 

@@ -1,13 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { Image } from "./image";
 
-export const CenteredImage = styled.img`
-  display: block;
-  max-width: 75%;
-  margin: auto;
-`;
-
-const Blockquote = styled.blockquote`
+export const Blockquote = styled.blockquote`
   padding-left: 20px;
   margin: 0 0 20px;
   border-left: 5px solid #eee;
@@ -17,7 +12,4 @@ const Blockquote = styled.blockquote`
   }
 `;
 
-export default {
-  Blockquote,
-  Image: props => <CenteredImage {...props} />
-};
+export const CenteredImage = (props) => <Image direction="center" {...props} />;
