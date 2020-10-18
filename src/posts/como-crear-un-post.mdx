@@ -1,0 +1,119 @@
+---
+title: "como crear un post"
+date: 2020-10-17
+author: arthur
+tags: []
+description: Paso a paso markdown y mdx, como los componentes de ouracademy
+isPublic: false # this post is a draft, you can share it's link to
+# other people to review your post. Remove this property to publish it.
+---
+
+import { CapitalizeNextLine } from "$components/capitalize";
+
+<CapitalizeNextLine />
+
+Bienvenido a ouracademy, un gusto tenerte con nosotros 😃, este post te explicara como escribir un post usando markdown y en especial mdx, te mostrara como esta estructurado esta pagina, como usar web components de ouracademy en tus post (asi como el componente que le da estilo a la B de Bienvenido 😉), y como crear tus propios componentes y usarlo en tu post (o en varios posts). Empecemos !
+
+Hay muchas maneras de crear un post, pero lo primero es ponerte como autor, para eso (sigue las instrucciones del README.md), esto es, agrega tu informacion persona en `author.yml`, asi como yo o diana:
+
+```yaml
+- id: arthur
+  name: Arthur Mauricio
+  avatar: https://miro.medium.com/fit/c/240/240/1*nNStMm8JvNW7ffS-Rd8Y6A.jpeg
+  description: Always learning & Like to coding.
+  links:
+    twitter: artmadeit
+    github: artmadeit
+    linkedIn: arthur-mauricio
+```
+
+Ahora si, con eso puedes empezar a crear un post, como dije antes tienes muchas formas:
+
+1. ejecutando el comando `npm run new-post`, este es un comando que te ayudara interactivamente a crear tu post:
+
+```
+Hi 🤖! I'll help you write a post
+? Enter it's title: un super post
+? Describe it but in an engaging way el post mas genial del mundo
+? Identify you, by putting your author id - see authors.yml: arthur
+? Enter an image url, this is used when you share your post on Twitter or Facebook:
+? Tag your post (separated by commas):
+Post created as a draft, at src/posts/como-crear-un-post.mdx, start writing 😃
+Remember to remove the "isPublic: false" to publish your post
+Don't know mdx? You could guide yourself by seeing other .mdx files or see https://www.gatsbyjs.org/docs/mdx/markdown-syntax/
+```
+
+Como ves, este comando te crea el post x ti, un archivo .mdx
+
+2. Otra forma, es simplemente copiar y pegar cualquier archivo .md o .mdx en el directorio /posts, es decir copiar y pegar un post antiguo.
+3. La otra forma es desde mismo github crear un post (si puedes hacerlo cuando estes camino al trabajo o en cualquier momento sin tener tu laptop 😛)
+
+Escoge la que te parezca mas facil 😉
+
+Ahora, los posts estan en formato markdown, sino lo sabes bueno es bastante sencillo:
+
+```md
+# Este es un header 1, nota el signo
+
+## Este es un header 2
+
+...
+
+###### este un header 6
+
+este es un parrafo lalalala
+
+este otro parrafo
+
+esta es una imagen ![alternativo](url)
+
+este es un parrafo con un [hipertexto](url)
+
+este es una lista (no ordenada):
+
+- hola
+- Como
+- estas
+
+y esta una lista desordenada:
+
+1. sal
+2. pimienta
+3. ajo
+
+ah no ordenada 😜, si puedes usar emojis XD
+
+y lo mas bonito es cuando usas componentes react, aqui es donde entra .mdx
+mdx basicamente es markdown (md) mas jsx (jsx es lo que usa react, un html combinado con js)
+
+entonces mdx = jsx + md
+
+quer quiero decir con eso bueno basciamente puedes importar componentes en tu markdown
+
+import { Box } from "grommet";
+
+# hola como estas
+
+<Box>tu que crees :P estoy muy boxeado</Box>
+
+en ouracademy tenemos un par de componentes muy utiles:
+```
+
+<!--
+[10:43 p. m., 17/10/2020] Arthur: componente Yoiutube, Tweet, Image, CapitalizeNextLine
+[10:43 p. m., 17/10/2020] Arthur: esos son los componentes que puedes reusar
+[10:44 p. m., 17/10/2020] Arthur: si creas un componente en la carpeta coponente puedes importarlo
+[10:44 p. m., 17/10/2020] Arthur: en tu markdown y usarlo
+[10:45 p. m., 17/10/2020] Arthur: x ejemplo si hago esto:
+
+# Un post de inteligencia articial :P
+
+asi que habia una vez un barco chiquito <Imag src="ia.jpg" direction="left" />
+[10:46 p. m., 17/10/2020] Arthur: si creas tu componente nose en holas.js .... const Hola = ({name}) => <p>Holaaaa {name} :) yupi</p>
+[10:46 p. m., 17/10/2020] Arthur: puedes importarlo en tu markdown
+[10:46 p. m., 17/10/2020] Arthur: import { Hola } from "\$components/holas"
+
+# Un post de inteligencia articial :P
+
+asi que habia una vez un barco chiquito <Hola name="diana"/>
+[10:47 p. m., 17/10/2020] Arthur: eso documentare mejor en un post -->
