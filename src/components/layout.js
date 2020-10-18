@@ -16,9 +16,6 @@ import { createGlobalStyle } from "styled-components";
 import { theme } from "./our-theme";
 
 const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-  }
   p,li{
     line-height: 32px;
     font-size: 19px;
@@ -155,41 +152,14 @@ export default ({ children, title, description, image, type = "website" }) => (
           />
           <GlobalStyle />
           <Container>
-            <div style={{ zIndex: 10, position: "relative" }}>
-              <Nav title={meta.title} />
-              {children}
-            </div>
+            <Nav title={meta.title} />
+            {children}
           </Container>
         </React.Fragment>
       )}
     />
   </Grommet>
 );
-
-// Diana svg code
-// const BackgroundCurve = () => (
-//   <svg
-//     style={{
-//       zIndex: 1,
-//       position: "absolute",
-//       top: 0,
-//       background: "#f4f6fa",
-//     }}
-//     viewBox="0 0 700 700"
-//     preserveAspectRatio="xMinYMin meet"
-//   >
-//     <defs>
-//       <linearGradient id="Gradient1" x1="0" x2="1" y1="0" y2="1">
-//         <stop offset="0%" stopColor="white" />
-//         <stop offset="100%" stopColor="white" />
-//       </linearGradient>
-//     </defs>
-//     <path
-//       d="M0,130 C180,165 400,140 700,130 L700,00 L0,0 Z"
-//       style={{ stroke: "none", fill: "url(#Gradient1)" }}
-//     />
-//   </svg>
-// );
 
 const SEO = ({ title, description, type, image }) => (
   <Helmet>
