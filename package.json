@@ -24,6 +24,7 @@
     "babel-plugin-styled-components": "^1.10.7",
     "date-fns": "^2.13.0",
     "dotenv": "^8.2.0",
+    "fontsource-raleway": "^3.0.9",
     "gatsby": "^2.21.21",
     "gatsby-plugin-google-tagmanager": "^2.3.1",
     "gatsby-plugin-manifest": "^2.4.2",

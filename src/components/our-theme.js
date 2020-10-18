@@ -1,14 +1,14 @@
-const isObject = item =>
+const isObject = (item) =>
   item && typeof item === "object" && !Array.isArray(item);
 
-const deepFreeze = obj => {
+const deepFreeze = (obj) => {
   Object.keys(obj).forEach(
-    key => key && isObject(obj[key]) && Object.freeze(obj[key])
+    (key) => key && isObject(obj[key]) && Object.freeze(obj[key])
   );
   return Object.freeze(obj);
 };
 
-const toObject = array =>
+const toObject = (array) =>
   array.reduce((obj, e, index) => {
     obj[index + 1] = e;
     return obj;
@@ -38,12 +38,11 @@ export const theme = deepFreeze({
         warning: "#FFD144",
         ok: "#01a982",
         unknown: "#CCCCCC",
-        disabled: "#CCCCCC"
-      })
+        disabled: "#CCCCCC",
+      }),
     },
     font: {
-      family: `-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"`,
-      face: undefined
-    }
-  }
+      family: "Raleway, sans-serif",
+    },
+  },
 });

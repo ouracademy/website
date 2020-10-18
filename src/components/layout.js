@@ -1,4 +1,5 @@
 import { navigate } from "@reach/router";
+import "fontsource-raleway";
 import { graphql, Link, StaticQuery } from "gatsby";
 import {
   Box,
@@ -18,7 +19,7 @@ import { theme } from "./our-theme";
 const GlobalStyle = createGlobalStyle`
   p,li{
     line-height: 32px;
-    font-size: 19px;
+    font-size: 20px;
     color: #2c3e50;
   }
   
@@ -39,7 +40,7 @@ const Container = ({ children }) => (
   <ResponsiveContext.Consumer>
     {(size) => (
       <Box align="center" pad="small">
-        <Box width={size !== "small" ? "75vw" : "full"}>{children}</Box>
+        <Box width={size !== "small" ? "70vw" : "90vw"}>{children}</Box>
       </Box>
     )}
   </ResponsiveContext.Consumer>
