@@ -7,8 +7,6 @@ date: 2019-03-17
 image: https://upload.wikimedia.org/wikipedia/commons/thumb/e/ed/UML_diagrams_overview.svg/600px-UML_diagrams_overview.svg.png
 ---
 
-import { Figure } from "\$components/figure";
-
 De vez en cuando, de algún compañero del trabajo o de la universidad, o en varios grupos de redes sociales veo preguntas como: ¿Usas UML? ¿Vale la pena aprender UML?, ¿UML sirve para aprender Orientación a Objetos? Si soy agile, debería usar UML? ¿UML solo se usa en la universidad?.
 
 Y de ello veo distintas opiniones, y lo peor afirmaciones erradas de gente conocida del desarrollo de software, tales como: UML solo lo usan los universitarios, UML solo se usa para documentar proyectos, UML está en desuso, UML no se usa en proyectos serios modernos! o peor algunas barbaridades como UML es una **metodología**..., algunas en un grado ciertas (pero quizá la única verdadera es que se esta usando menos 😞).
@@ -19,9 +17,10 @@ Existen distintas [formas o modos de usar UML][4]. Usualmente en las universidad
 
 Del otro lado, otras personas usan UML a través de esbozos de algún flujo de negocio en un diagrama de actividades (o quizá usando BPMN), lo más rápido posible, sin prestar atención a la sintaxis de UML.
 
-<Figure
+<Image
   src="http://agilemodeling.com/images/models/activityDiagramEnroll.JPG"
-  caption="Diagrama de actividades como un esbozo, de Scott Ambler"
+  description="Diagrama de actividades como un esbozo, de Scott Ambler"
+  size="700px"
 />
 
 Ambas formas de usar son válidas, y así como estás formas de usar UML, existen otras. En general, existen 3 propósitos, que son los modos generales de como usar UML, siguiendo la clasificación de [Fowler](https://martinfowler.com).
