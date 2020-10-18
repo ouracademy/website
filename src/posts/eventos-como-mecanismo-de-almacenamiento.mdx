@@ -74,17 +74,21 @@ Cuando la mayoría de personas consideran almacenar un objeto, tienden a pensar 
 
 Considera por el momento la creación de un pequeño objeto Pedido (Order) para un sistema web de ventas. La mayoría de los desarrolladores imaginarían algo similar a lo que se representa en la Figura 1. Esta es una visión estructural de lo que un Pedido es. Un pedido tiene n Lineas de articulos (Line Items) y Información de Entrega (Shipping Information). Por su puesto, es una vista super simplificada de lo que un Pedido es, pero se puede ver su foco hacia la estructura de un pedido y sus partes.
 
-![vista estructurada de un pedido](https://cqrs.files.wordpress.com/2010/11/image16.png?w=550&h=303&zoom=2)
-
-Figura 1. Una vista estructurada de un Pedido.
+<Image
+  description="Figura 1. Una vista estructurada de un Pedido."
+  alt="vista estructurada de un pedido"
+  src="https://cqrs.files.wordpress.com/2010/11/image16.png?w=550&h=303&zoom=2"
+/>
 
 Sin embargo, esta no es la única forma de ver esta información. Previamente en el área de discusiones vimos el concepto de una transacción, los desarrolladores tratan con el concepto de transacciones regularmente, ellos pueden ser vistos como una representación de los cambios entre un punto y su punto siguiente. Son regularmente llamados "Deltas". El delta entre dos estados estáticos puede ser siempre definido pero más importante muchas veces son dejados como un concepto implicito, usualmente relegados a frameworks como Hibernate en Java o Entity Framework en el mundo de Microsoft. Estos frameworks guardan el estado original y calculan las diferencias entre el nuevo estado y con ello actualizan el modelo de datos. Al hacer los deltas explicitos puede ser altamente valioso en términos técnicos y más importante en beneficios de negocio.
 
 El uso de tales deltas puede ser visto en muchos modelos de negocio maduros. El ejemplo canónico del uso de deltas es en el campo de la contabilidad. Cuando miramos un libro mayor como el de la Figura 2, cada transacción o delta se registra. A su costado, podemos ver el total desnormalizado de una cuenta. Para calcular este número, el delta actual es aplicado al último balance. Podemos confiar que el último balance conocido este bien, debido que podriamos volver a ejecutarse, en cualquier punto dado las transacciones desde el "principio del tiempo" para verificar la validez de ese valor. Con ello tenemos un registro de auditoría verificable.
 
-![Un libro mayor simplificado](https://cqrs.files.wordpress.com/2010/11/image17.png?w=550&h=101&zoom=2)
-
-Figura 2. Un libro mayor simplificado
+<Image
+  description="Figura 2. Un libro mayor simplificado"
+  alt="Un libro mayor simplificado"
+  src="https://cqrs.files.wordpress.com/2010/11/image17.png?w=550&h=101&zoom=2"
+/>
 
 Debido a que todas las transacciones o deltas asociados con la cuenta existen, podemos leerlos y con ello verificar el resultado. El "balance actual" en cualquier punto puede ser derivado al mirar el "balance actual" o al ejecutar todos los cambios (deltas) desde el inicio de la cuenta. La segunda propiedad es obviamente valiosa en un dominio como el de contabilidad, los contadores trabajan con dinero y la habilidad de verificar los calculos sean realizados correctamente es extremadamente valioso, era incluso valioso desde antes de las computadoras cuando era común ver a un contador por haber hecho una equivocación de calculo a las 3am cuando deberían haber estado durmiendo en vez de leer los libros de contabilidad 😝.
 
@@ -94,9 +98,13 @@ Sin embargo, estos tipos de beneficios no solo se limitan a dominios basados en 
 
 Volviendo al ejemplo de Pedido de la Figura 1, el mismo orden podría representarse en la forma de un modelo transaccional como se muestra en la Figura 3.
 
-![Una vista transaccional de un Pedido](https://cqrs.files.wordpress.com/2010/11/image18.png?w=550&h=367&zoom=2)
-
-Figura 3. Una vista transaccional de un Pedido
+<figure>
+  <img
+    src="https://cqrs.files.wordpress.com/2010/11/image18.png?w=550&h=367&zoom=2"
+    alt="Una vista transaccional de un Pedido"
+  />
+  <figcaption>Figura 3. Una vista transaccional de un Pedido</figcaption>
+</figure>
 
 Esto se puede aplicar a cualquier tipo de objeto. Al reproducirse a través de los eventos, el objeto puede volver al último estado conocido. Es matemáticamente equivalente almacenar el final de la ecuación o la ecuación que la representa. Hay una representación estructural del objeto, pero existe solo al reproducir las transacciones anteriores para devolver la estructura a su último estado conocido, los datos no se conservan en una estructura, sino como una serie de transacciones. Una posibilidad muy interesante aquí es que, a diferencia de cuando se almacena el estado actual de una manera estructural, no hay acoplamiento entre la representación del estado actual en el dominio y en el almacenamiento, la representación del estado actual en el dominio puede variar sin pensar en el mecanismo de persistencia (evitando migraciones o refactorizaciones de bases de datos).
 

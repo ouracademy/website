@@ -9,8 +9,8 @@ import { parseHeader } from "parse-commit-message";
 import React from "react";
 import { Avatar } from "../../pages/about";
 import { PostItem } from "../../pages/articles";
-import { Blockquote, CenteredImage } from "../design-system";
-import { Image } from "../image";
+import { Blockquote } from "../design-system";
+import { Image, Img } from "../image";
 import Layout from "../layout";
 import { HorizontalBulletTags } from "../tags/tags";
 import { Youtube } from "../youtube";
@@ -67,7 +67,7 @@ const PostPageTemplate = ({ data: { mdx, github }, location, pageContext }) => {
         <MDXProvider
           components={{
             blockquote: Blockquote,
-            img: CenteredImage,
+            img: Img,
             Image,
             Youtube,
           }}

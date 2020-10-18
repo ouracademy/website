@@ -13,9 +13,10 @@ Este es un articulo un poco difícil de escribir. No tenia planeado escribir sob
 
 Primero, **el performance importa**. Aunque la [ley de Moore](https://es.wikipedia.org/wiki/Ley_de_Moore) nos ayuda a que nuestros programas sean menos lentos, es fastidioso que un programa te pida mejorar tu máquina (sea tu memoria RAM o CPU) para poder usar su nueva versión 😠. La pregunta es, ¿Como lograr hacer programas veloces?
 
-![alan kay sobre bloatware](/images/optimization.png)
-
-Figura 1. Alan Kay hablando sobre como cargar un documento word, ahora tarda mucho más que hace 10 años.
+<Image alt="alan kay sobre bloatware" src="/images/optimization.png"
+description="Figura 1. Alan Kay hablando sobre como cargar un documento word, ahora tarda mucho más que hace 10 años."
+direction="right"
+/>
 
 Para muchos programadores, el performance es algo que ponemos **continua atención a medida que programamos**. Cada vez que escribimos algo de código, pensamos los problemas de performance que tiene y que podríamos hacer para mejorar ese performance (vemos un doble `for` y al instante estamos pensando como mejorarlo). Esto es una técnica obvia - lastima que no sea muy útil.
 
@@ -25,9 +26,9 @@ El performance no es algo que se pueda lograr de esta forma. Involucra una **dis
 
 Para optimizar un programa se debe seguir una serie de pasos específicos. Primero, se necesita un **_profiler_** -un programa que puede analizar que tanto tiempo tu programa tarda en realizar cada una de sus funciones (métodos, rutinas...). El performance de un software tiene la regla famosa del 80/20: 80% del tiempo del programa se gasta en solo el 20% del código. Tratar de optimizar el performance de todo el código no vale la pena, asi que lo primero que se debe hacer es buscar ese 20% del código. Tratar de deducir donde el programa gasta la mayor parte de su tiempo, también no vale la pena. Sin embargo, conozco muchos programadores experimentados que siempre hacen eso. Debes usar un profiler!.
 
-![Ejemplo de profiler](https://www.ej-technologies.com/assets/products/jprofiler/whatsnew/http_hotspots-73fd1eae06bdb52cc5186c664ad717f6.png)
-
-Figura 2. Ejemplo de un profiler (JProfiler) donde una gran porción (42%) del tiempo se gasta en realizar un método remoto.
+<Image alt="Ejemplo de profiler" src="https://www.ej-technologies.com/assets/products/jprofiler/whatsnew/http_hotspots-73fd1eae06bdb52cc5186c664ad717f6.png" 
+description="Figura 2. Ejemplo de un profiler (JProfiler) donde una gran porción (42%) del tiempo se gasta en realizar un método remoto." size="large"
+/>
 
 El profiler necesitara que ejecutes algo de código, para ello podríamos ejecutarlo en un código que simule el programa bajo situaciones comunes (de uso de tu sistema). Un test suite automatizado es un buen punto de inicio, pero recuerda estar seguro de que este simule situaciones comunes. Otro punto importante, es el punto que mi amigo [Dave Rice](https://www.thoughtworks.com/profiles/david-rice) recalca: "Nunca optimices un sistema multi-usuarios con tests que se centren en un solo usuario". Errores tras errores, nos han enseñado que un sistema (por ejemplo una Base de datos) tiene distintos cuellos de botella que un sistema para un único usuario - a menudo enfocados en transacciones. Un mal conjunto de pruebas fácilmente te puede conducir al equivocado 20% de código.
 
