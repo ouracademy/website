@@ -161,13 +161,7 @@ export default ({
       Un grupo de amigos que se divierte aprendiendo y enseñando practicas,
       principios, tecnologías y teorías de desarrollo software.
     </p>
-    <Box
-      wrap
-      direction="row-responsive"
-      justify="center"
-      pad="large"
-      gap="medium"
-    >
+    <Box wrap direction="row-responsive" justify="center" gap="medium">
       {edges.map(({ node: member }) => (
         <Card
           key={member.id}
