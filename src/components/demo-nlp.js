@@ -21,7 +21,9 @@ export const NLP = () => {
     if (!checkUrlIsValid(url)) return;
     setLoading(true);
     axios
-      .post(`http://3.135.194.119:5000/nlp/from-url`, { url: url })
+      .get(`https://iiycpfov33.execute-api.us-east-1.amazonaws.com/nlp`, {
+        params: { url: url },
+      })
       .then(({ data }) => {
         setIEResult(data["data"]);
         setLoading(false);
