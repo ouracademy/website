@@ -21,6 +21,7 @@
     "@mdx-js/mdx": "^1.6.1",
     "@mdx-js/react": "^1.6.1",
     "@pauliescanlon/gatsby-mdx-embed": "0.0.21",
+    "axios": "^0.21.0",
     "babel-plugin-styled-components": "^1.10.7",
     "date-fns": "^2.13.0",
     "dotenv": "^8.2.0",
