@@ -7,7 +7,7 @@
     "jpoissonnier.vscode-styled-components",
     "esbenp.prettier-vscode",
     "wix.vscode-import-cost",
-    "Prisma.vscode-graphql",
+    "graphql.vscode-graphql",
     "silvenon.mdx",
 
     "wayou.vscode-todo-highlight",
