@@ -7,7 +7,7 @@
 const yaml = require("js-yaml");
 const fs = require("fs");
 const inquirer = require("inquirer");
-const Joi = require("@hapi/joi");
+const Joi = require("joi");
 
 const generateTemplateOf = require("./template");
 const postFrom = require("./post-from");
@@ -16,8 +16,8 @@ const authors = yaml
   .safeLoad(fs.readFileSync("src/posts/author.yaml"))
   .map((x) => x.id);
 
-const SEOsuggestion = (length, url) =>
-  `Please don't exceed ${length} characters, this is for SEO purposes 😉. \n` +
+const SEOsuggestion = (url) =>
+  `Please don't exceed {#limit} characters, this is for SEO purposes 😉. \n` +
   `More on ${url} \n`;
 
 const validateInput = (schema) => (input) => {
@@ -34,19 +34,9 @@ inquirer
       validate: validateInput(
         Joi.string()
           .max(60)
-          .error((errors) =>
-            errors.map((error) => {
-              switch (error.type) {
-                case "string.max":
-                  error.message = SEOsuggestion(
-                    error.context.limit,
-                    "https://moz.com/learn/seo/title-tag"
-                  );
-              }
-
-              return error;
-            })
-          )
+          .messages({
+            "string.max": SEOsuggestion("https://moz.com/learn/seo/title-tag")
+          })
       ),
     },
     {
@@ -56,19 +46,9 @@ inquirer
         Joi.string()
           .allow("")
           .max(160)
-          .error((errors) =>
-            errors.map((error) => {
-              switch (error.type) {
-                case "string.max":
-                  error.message = SEOsuggestion(
-                    error.context.limit,
-                    "https://www.seoclarity.net/resources/knowledgebase/write-perfect-meta-description-seo-17115/"
-                  );
-              }
-
-              return error;
+          .messages({
+            "string.max": SEOsuggestion("https://www.seoclarity.net/resources/knowledgebase/write-perfect-meta-description-seo-17115/")
             })
-          )
       ),
     },
     {
