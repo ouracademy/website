@@ -6,6 +6,8 @@ This website is created using [Gatsby](#resources), MDX & Grommet for UI. It use
 
 It also has a `new-post` script to help you create new posts using inquirer.js.
 
+![npm run new-post command in action](https://res.cloudinary.com/our-academy/image/upload/v1609897430/ouracademy-cli.gif)
+
 ---
 
 ## How write a post
