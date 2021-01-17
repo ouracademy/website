@@ -1,0 +1,30 @@
+---
+title: "Que es Service Oriented Architecture, SOA?"
+date: 2021-01-17
+author: arthur
+tags: [arquitectura,microservicios]
+description: La ambiguedad de SOA que hoy conduce a los microservicios, de Martin Fowler
+---
+
+> Traducido de [Service Oriented Ambiguity](https://martinfowler.com/bliki/ServiceOrientedAmbiguity.html) de Martin Fowler
+
+
+Una pregunta que cada cierto me preguntan es "¿qué piensas de SOA (Arquitectura Orientada a Servicios)?" Es una pregunta que es prácticamente imposible de responder porque **SOA significa muchas cosas diferentes** para diferentes personas.
+
+- Para algunas SOA es acerca de exponer un sistema a traves de servicios web (web services). Este grupo se puede dividir en aquellos que esperan que se aplique los estándares WS-* y aquellos que aceptan cualquier forma de XML o JSON (u otros) a traves de http.
+
+- Para algunos SOA implica una arquitectura donde las aplicaciones desaparecen. En vez de tener tus servicios core que proveen funcionalidad y datos del negocio separados de agregadores de UI (por ejemplo el patrón Backend For Frontend [1, 2] y tecnologias como GraphQL), que aplican funciones de presentación de agregación (es decir juntan distintas partes que los servicios core proveen).
+
+- Para algunos SOA se trata de permitir a sistemas comunicarse sobre alguna forma de estructura estandar (usualmente XML/JSON) con otras aplicaciones. En su peor forma puede ser visto como "CORBA con corchetes '{}' o con tags "</>" . O en otras formas mas sofisticadas esto involucra crear un tipo de columna vertebral (un backbone) estándar para que una organización trabajen sus aplicaciones sobre dicha base. Este backbone puede o no puede involucrar http.
+
+- Para algunos SOA es acerca de usar (la mayoría de las veces) mensajería asincrona (vea Kafka, RabbitMQ, entre otras) para transferir documentos entre sistemas diferentes. Esencialmente esto es Integración de Aplicaciones Empresariales (Enteprise Application Integration, EAI) sin necesidad de gastar en vendedores caros y bloquearse en solo trabajar con ellos (el clásico trabajar solo con Enteprise Service Bus de IBM 😆).
+
+He escuchado distintas personas hablar buenas cosas de SOA, de como separa la data del proceso, de como combina la data con el proceso, de que usa estándares web (e.g., WS-*), que es independiente de estándares web (e.g, REST), que es asincronico, que es sincronico, que la sincronicidad no importa...
+
+Estuve hace unos años atrás en una conferencia de desarrolladores de Microsoft. Me senté en un día lleno de presentaciones de SOA - al final estuve en el panel de discusión de SOA. Hice reír al publico cuando pregunta si alguien más entendía qué diablos era SOA. Posteriormente, alguien comentó que esta ambigüedad también era algo que sucedía con la Orientación a objetos (OO). Y claro que hay verdad en ello, en OO por ejemplo [existen distintas definiciones](https://wiki.c2.com/?DefinitionsForOo). Claro que hay ambiguedad en OO pero en SOA es mucho más exacerbado, y ahora más con el [término microservicios](/posts/microservicios-que-son-cuando-usarlos-y-como-construirlos.mdx)
+
+Asi que hacemos? Primero tenemos que recordar que tan diferentes ( y muchas veces incompatibles) son estas ideas en el campo de SOA. Estas necesitan ser propiamente descritas (y nombradas) independitemente de SOA (como los microservicios que **si se diferencian al ser más exactos en su definicion de lo que es y lo que no es**). Pienso que SOA se ha vueto una palabra libre de semantica que puede juntarse con muchas otras como "componentes" y "arquitectura". Mas alla de ayudar en mucho, por lo que las ideas concretas que tienen algo de sustancia necesitan tener una vida independiente.
+
+## Referencias
+1. [Backend for frontend, Sam Newman](https://samnewman.io/patterns/architectural/bff/)
+2. [Backend for frontend, Phil Calcado](https://philcalcado.com/2015/09/18/the_back_end_for_front_end_pattern_bff.html)
