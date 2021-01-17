@@ -2,13 +2,13 @@
 title: "Creando un command line (cli) con nodejs"
 date: 2020-12-30
 author: arthur
-tags: [divertido,codigo]
+tags: [divertido, codigo]
 description: Usando inquirer y validaciones con joi, y un plus de moustache
 image: https://pc-solucion.es/wp-content/uploads/2018/05/significado-cli.jpg
 ---
 
 Hace varios años atras cuando empece mi blog hecho en next.js (cuando next.js estaba en la versión 1), escribia
-mis posts en puro html (bueno en jsx). Sin embargo, estaba cansado de estar escribiendo posts usando jsx, 
+mis posts en puro html (bueno en jsx). Sin embargo, estaba cansado de estar escribiendo posts usando jsx,
 es muy engorroso...
 
 Si quieres escribir un parrafo con una palabra importante señalada (en negrita), tenia que hacer
@@ -18,20 +18,28 @@ En cambio en markdown podia hacer, simplemente:
 `Hola mundo, esto es **importante!**`
 
 Sin embargo me gustaba la idea de usar jsx porque podía agregar componentes React, es decir podia hacer cosas como:
-`<p>Han visto domain driven design esta de vuelta de moda: </p> <YoutubeVideos of={"domain-driven-design"}/> `
+`<p>Han visto domain driven design esta de vuelta de moda: </p> <YoutubeVideos of={"domain-driven-design"}/>`
 
 Estuve mucho tiempo asi hasta que, hace 3 años atras, me entere de mdx, una tecnologia que combina lo mejor de ambos
 mundos markdown + jsx. Decidi entonces hacer que mi blog use mdx...pero tambien queria que sea muy muy veloz..
-queria que mis paginas estaticas (y en ese tiempo next.js solo servia para server side rendering), asi que me movi a 
+queria que mis paginas estaticas (y en ese tiempo next.js solo servia para server side rendering), asi que me movi a
 gatsby.js, esos tiempos inestable gatsby + mdx...todos los lios que me meti 😝
 
 Porque te cuento eso? Para contarte de mi vida? Claro que si 🤪
 
 No nada es que haremos una command line o cli que genere archivos en .mdx!
-Eso fue lo que hice ya hace creo +1 de año, si te interesa de frente el codigo, ahi ta: https://github.com/ouracademy/website/tree/master/template
+Eso fue lo que hice ya hace creo +1 de año, si te interesa de frente el codigo, te dejo [el link aca](https://github.com/ouracademy/website/tree/master/template)
 
-Empecemos con lo básico, usaremos nodejs y la librería [inquirer](https://www.npmjs.com/package/inquirer), asi que primero, creemos un proyecto e 
+<Image
+  alt="npm run new-post command in action"
+  src="/cli.gif"
+  size="large"
+  description="El cli que haremos"
+/>
+
+Empecemos con lo básico, usaremos nodejs y la librería [inquirer](https://www.npmjs.com/package/inquirer), asi que primero, creemos un proyecto e
 instalemos la libreria
+
 ```
 mkdir mi-cli
 cd mi-cli
@@ -39,23 +47,24 @@ npm init
 npm install inquirer
 ```
 
-Inquirer es una librería que facilita hacer cli apps, creemos un ejemplo basico, un cli que nos pida el titulo de nuestro post a crear. 
+Inquirer es una librería que facilita hacer cli apps, creemos un ejemplo basico, un cli que nos pida el titulo de nuestro post a crear.
 
 ```javascript
 const inquirer = require("inquirer");
 console.log("Hola 🤖! Soy un cli que te ayudare a crear tu post");
 inquirer
   .prompt([
-      {
+    {
       name: "title",
       message: "Por favor, dame el titulo de tu post:",
     },
-  ]).then((answers) => {
-      console.log(`Post creado con titulo: ${answers.title}`)
-  })
+  ])
+  .then((answers) => {
+    console.log(`Post creado con titulo: ${answers.title}`);
+  });
 ```
 
-Basicamente `inquirer.prompt` quiere decir que inquirer hara preguntas (un arreglo de preguntas cada una con un mensaje, `message`, y nombre `name`)  y luego de preguntar al usuario, el `then` nos dara las respuestas a nuestras preguntas en un objeto (en base al `name` de cada pregunta).
+Basicamente `inquirer.prompt` quiere decir que inquirer hara preguntas (un arreglo de preguntas cada una con un mensaje, `message`, y nombre `name`) y luego de preguntar al usuario, el `then` nos dara las respuestas a nuestras preguntas en un objeto (en base al `name` de cada pregunta).
 
 Sencillo?
 
@@ -63,7 +72,7 @@ En inquirer podemos tambien indicar que el usuario solo pueda escoger un par de 
 
 ```javascript
 const inquirer = require("inquirer");
-const authors = ["arthur", "diana"] // imaginate poder obtenerlo de un REST api
+const authors = ["arthur", "diana"]; // imaginate poder obtenerlo de un REST api
 console.log("Hola 🤖! Soy un cli que te ayudare a crear tu post");
 inquirer
   .prompt([
@@ -71,16 +80,18 @@ inquirer
       name: "title",
       message: "Por favor, dame el titulo de tu post:",
     },
-     {
+    {
       type: "list",
       name: "author",
       message: "Quien escribe el post?",
       choices: authors,
     },
-  ]).then((answers) => {
-      console.log(
-          `Post creado con titulo: ${answers.title}, autor: ${answers.author}`)
-  })
+  ])
+  .then((answers) => {
+    console.log(
+      `Post creado con titulo: ${answers.title}, autor: ${answers.author}`
+    );
+  });
 ```
 
 Bueno ta todo muy bien pero de vez en cuando queremos validar algunas preguntas, que tal si usamos la libreria [joi](https://www.npmjs.com/package/joi) para validar por ejemplo que el titulo no pase de 60 caracteres, porque? bueno es recomendable que si creas un post uses las mejores prácticas de SEO 😃
@@ -88,46 +99,50 @@ Bueno ta todo muy bien pero de vez en cuando queremos validar algunas preguntas,
 Hagamos con joi lo basico, no te olvides 1ro de instalarlo, `npm install joi`
 
 ```javascript
+const Joi = require("joi");
 
-const Joi = require('joi')
+const title =
+  "un titulo muy largoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo";
 
-const title = "un titulo muy largoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
-
-const {error} = Joi.string().max(60).validate(title)
-console.log(error.message) 
+const { error } = Joi.string().max(60).validate(title);
+console.log(error.message);
 // saldra: "value" length must be less than or equal to 60 characters long'
 ```
 
 Con el codigo de arriba podemos validar que nuestro titulo no sea muy largo, incluso podriamos poner un mensaje más personalizado:
 
 ```javascript
-const Joi = require('joi')
+const Joi = require("joi");
 
-const title = "un titulo muy largoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+const title =
+  "un titulo muy largoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo";
 
-const sugerenciaSEO = 
-`Por favor no exceda de {#limit} caracteres, por propositos de SEO 😉\n` +
-`Chequea: https://moz.com/learn/seo/title-tag \n`;
+const sugerenciaSEO =
+  `Por favor no exceda de {#limit} caracteres, por propositos de SEO 😉\n` +
+  `Chequea: https://moz.com/learn/seo/title-tag \n`;
 
-const {error} = Joi.string().max(60).messages({"string.max": sugerenciaSEO }).validate(title)
-console.log(error.message) 
+const { error } = Joi.string()
+  .max(60)
+  .messages({ "string.max": sugerenciaSEO })
+  .validate(title);
+console.log(error.message);
 // saldra: Por favor no exceda de 60 caracteres
 ```
 
-Nota como el `{#limit}` actua como una interpolacion, es decir el `limit = 60` 
-Increible no? 
+Nota como el `{#limit}` actua como una interpolacion, es decir el `limit = 60`
+Increible no?
 
 Bueno tiempo de juntar `joi` y `inquirer`, para ello agregaremos a la pregunta de titulo, una propiedad `validate`, que debe retornar true si es que el valor (el titulo) ingresado por el usuario es valido o retornar un string, un mensaje de error en caso que no sea valido.
 
 ```javascript
 const inquirer = require("inquirer");
-const Joi = require('joi')
+const Joi = require("joi");
 
-const authors = ["arthur", "diana"] // imaginate poder obtenerlo de un REST api
+const authors = ["arthur", "diana"]; // imaginate poder obtenerlo de un REST api
 
-const sugerenciaSEO = 
-`Por favor no exceda de {#limit} caracteres, por propositos de SEO 😉\n` +
-`Chequea: https://moz.com/learn/seo/title-tag \n`;
+const sugerenciaSEO =
+  `Por favor no exceda de {#limit} caracteres, por propositos de SEO 😉\n` +
+  `Chequea: https://moz.com/learn/seo/title-tag \n`;
 
 console.log("Hola 🤖! Soy un cli que te ayudare a crear tu post");
 inquirer
@@ -135,33 +150,35 @@ inquirer
     {
       name: "title",
       message: "Por favor, dame el titulo de tu post:",
-      validate: title => { // aca la integracion con joi :)
+      validate: (title) => {
+        // aca la integracion con joi :)
         const { error } = Joi.string()
-                            .max(60)
-                            .messages({"string.max": sugerenciaSEO })
-                            .validate(title)
+          .max(60)
+          .messages({ "string.max": sugerenciaSEO })
+          .validate(title);
         return error ? error.message : true;
-      }
+      },
     },
-     {
+    {
       type: "list",
       name: "author",
       message: "Quien escribe el post?",
       choices: authors,
     },
-  ]).then((answers) => {
-      console.log(
-          `Post creado con titulo: ${answers.title}, autor: ${answers.author}`)
-  })
+  ])
+  .then((answers) => {
+    console.log(
+      `Post creado con titulo: ${answers.title}, autor: ${answers.author}`
+    );
+  });
 ```
 
 Bueno se puso bueno la cosa no?, que tal si ahora creamos un archivo .mdx o si deseas un markdown a partir de estos datos en base a una plantilla, para ello usaremos otra librería mustache! Esto se va a poner bueno 🤪
 
-
 ```javascript
 const Mustache = require("mustache");
 
-const generateTemplateOf = post =>
+const generateTemplateOf = (post) =>
   Mustache.render(
     `---
     title: "{{title}}"
@@ -173,35 +190,33 @@ const generateTemplateOf = post =>
   );
 
 // podemos llamarlo
-generateTemplateOf({title: "Un post sobre cli", author: "arthur" })
+generateTemplateOf({ title: "Un post sobre cli", author: "arthur" });
 // con ello nos generara un string, interpolando los datos de nuestro post
 // es decir hara algo como:
 // ---
 // title: "Un post sobre cli"
 // author: arthur
 // ---
-
 ```
 
 Sencillo no? Dado ello podemos guardarlo en un archivo .mdx, de la siguiente forma
 
 ```javascript
 const fs = require("fs");
-const path = "mi-post.mdx"
-const post = {title: "Un post sobre cli", author: "arthur" }
+const path = "mi-post.mdx";
+const post = { title: "Un post sobre cli", author: "arthur" };
 fs.writeFileSync(path, generateTemplateOf(post));
 ```
 
 Momento de juntar todo
 
-
 ```javascript
 const fs = require("fs");
 const Mustache = require("mustache");
 const inquirer = require("inquirer");
-const Joi = require('joi')
+const Joi = require("joi");
 
-const generateTemplateOf = post =>
+const generateTemplateOf = (post) =>
   Mustache.render(
     `---
     title: "{{title}}"
@@ -212,11 +227,11 @@ const generateTemplateOf = post =>
     post
   );
 
-const authors = ["arthur", "diana"] // imaginate poder obtenerlo de un REST api
+const authors = ["arthur", "diana"]; // imaginate poder obtenerlo de un REST api
 
-const sugerenciaSEO = 
-`Por favor no exceda de {#limit} caracteres, por propositos de SEO 😉\n` +
-`Chequea: https://moz.com/learn/seo/title-tag \n`;
+const sugerenciaSEO =
+  `Por favor no exceda de {#limit} caracteres, por propositos de SEO 😉\n` +
+  `Chequea: https://moz.com/learn/seo/title-tag \n`;
 
 console.log("Hola 🤖! Soy un cli que te ayudare a crear tu post");
 inquirer
@@ -224,31 +239,32 @@ inquirer
     {
       name: "title",
       message: "Por favor, dame el titulo de tu post:",
-      validate: title => { // aca la integracion con joi :)
+      validate: (title) => {
+        // aca la integracion con joi :)
         const { error } = Joi.string()
-                            .max(60)
-                            .messages({"string.max": sugerenciaSEO })
-                            .validate(title)
+          .max(60)
+          .messages({ "string.max": sugerenciaSEO })
+          .validate(title);
         return error ? error.message : true;
-      }
+      },
     },
-     {
+    {
       type: "list",
       name: "author",
       message: "Quien escribe el post?",
       choices: authors,
     },
-  ]).then((answers) => {
-    const post = answers
+  ])
+  .then((answers) => {
+    const post = answers;
 
     // a partir del titulo puedo generar el path
     // por ejemplo poniendolo en minuscula y eliminando espacios en blanco
     // o mejor usando slugify
-    const path = post.title + ".mdx" 
+    const path = post.title + ".mdx";
     fs.writeFileSync(path, generateTemplateOf(post));
-    console.log(`Post creado en ${path}`)
-  })
+    console.log(`Post creado en ${path}`);
+  });
 ```
 
-Eso es todo por este post, espero que te haya gustado, el codigo completo (el que uso en mi blog), esta en https://github.com/ouracademy/website/tree/master/template
-
+Eso es todo por este post, espero que te haya gustado 😝
