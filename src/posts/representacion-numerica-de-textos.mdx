@@ -1,0 +1,36 @@
+---
+title: "Representacion numérica de textos"
+date: 2020-12-31
+author: diana
+tags: [NLP, ML, feature engineering]
+description: Representar con números los textos
+image: https://f-origin.hypotheses.org/wp-content/blogs.dir/4190/files/2018/04/3dplot-500x381.jpg
+isPublic: false
+---
+
+En esta era digital, la cantidad de textos, imagenes, videos ha aumentado exponecialmente, habran
+escuchado que esto es referido como datos no estructurados, y bueno si tienes muchos de estos datos
+, querras aprovecharlo, pero para eso deberas pasarlo a una forma que las maquinas y los algoritmos
+puedan entender, y wala, lo que entienden son los **números**.
+
+En general, si quieres procesar el mundo, debes pensar ¿como lo represento en números?
+Un ejemplo mas directo son las imágenes, que se representa en un conjunto de pixeles.
+Bueno iniciemos ... Un texto se puede representar de muchas formas iremos describiendo de lo mas simple a lo mas complejo:
+
+- Mapear cada palabra con un identificador.
+  Es decir si tengo estas oraciones:
+- El gato esta jugando.
+- Los perros van al parque.
+- Yo tengo dos gatos y un perro.
+  Las tres oraciones forman tu "text corpus"
+  Las palabras en las oraciones forman tu "vocabulario":
+
+  | Tables   |      Are      |   Cool |
+  | -------- | :-----------: | -----: |
+  | col 1 is | left-aligned  | \$1600 |
+  | col 2 is |   centered    |   \$12 |
+  | col 3 is | right-aligned |    \$1 |
+
+  | 0   | 1    | 2    | 3       | 4   | 5      | 6   | 7   | 8      | 9   | 10  |
+  | --- | ---- | ---- | ------- | --- | ------ | --- | --- | ------ | --- | --- |
+  | El  | gato | esta | jugando | los | perros | van | al  | parque | yo  |
