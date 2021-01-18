@@ -2,7 +2,7 @@
 title: "Principios a considerar en la arquitectura de software"
 date: 2021-01-17
 author: diana
-tags: [Arquitectura Software, Diseño, Principios, El arte de la escalabilidad]
+tags: [arquitectura, diseno, Principios, El arte de la escalabilidad]
 description: Que tener en cuenta cuando diseñas tu arquitectura
 image: /images/principlesArquitecture.png
 
@@ -23,7 +23,7 @@ Para esta tarea, tener un conocimiento amplio, es muy beneficioso. En este senti
 
 Bueno, ¿porqué te hablo del conocimiento? Porque sucede que a la vez que lo vas adquiriendo, vas generando un esquema mental, de reglas y relaciones, al igual como un sistema experto funciona. Es en este contexto, que espero que los principios de arquitectura, que te menciona el titulo del post, cuya fuente es el libro [The art of scalability](https://akfpartners.com/books/the-art-of-scalability), se sume a tu esquema mental al momento de diseñar la arquitectura de tu software.
 
-Ahora ya yendo al tema en si, el libro nos da a conocer 12 principios, los cuales estan relacionados a la **escalabilidad**, **disponibilidad** y **costo**.
+Ahora yendo al tema en si, el libro nos da a conocer 12 principios, que se describen a continuación, los cuales estan relacionados a la **escalabilidad**, **disponibilidad** y **costo**.
 
 - Principio 1: N+1 Design
 
