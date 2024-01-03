@@ -4,12 +4,11 @@
 
   // List of extensions which should be recommended for users of this workspace.
   "recommendations": [
-    "jpoissonnier.vscode-styled-components",
+    "styled-components.vscode-styled-components",
     "esbenp.prettier-vscode",
     "wix.vscode-import-cost",
     "graphql.vscode-graphql",
-    "silvenon.mdx",
-
+    "unifiedjs.vscode-mdx",
     "wayou.vscode-todo-highlight",
     "bierner.emojisense",
     "streetsidesoftware.code-spell-checker",
